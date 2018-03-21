@@ -22,3 +22,22 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.navbar-custom {
+    background-color: #A3D977;
+    border-color:black;
+}
+.navbar-brand {
+    color: #484848;
+    font-size: 22px;
+    font-family: 'Facebook Letter Faces';
+}
+
+.nav li a {
+    color: #484848;
+    font-size: 22px;
+    font-family: 'Facebook Letter Faces';
+}
+
+
+
