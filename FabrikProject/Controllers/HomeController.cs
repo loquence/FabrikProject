@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace FabrikProject.Controllers
 {
-    public class HomeController : ApplicationBaseController
+    public class HomeController : Controller
     {
         public ActionResult Index()
         {

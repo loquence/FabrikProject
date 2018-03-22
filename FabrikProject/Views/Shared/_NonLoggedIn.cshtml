@@ -1,0 +1,21 @@
+﻿@using FabrikProject.Models
+@model LoginViewModel
+<section id="loginForm">
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "navbar-form", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="submit" value="Log in" class="btn btn-default navbar-right" />
+        <div class="navbar-right form-group">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+        </div>
+        <div class="navbar-right form-group">
+
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+        <div class="navbar-right">
+            @Html.Label("Email", "Sign In: ")
+        </div>
+    }
+</section>
