@@ -13,7 +13,7 @@ using FabrikProject.Models;
 namespace FabrikProject.Controllers
 {
     [Authorize]
-    public class AccountController : ApplicationBaseController
+    public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;

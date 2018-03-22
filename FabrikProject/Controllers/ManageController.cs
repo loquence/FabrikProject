@@ -11,7 +11,7 @@ using FabrikProject.Models;
 namespace FabrikProject.Controllers
 {
     [Authorize]
-    public class ManageController : ApplicationBaseController
+    public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
