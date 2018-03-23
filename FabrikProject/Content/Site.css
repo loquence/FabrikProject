@@ -44,5 +44,8 @@ textarea {
     overflow:hidden;
 }
 
+.custom-table > tr > td {
+    border-width:medium;
 
+}
 

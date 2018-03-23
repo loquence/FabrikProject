@@ -125,9 +125,10 @@ namespace FabrikProject.Models
     {
         [Key]
         public string Email { get; set; }
+        /*
         [ForeignKey("Email")]
         public virtual ApplicationUser User { get; set; }
-
+        */
         [DataType(DataType.Text)]
         public string Stock { get; set; }
     }

@@ -30,7 +30,7 @@ namespace FabrikProject.Models
         {
         }
 
-        public DbSet<UserStock> Stock { get; set; }
+        public DbSet<UserStock> UserStock { get; set; }
 
         public static ApplicationDbContext Create()
         {
