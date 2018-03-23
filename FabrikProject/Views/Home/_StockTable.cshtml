@@ -1,1 +1,81 @@
-﻿
+﻿@using FabrikProject.Models
+@model UserStockViewModel
+
+<div class="row">
+    <div class="col-md-4 table-responsive">
+        <table class="table table-bordered">
+            <tr>
+                <td>
+                    Total Value
+                </td>
+                <td>
+                    $390,000
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Returns
+                </td>
+                <td>
+                    + $5,000
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Initial Investment
+                </td>
+                <td>
+                    $385,000
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Asset Count
+                </td>
+                <td>
+                    3
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-8">
+        <h1> The chart will go here</h1>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <table>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(m => Model.Stock)
+                </th>
+            </tr>
+
+
+
+        </table>
+
+        @using (Html.BeginForm("AddStock", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Stock, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Stock, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Add Asset" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
