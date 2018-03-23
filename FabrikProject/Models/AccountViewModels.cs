@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FabrikProject.Models
 {
@@ -119,4 +120,23 @@ namespace FabrikProject.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+    public class UserStock
+    {
+        [Key]
+        public string Email { get; set; }
+        [ForeignKey("Email")]
+        public virtual ApplicationUser User { get; set; }
+
+        [DataType(DataType.Text)]
+        public string Stock { get; set; }
+    }
+
+    public class UserStockViewModel
+    {
+        [Required]
+        public string Stock { get; set; }
+    }
+
+   
 }
