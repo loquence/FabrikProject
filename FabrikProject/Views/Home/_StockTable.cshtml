@@ -2,8 +2,8 @@
 @model UserStockViewModel
 
 <div class="row">
-    <div class="col-md-4 table-responsive">
-        <table class="table table-bordered">
+    <div class="col-md-4">
+        <table class="table table-bordered table-responsive custom-table" style="border-width: medium;border-color:#565656;">
             <tr>
                 <td>
                     Total Value
@@ -57,7 +57,7 @@
 
         </table>
 
-        @using (Html.BeginForm("AddStock", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        @using (Html.BeginForm("UserAddStock", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
             @Html.AntiForgeryToken()
 

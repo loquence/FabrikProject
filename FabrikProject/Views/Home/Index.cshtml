@@ -6,6 +6,10 @@
 @if (Request.IsAuthenticated)
 {
     @Html.Partial("_StockTable")
+    if (ViewBag.Message != null)
+    {
+        <h1>ViewBag.Message</h1>
+    }
 
 }
 else { 
