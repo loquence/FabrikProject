@@ -169,9 +169,17 @@ namespace FabrikProject.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View("Register");
         }
-
+        /*
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddStock(UserStockViewModel model)
+        {
+            var stock = new UserStock { Stock = model.Stock };
+        }
+        */
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
