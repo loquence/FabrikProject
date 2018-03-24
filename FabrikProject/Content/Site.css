@@ -44,17 +44,6 @@ textarea {
     overflow:hidden;
 }
 
-.custom-table > tr > td {
-    border-width:medium;
 
-}
-nav ul {
-    height: 200px;
-    width: 18%;
-}
 
-nav ul {
-    overflow: hidden;
-    overflow-y: scroll;
-}
 

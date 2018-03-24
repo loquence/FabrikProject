@@ -4,8 +4,12 @@
 }
 <h1></h1>
 <div class="row">
-    <input class="form-control" id ="myInput" type="text" placeholder="Search.." />
-    <div class="col-md-6" style="overflow-y:scroll; height:200px; text-align:center;">
+    <div class="form-group input-group-prepend">
+        <i class="glyphicon glyphicon-search form-control-feedback"></i>
+        <input class="form-control" id="myInput" type="text" placeholder="Search.." />
+    </div>
+    <div class="col-md-6" style="overflow-y:scroll; height:200px; text-align:center; background-color:gray">
+        
         <ul class="list-group" id="myList" style="border-width: medium;border-color:#565656;">
             <li class="list-group-item">Item 0</li>
             <li class="list-group-item">Item 1</li>
