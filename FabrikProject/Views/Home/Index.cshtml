@@ -10,6 +10,9 @@
 
 }
 else { 
+    <div class="row">
+        <h1></h1>
+    </div>
 <div class="row">
     <div class="col-md-6 div-custom">
         <h1 style="text-align:center;">Welcome to the</h1>
@@ -18,7 +21,7 @@ else {
             <img src="~/Content/Images/logo2.png"  alt="Logo" />
         </div>
     </div>
-    <div class="col-md-6" style="background-color:#98fb98;">
+    <div class="col-md-6" style="background-color:#CFDBC5;">
         @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
             @Html.AntiForgeryToken()
