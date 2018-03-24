@@ -9,13 +9,13 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-2" style="background-color:#CFDBC5;">
 
-        <hr />
+        
         <dl class="dl-horizontal">
             <dt>Email:</dt>
             <dd>
                 @if (Model.Email != null)
                 {
-                    <p>@Model.Email [@Html.ActionLink("Change your email", "ChangeEmail")]</p>
+                    <p>@Html.DisplayFor(model=>model.Email) [@Html.ActionLink("Change your email", "ChangeEmail")]</p>
 
                 }
             </dd>
