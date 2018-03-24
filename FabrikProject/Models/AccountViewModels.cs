@@ -123,7 +123,7 @@ namespace FabrikProject.Models
 
     public class UserStock
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         [Required]
@@ -146,6 +146,8 @@ namespace FabrikProject.Models
     {
         [Required]
         public string Stock { get; set; }
+        [Required]
+        public int quantity { get; set; }
     }
 
    
