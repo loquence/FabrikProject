@@ -280,6 +280,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_NonLoggedIn.cshtml" />
     <Content Include="Views\Home\_StockTable.cshtml" />
+    <Content Include="Views\Account\UserAddStock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
