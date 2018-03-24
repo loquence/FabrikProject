@@ -124,6 +124,11 @@ namespace FabrikProject.Models
     public class UserStock
     {
         [Key]
+        public int ID { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
         public string Email { get; set; }
         /*
         [ForeignKey("Email")]
@@ -131,6 +136,10 @@ namespace FabrikProject.Models
         */
         [DataType(DataType.Text)]
         public string Stock { get; set; }
+
+        [Required]
+        [Display(Name = "Quantity")]
+        public int quantity { get; set; }
     }
 
     public class UserStockViewModel
