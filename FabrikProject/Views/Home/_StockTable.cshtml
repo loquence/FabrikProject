@@ -1,0 +1,65 @@
+﻿@using FabrikProject.Models
+@model UserStockViewModel
+
+<div class="row">
+    <div class="col-md-4">
+        <table class="table table-bordered table-responsive custom-table" style="border-width: medium;border-color:#565656;">
+            <tr>
+                <td>
+                    Total Value
+                </td>
+                <td>
+                    $390,000
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Returns
+                </td>
+                <td>
+                    + $5,000
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Initial Investment
+                </td>
+                <td>
+                    $385,000
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Asset Count
+                </td>
+                <td>
+                    3
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-8">
+        <h1> The chart will go here</h1>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-responsive">
+            <tr class="active">
+                <th>Stock</th>
+                <th>Ticker</th>
+                <th>Quantity</th>
+                <th>Mkt Price</th>
+                <th>Value</th>
+            </tr>
+        </table>
+    </div>
+</div>
+
+    
+<div class="col-md-2 col-md-offset-10">
+    @Html.ActionLink("Add Asset", "UserAddStock", "Account", null, new { @class = "btn btn-success btn-large" }) ;
+</div>
+

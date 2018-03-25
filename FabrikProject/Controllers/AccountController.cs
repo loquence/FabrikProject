@@ -17,7 +17,7 @@ namespace FabrikProject.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        
         public AccountController()
         {
         }
@@ -169,9 +169,33 @@ namespace FabrikProject.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View("Register");
         }
-
+        [AllowAnonymous]
+        public ActionResult UserAddStock()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UserAddStock(UserStockViewModel model, FabrikProject.Models.ApplicationDbContext context)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                
+                var stock = new UserStock { Stock = model.Stock, Email = User.Identity.GetUserName() };
+                context.UserStock.Add(stock);
+                await context.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+                
+            }
+            return View("Home");
+            
+        }
+        
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]

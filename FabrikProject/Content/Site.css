@@ -28,21 +28,22 @@ textarea {
     border-color:black;
 }
 .navbar-brand {
-    color: #484848;
+    color: black;
     font-size: 22px;
     font-family: 'Facebook Letter Faces';
 }
 
-.nav li a {
-    color: #484848;
-    font-size: 22px;
-    font-family: 'Facebook Letter Faces';
-}
+
 
 .div-custom {
     text-align:center;
     vertical-align:middle;
 }
+
+.homepageImg {
+    overflow:hidden;
+}
+
 
 
 
