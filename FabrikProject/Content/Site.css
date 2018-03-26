@@ -27,17 +27,26 @@ textarea {
     background-color: #A3D977;
     border-color:black;
 }
+
+.nav > li > a {
+    background-color: #A3D977;
+}
+
 .navbar-brand {
+
     color: black;
     font-size: 22px;
     font-family: 'Facebook Letter Faces';
 }
 
-
+a:hover, a:focus {
+    background-color: #A3D977;
+    color: white;
+}
 
 .div-custom {
-    text-align:center;
-    vertical-align:middle;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .homepageImg {
