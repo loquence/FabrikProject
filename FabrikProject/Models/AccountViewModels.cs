@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System;
 
 namespace FabrikProject.Models
 {
@@ -140,6 +141,10 @@ namespace FabrikProject.Models
         [Required]
         [Display(Name = "Quantity")]
         public int quantity { get; set; }
+
+        [Required]
+        [Display(Name ="DatePrice")]
+        public DateTime DatePrice { get; set; }
     }
 
     public class UserStockViewModel
@@ -148,6 +153,8 @@ namespace FabrikProject.Models
         public string Stock { get; set; }
         [Required]
         public int quantity { get; set; }
+        [Required]
+        public DateTime DatePrice { get; set; }
     }
 
 

@@ -1,4 +1,5 @@
-﻿
+﻿@using FabrikProject.Models
+
 @{ 
     ViewBag.Title = "Add Asset";
 }
@@ -10,7 +11,7 @@
     </div>
     <div class="col-md-6" style="overflow-y:scroll; height:200px; text-align:center; background-color:gray">
         
-        <ul class="list-group" id="myList" style="border-width: medium;border-color:#565656;">
+        <ul class="list-group stock" id="myList" style="border-width: medium;border-color:#565656;">
             <li class="list-group-item">Item 0</li>
             <li class="list-group-item">Item 1</li>
             <li class="list-group-item">Item 2</li>
@@ -42,23 +43,33 @@
 </div>
 <h1></h1>
 <div class="row">
-    <div class="col-md-12">
+    @using (Html.BeginForm("UserAddStock", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <div class="col-md-12">
         <table class="table table-bordered table-response table-striped">
-            <thead>
-                <tr>
-                    <td>Stock</td>
-                    <td>Ticker</td>
-                    <td>Quantity</td>
-                    <td>Date Price</td>
-                    <td>Value</td>
-                </tr>
-                
+                <thead>
+                    <tr>
+                        <td>Stock</td>
+                        <td>Ticker</td>
+                        <td>Quantity</td>
+                        <td>Date Price</td>
+                        <td>Value</td>
+                    </tr>
+                </thead>
+                <tbody class="stock-body"></tbody>
+                <tbody></tbody>
+            </table>
+        </div>
+        
+            <div class="col-md-2 col-md-offset-2">
+                @Html.ActionLink("Cancel", "UserAddStock", "Account", null, new { @class = "btn btn-danger btn-large" })
 
-            </thead>
-            <tbody>
+            </div>
+            <div class="col-md-2 col-md-offset-5">
+                <input type="submit" class="btn btn-success" value="Confirm" />
+            </div>
+        
+    }
 
-            </tbody>
-        </table>
-    </div>
 </div>
 

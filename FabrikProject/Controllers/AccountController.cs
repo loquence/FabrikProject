@@ -186,7 +186,7 @@ namespace FabrikProject.Controllers
             if (ModelState.IsValid)
             {
                 
-                var stock = new UserStock { Stock = model.Stock, Email = User.Identity.GetUserName() };
+                var stock = new UserStock { Stock = model.Stock, Email = User.Identity.GetUserName(), quantity = model.quantity, DatePrice = model.DatePrice };
                 context.UserStock.Add(stock);
                 await context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
