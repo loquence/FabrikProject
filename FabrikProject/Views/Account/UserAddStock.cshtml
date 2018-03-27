@@ -1,6 +1,6 @@
 ﻿@using FabrikProject.Models
 
-@{ 
+@{
     ViewBag.Title = "Add Asset";
 }
 <h1></h1>
@@ -9,44 +9,56 @@
         <i class="glyphicon glyphicon-search form-control-feedback"></i>
         <input class="form-control" id="myInput" type="text" placeholder="Search.." />
     </div>
-    <div class="col-md-6" style="overflow-y:scroll; height:200px; text-align:center; background-color:gray">
-        
+    <div class="col-md-5" style="overflow-y:scroll; height:280px; text-align:center; background-color:gray">
+
         <ul class="list-group stock" id="myList" style="border-width: medium;border-color:#565656;">
-            <li class="list-group-item">Item 0</li>
-            <li class="list-group-item">Item 1</li>
-            <li class="list-group-item">Item 2</li>
-            <li class="list-group-item">Item 3</li>
-            <li class="list-group-item">Item 4</li>
-            <li class="list-group-item">Item 5</li>
-            <li class="list-group-item">Item 6</li>
-            <li class="list-group-item">Item 7</li>
-            <li class="list-group-item">Item 8</li>
-            <li class="list-group-item">Item 9</li>
-            <li class="list-group-item">Item 10</li>
-            <li class="list-group-item">Item 11</li>
-            <li class="list-group-item">Item 12</li>
-            <li class="list-group-item">Item 13</li>
-            <li class="list-group-item">Item 14</li>
-            <li class="list-group-item">Item 15</li>
-            <li class="list-group-item">Item 16</li>
-            <li class="list-group-item">Item 17</li>
-            <li class="list-group-item">Item 18</li>
-            <li class="list-group-item">Item 19</li>
-            <li class="list-group-item">Item 20</li>
-            <li class="list-group-item">Item 21</li>
-            <li class="list-group-item">Item 22</li>
-            <li class="list-group-item">Item 23</li>
-            <li class="list-group-item">Item 24</li>
-            <li class="list-group-item">Item 25</li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">AAPL</h4>
+                <p class="list-group-item-text">Stock - Apple</p>
+            </li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">Google</h4>
+                <p class="list-group-item-text">GOOGL</p>
+            </li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">First List Group Item Heading</h4>
+                <p class="list-group-item-text">List Group Item Text</p>
+            </li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">First List Group Item Heading</h4>
+                <p class="list-group-item-text">List Group Item Text</p>
+            </li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">First List Group Item Heading</h4>
+                <p class="list-group-item-text">List Group Item Text</p>
+            </li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">First List Group Item Heading</h4>
+                <p class="list-group-item-text">List Group Item Text</p>
+            </li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">First List Group Item Heading</h4>
+                <p class="list-group-item-text">List Group Item Text</p>
+            </li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">First List Group Item Heading</h4>
+                <p class="list-group-item-text">List Group Item Text</p>
+            </li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">First List Group Item Heading</h4>
+                <p class="list-group-item-text">List Group Item Text</p>
+            </li>
         </ul>
     </div>
 </div>
-<h1></h1>
+<br />
+<br />
+<br />
 <div class="row">
     @using (Html.BeginForm("UserAddStock", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         <div class="col-md-12">
-        <table class="table table-bordered table-response table-striped">
+            <table class="table table-bordered table-response table-striped">
                 <thead>
                     <tr>
                         <td>Stock</td>
@@ -60,15 +72,15 @@
                 <tbody></tbody>
             </table>
         </div>
-        
-            <div class="col-md-2 col-md-offset-2">
-                @Html.ActionLink("Cancel", "UserAddStock", "Account", null, new { @class = "btn btn-danger btn-large" })
 
-            </div>
-            <div class="col-md-2 col-md-offset-5">
-                <input type="submit" class="btn btn-success" value="Confirm" />
-            </div>
-        
+        <div class="col-md-1">
+            @Html.ActionLink("Cancel", "UserAddStock", "Account", null, new { @class = "btn btn-danger btn-lg", style="outline:none" })
+
+        </div>
+        <div class="col-md-2 col-md-offset-9">
+            <input type="submit" class="btn btn-success btn-lg" value="Confirm" style="float:right" />
+        </div>
+
     }
 
 </div>

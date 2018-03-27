@@ -53,6 +53,8 @@ a:hover, a:focus {
     overflow:hidden;
 }
 
-
+.custom-button:focus {
+    outline:none;
+}
 
 

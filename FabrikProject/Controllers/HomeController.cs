@@ -17,7 +17,7 @@ namespace FabrikProject.Controllers
             var email = User.Identity.GetUserName();
             var list = context.UserStock.Where(r => r.Email == email).ToList();
             
-            return View(list);
+            return View();
         }
 
         public ActionResult About()
