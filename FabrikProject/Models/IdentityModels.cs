@@ -26,7 +26,7 @@ namespace FabrikProject.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("EssentialPortfolio_DB", throwIfV1Schema: false)
+            : base("DeffaultConnection", throwIfV1Schema: false)
         {
         }
 
