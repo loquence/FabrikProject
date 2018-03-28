@@ -3,6 +3,11 @@
 @{
     ViewBag.Title = "Add Asset";
 }
+
+
+
+@if (Request.IsAuthenticated)
+{
 <h1></h1>
 <div class="row">
     <div class="form-group input-group-prepend">
@@ -57,6 +62,7 @@
 <div class="row">
     @using (Html.BeginForm("UserAddStock", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
+        @Html.AntiForgeryToken()
         <div class="col-md-12" style="text-align:center;">
             <table class="table table-bordered table-response table-striped">
                 <thead>
@@ -100,3 +106,8 @@
 <br />
 <br />
 
+}
+else
+{
+    Response.Redirect("/");
+}
