@@ -140,11 +140,15 @@ namespace FabrikProject.Models
 
         [Required]
         [Display(Name = "Quantity")]
-        public int quantity { get; set; }
+        public int Quantity { get; set; }
 
         [Required]
         [Display(Name ="DatePrice")]
         public DateTime DatePrice { get; set; }
+
+        [Required]
+        [Display(Name ="Price When Bought")]
+        public double PriceWhenBought { get; set; }
     }
 
     public class UserStockViewModel
@@ -152,10 +156,14 @@ namespace FabrikProject.Models
         [Required]
         public string Stock { get; set; }
         [Required]
-        public int quantity { get; set; }
+        public int Quantity { get; set; }
         [Required]
         public DateTime DatePrice { get; set; }
+        [Required]
+        public double PriceWhenBought { get; set; }
     }
+
+ 
 
 
 
