@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FabrikProject.Models;
+using System.Collections.Generic;
 
 namespace FabrikProject.Controllers
 {
@@ -180,15 +181,18 @@ namespace FabrikProject.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> UserAddStock(UserStockViewModel model, FabrikProject.Models.ApplicationDbContext context)
+        public async Task<ActionResult> UserAddStock(ICollection<UserStockViewModel> model, FabrikProject.Models.ApplicationDbContext context)
         {
             
             if (ModelState.IsValid)
             {
+                foreach (var m in model)
+                {
+                    var stock = new UserStock { Stock = m.Stock, Email = User.Identity.GetUserName(), Quantity = m.Quantity, DatePrice = m.DatePrice, PriceWhenBought = m.PriceWhenBought };
+                    context.UserStock.Add(stock);
+                    await context.SaveChangesAsync();
+                }
                 
-                var stock = new UserStock { Stock = model.Stock, Email = User.Identity.GetUserName() };
-                context.UserStock.Add(stock);
-                await context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
                 
             }
