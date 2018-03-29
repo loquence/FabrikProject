@@ -10,7 +10,7 @@
 
 </head>
 <body>
-    <div class="navbar navbar-fixed-top navbar-custom">
+    <div class="navbar navbar-inverse navbar-fixed-top navbar-custom">
         <div class="container">
             <div class="navbar-header">
                  
@@ -20,6 +20,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-left" href="/"><img src="~/Content/Images/eLogo2.png" height="50" width="50" /></a>
+                @Html.ActionLink("Essential Portfolio","Index","Home", new { area=""},new { @class="navbar-brand"})
             </div>
             <div class="navbar-collapse collapse">
                 @Html.Partial("_LoginPartial")
