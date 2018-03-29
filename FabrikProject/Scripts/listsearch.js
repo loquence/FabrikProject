@@ -24,7 +24,8 @@ $(function () {
          }
          
          var rand = Math.random();
-         $(".stock-body").append("<tr>\n<td>" + stock + "</td>\n<td>" + ticker + "</td>\n<td><input type=\"text\" class=\"form-control quantity-box\" name=\"["+numb+"].Quantity\" placholder=\"Quantity\" required/></td>\n<td><input type=\"date\" name=\"["+numb+"].DatePrice\"class=\"form-control price-box\" required /></td>\n<td>$" + rand * 10000 + "</td>\n" + "</tr>\n<input type=\"hidden\" name\"["+numb+"].Stock\"value=\"" + ticker +"\" />")
+         var randNum = rand * 10000;
+         $(".stock-body").append("<tr>\n<td>" + stock + "</td>\n<td>" + ticker + "</td>\n<td><input type=\"text\" class=\"form-control quantity-box\" name=\"[" + numb + "].Quantity\" placholder=\"Quantity\" required/></td>\n<td><input type=\"date\" name=\"[" + numb + "].DatePrice\"class=\"form-control price-box\" required /></td>\n<td>$" + randNum + "</td>\n" + "</tr>\n<input type=\"hidden\" name=\"[" + numb + "].Stock\" value=\"" + ticker + "\" />\n<input type=\"hidden\" name=\"[" + numb + "].PriceWhenBought\" value=\"" + randNum + "\" />")
          numb++;
 
      });

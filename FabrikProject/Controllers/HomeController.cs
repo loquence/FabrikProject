@@ -11,12 +11,8 @@ namespace FabrikProject.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(FabrikProject.Models.ApplicationDbContext context)
+        public ActionResult Index()
         {
-            
-            var email = User.Identity.GetUserName();
-            var list = context.UserStock.Where(r => r.Email == email).ToList();
-            
             return View();
         }
 
@@ -39,6 +35,18 @@ namespace FabrikProject.Controllers
             ViewBag.Message = "Our Updates Page";
 
             return View();
+        }
+
+        [ChildActionOnly]
+        public ActionResult _StockTable(FabrikProject.Models.ApplicationDbContext context)
+        {
+            var email = User.Identity.GetUserName();
+            var list = context.UserStock.Where(r => r.Email == email).ToList();
+            foreach (var item in list)
+            {
+                Console.WriteLine(item.Stock);
+            }
+            return PartialView(list);
         }
     }
 }

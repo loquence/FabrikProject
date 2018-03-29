@@ -375,6 +375,20 @@ namespace FabrikProject.Controllers
             }
         }
 
+        
+        [AllowAnonymous]
+        public ActionResult Performance()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return View("Login", "Account");
+            }
+        }
+
         //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]

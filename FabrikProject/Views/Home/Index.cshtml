@@ -6,7 +6,7 @@
 @if (Request.IsAuthenticated)
 {
     <br />
-    @Html.Partial("_StockTable")
+    @Html.Action("_StockTable","Home")
     <br />
     <br />
     <br />

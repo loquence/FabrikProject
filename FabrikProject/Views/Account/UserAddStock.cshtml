@@ -3,100 +3,112 @@
 @{
     ViewBag.Title = "Add Asset";
 }
-<h1></h1>
-<div class="row">
-    <div class="form-group input-group-prepend">
-        <i class="glyphicon glyphicon-search form-control-feedback"></i>
-        <input class="form-control" id="myInput" type="text" placeholder="Search.." />
+
+
+
+@if (Request.IsAuthenticated)
+{
+    <h1></h1>
+    <div class="row">
+        <div class="form-group input-group-prepend">
+            <i class="glyphicon glyphicon-search form-control-feedback"></i>
+            <input class="form-control" id="myInput" type="text" placeholder="Search.." />
+        </div>
+        <div class="col-md-5" style="overflow-y:scroll; height:280px; text-align:center; background-color:gray">
+
+            <ul class="list-group stock" id="myList" style="border-width: medium;border-color:#565656;">
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">AAPL</h4>
+                    <p class="list-group-item-text">Stock - Apple</p>
+                </li>
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">Google</h4>
+                    <p class="list-group-item-text">GOOGL</p>
+                </li>
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
+                    <p class="list-group-item-text">List Group Item Text</p>
+                </li>
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
+                    <p class="list-group-item-text">List Group Item Text</p>
+                </li>
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
+                    <p class="list-group-item-text">List Group Item Text</p>
+                </li>
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
+                    <p class="list-group-item-text">List Group Item Text</p>
+                </li>
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
+                    <p class="list-group-item-text">List Group Item Text</p>
+                </li>
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
+                    <p class="list-group-item-text">List Group Item Text</p>
+                </li>
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
+                    <p class="list-group-item-text">List Group Item Text</p>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="col-md-5" style="overflow-y:scroll; height:280px; text-align:center; background-color:gray">
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        @using (Html.BeginForm("UserAddStock", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="col-md-12" style="text-align:center;">
+                <table class="table table-bordered table-response table-striped">
+                    <thead>
+                        <tr>
+                            <td>Stock</td>
+                            <td>Ticker</td>
+                            <td>Quantity</td>
+                            <td>Date Price</td>
+                            <td>Value</td>
+                        </tr>
+                    </thead>
+                    <tbody class="stock-body"></tbody>
+                    <tbody></tbody>
+                </table>
+            </div>
 
-        <ul class="list-group stock" id="myList" style="border-width: medium;border-color:#565656;">
-            <li class="list-group-item">
-                <h4 class="list-group-item-heading">AAPL</h4>
-                <p class="list-group-item-text">Stock - Apple</p>
-            </li>
-            <li class="list-group-item">
-                <h4 class="list-group-item-heading">Google</h4>
-                <p class="list-group-item-text">GOOGL</p>
-            </li>
-            <li class="list-group-item">
-                <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                <p class="list-group-item-text">List Group Item Text</p>
-            </li>
-            <li class="list-group-item">
-                <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                <p class="list-group-item-text">List Group Item Text</p>
-            </li>
-            <li class="list-group-item">
-                <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                <p class="list-group-item-text">List Group Item Text</p>
-            </li>
-            <li class="list-group-item">
-                <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                <p class="list-group-item-text">List Group Item Text</p>
-            </li>
-            <li class="list-group-item">
-                <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                <p class="list-group-item-text">List Group Item Text</p>
-            </li>
-            <li class="list-group-item">
-                <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                <p class="list-group-item-text">List Group Item Text</p>
-            </li>
-            <li class="list-group-item">
-                <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                <p class="list-group-item-text">List Group Item Text</p>
-            </li>
-        </ul>
+            <div class="col-md-1">
+                @Html.ActionLink("Cancel", "UserAddStock", "Account", null, new { @class = "btn btn-danger btn-lg", style = "outline:none" })
+
+            </div>
+            <div class="col-md-2 col-md-offset-9">
+                <input type="submit" class="btn btn-success btn-lg" value="Confirm" style="float:right" />
+            </div>
+
+        }
+
     </div>
-</div>
-<br />
-<br />
-<br />
-<div class="row">
-    @using (Html.BeginForm("UserAddStock", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-        <div class="col-md-12" style="text-align:center;">
-            <table class="table table-bordered table-response table-striped">
-                <thead>
-                    <tr>
-                        <td>Stock</td>
-                        <td>Ticker</td>
-                        <td>Quantity</td>
-                        <td>Date Price</td>
-                        <td>Value</td>
-                    </tr>
-                </thead>
-                <tbody class="stock-body"></tbody>
-                <tbody></tbody>
-            </table>
-        </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
 
-        <div class="col-md-1">
-            @Html.ActionLink("Cancel", "UserAddStock", "Account", null, new { @class = "btn btn-danger btn-lg", style = "outline:none" })
+}
+else
+{
+    @Html.Partial("Login")
 
-        </div>
-        <div class="col-md-2 col-md-offset-9">
-            <input type="submit" class="btn btn-success btn-lg" value="Confirm" style="float:right" />
-        </div>
-
-    }
-
-</div>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-
+}

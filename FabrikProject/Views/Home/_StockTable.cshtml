@@ -1,5 +1,5 @@
 ﻿@using FabrikProject.Models
-@model UserStockViewModel
+@model IEnumerable<UserStock>
 
 <div class="row">
     <div class="col-md-4">
@@ -39,7 +39,7 @@
         </table>
     </div>
     <div class="col-md-8">
-        <h1> The chart will go here</h1>
+        <img src="~/Content/Images/portfolioOverview.png" />s
     </div>
 </div>
 
@@ -47,13 +47,28 @@
 <div class="row">
     <div class="col-md-12">
         <table class="table table-bordered table-responsive">
-            <tr class="active">
-                <th>Stock</th>
-                <th>Ticker</th>
-                <th>Quantity</th>
-                <th>Mkt Price</th>
-                <th>Value</th>
-            </tr>
+            <thead>
+                <tr class="active">
+                    <th>Stock</th>
+                    <th>Ticker</th>
+                    <th>Quantity</th>
+                    <th>Mkt Price</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <th>Stock Name</th>
+                    <th>@Html.DisplayFor(modelItem => item.Stock)</th>
+                    <th>@Html.DisplayFor(modelItem => item.Quantity)</th>
+                    <th>@Html.DisplayFor(modelItem => item.DatePrice)</th>
+                    <th>@Html.DisplayFor(modelItem => item.PriceWhenBought)</th>
+
+                </tr>
+                }
+            </tbody>
         </table>
     </div>
 </div>

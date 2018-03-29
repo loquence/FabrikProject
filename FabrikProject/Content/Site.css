@@ -25,7 +25,6 @@ textarea {
 
 .navbar-custom {
     background-color: #A3D977;
-    border-color:black;
 }
 
 .nav > li > a {
@@ -35,8 +34,7 @@ textarea {
 .navbar-brand {
 
     color: black;
-    font-size: 22px;
-    font-family: 'Facebook Letter Faces';
+    
 }
 
 a:hover, a:focus {
@@ -99,4 +97,25 @@ a:hover, a:focus {
     border-top: none;
 }
 
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.title {
+    color: grey;
+}
+
+.column {
+    float: left;
+    width: 33.3%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: black;
+}
+
+.navbar-inverse .navbar-brand {
+    color:black;
+}
 

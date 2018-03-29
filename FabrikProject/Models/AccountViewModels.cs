@@ -136,6 +136,7 @@ namespace FabrikProject.Models
         public virtual ApplicationUser User { get; set; }
         */
         [DataType(DataType.Text)]
+        [Display(Name ="Asset")]
         public string Stock { get; set; }
 
         [Required]
@@ -143,11 +144,11 @@ namespace FabrikProject.Models
         public int Quantity { get; set; }
 
         [Required]
-        [Display(Name ="DatePrice")]
+        [Display(Name ="Date Purchased")]
         public DateTime DatePrice { get; set; }
 
         [Required]
-        [Display(Name ="Price When Bought")]
+        [Display(Name ="Original Value")]
         public double PriceWhenBought { get; set; }
     }
 
