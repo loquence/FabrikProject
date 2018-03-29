@@ -299,6 +299,8 @@
     <Content Include="Views\Account\UserAddStock.cshtml" />
     <Content Include="Views\Home\Updates.cshtml" />
     <Content Include="Views\Account\Performance.cshtml" />
+    <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\ApplicationBase\" />

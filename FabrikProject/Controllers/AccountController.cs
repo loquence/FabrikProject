@@ -345,6 +345,20 @@ namespace FabrikProject.Controllers
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
 
+        [AllowAnonymous]
+        public ActionResult Edit(int id, FabrikProject.Models.ApplicationDbContext context)
+        {
+            UserStock stock = context.UserStock.Find(id);
+            return View(stock);
+        }
+
+        [AllowAnonymous]
+        public ActionResult Delete(int id, FabrikProject.Models.ApplicationDbContext context)
+        {
+            UserStock stock = context.UserStock.Find(id);
+            return View(stock);
+        }
+
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]

@@ -60,12 +60,15 @@
                 @foreach (var item in Model)
                 {
                 <tr>
-                    <th>Stock Name</th>
-                    <th>@Html.DisplayFor(modelItem => item.Stock)</th>
-                    <th>@Html.DisplayFor(modelItem => item.Quantity)</th>
-                    <th>@Html.DisplayFor(modelItem => item.DatePrice)</th>
-                    <th>@Html.DisplayFor(modelItem => item.PriceWhenBought)</th>
-
+                    <td>Stock Name</td>
+                    <td>@Html.DisplayFor(modelItem => item.Stock)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DatePrice)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PriceWhenBought)</td>
+                    <td>
+                        @Html.ActionLink("Edit","Edit","Account", new { id = item.ID },null)
+                        @Html.ActionLink("Delete","Delete","Account", new { id = item.ID }, null)
+                    </td>
                 </tr>
                 }
             </tbody>
