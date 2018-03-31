@@ -204,23 +204,30 @@ namespace FabrikProject.Controllers
 
         private List<Models.Csv> ReturnStockTable()
         {
-            using (var reader = new System.IO.StreamReader(@"~/App_Data/assets.csv"))
+            string path = Server.MapPath("~/App_Data/assets.csv");
+            using (var reader = new System.IO.StreamReader(path))
             {
                 List<FabrikProject.Models.Csv> list = new List<Models.Csv>();
                 var count = 0;
                 while (!reader.EndOfStream)
                 {
+
+
+                    var lin = reader.ReadLine();
+                    var values = lin.Split(',');
                     if (count != 0)
                     {
-                        var lin = reader.ReadLine();
-                        var values = lin.Split(',');
                         Models.Csv temp = new Models.Csv();
                         temp.AssetTicker = values[0];
                         temp.AssetName = values[1];
                         temp.AssetType = values[2];
                         list.Add(temp);
                     }
-
+                    else
+                    {
+                        count++;
+                    }
+                    
                 }
                 return list;
             }
