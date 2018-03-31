@@ -44,9 +44,11 @@ namespace FabrikProject.Controllers
             var list = context.UserStock.Where(r => r.Email == email).ToList();
             foreach (var item in list)
             {
-                Console.WriteLine(item.Stock);
+                Console.WriteLine(item.AssetTicker);
             }
             return PartialView(list);
         }
+
+        
     }
 }

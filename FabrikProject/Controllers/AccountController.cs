@@ -175,7 +175,9 @@ namespace FabrikProject.Controllers
         [AllowAnonymous]
         public ActionResult UserAddStock()
         {
-            return View();
+            List<Csv> model = new List<Csv>();
+            model = ReturnStockTable();
+            return View( model);
         }
         
         [HttpPost]
@@ -188,7 +190,7 @@ namespace FabrikProject.Controllers
             {
                 foreach (var m in model)
                 {
-                    var stock = new UserStock { Stock = m.Stock, Email = User.Identity.GetUserName(), Quantity = m.Quantity, DatePrice = m.DatePrice, PriceWhenBought = m.PriceWhenBought };
+                    var stock = new UserStock { AssetName = m.AssetName, AssetTicker = m.AssetTicker, Email = User.Identity.GetUserName(), Quantity = m.Quantity, DatePrice = m.DatePrice, PriceWhenBought = m.PriceWhenBought };
                     context.UserStock.Add(stock);
                     await context.SaveChangesAsync();
                 }
@@ -199,7 +201,32 @@ namespace FabrikProject.Controllers
             return View("Home");
             
         }
-        
+
+        private List<Models.Csv> ReturnStockTable()
+        {
+            using (var reader = new System.IO.StreamReader(@"~/App_Data/assets.csv"))
+            {
+                List<FabrikProject.Models.Csv> list = new List<Models.Csv>();
+                var count = 0;
+                while (!reader.EndOfStream)
+                {
+                    if (count != 0)
+                    {
+                        var lin = reader.ReadLine();
+                        var values = lin.Split(',');
+                        Models.Csv temp = new Models.Csv();
+                        temp.AssetTicker = values[0];
+                        temp.AssetName = values[1];
+                        temp.AssetType = values[2];
+                        list.Add(temp);
+                    }
+
+                }
+                return list;
+            }
+
+        }
+
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
