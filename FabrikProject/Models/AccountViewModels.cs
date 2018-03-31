@@ -135,9 +135,15 @@ namespace FabrikProject.Models
         [ForeignKey("Email")]
         public virtual ApplicationUser User { get; set; }
         */
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name ="Ticker")]
+        public string AssetTicker { get; set; }
+
+        [Required]
         [DataType(DataType.Text)]
         [Display(Name ="Asset")]
-        public string Stock { get; set; }
+        public string AssetName { get; set; }
 
         [Required]
         [Display(Name = "Quantity")]
@@ -155,13 +161,26 @@ namespace FabrikProject.Models
     public class UserStockViewModel
     {
         [Required]
-        public string Stock { get; set; }
+        public string AssetTicker { get; set; }
         [Required]
         public int Quantity { get; set; }
         [Required]
         public DateTime DatePrice { get; set; }
         [Required]
         public double PriceWhenBought { get; set; }
+        [Required]
+        public string AssetName { get; set; }
+        
+    }
+
+    public class Csv
+    {
+        [Required]
+        public string AssetName { get; set; }
+        [Required]
+        public string AssetTicker { get; set; }
+        [Required]
+        public string AssetType { get; set; }
     }
 
  

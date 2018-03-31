@@ -1,4 +1,5 @@
 ﻿@using FabrikProject.Models
+@model List<Csv>
 
 @{
     ViewBag.Title = "Add Asset";
@@ -17,42 +18,14 @@
         <div class="col-md-5" style="overflow-y:scroll; height:280px; text-align:center; background-color:gray">
 
             <ul class="list-group stock" id="myList" style="border-width: medium;border-color:#565656;">
-                <li class="list-group-item">
-                    <h4 class="list-group-item-heading">AAPL</h4>
-                    <p class="list-group-item-text">Stock - Apple</p>
-                </li>
-                <li class="list-group-item">
-                    <h4 class="list-group-item-heading">Google</h4>
-                    <p class="list-group-item-text">GOOGL</p>
-                </li>
-                <li class="list-group-item">
-                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </li>
-                <li class="list-group-item">
-                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </li>
-                <li class="list-group-item">
-                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </li>
-                <li class="list-group-item">
-                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </li>
-                <li class="list-group-item">
-                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </li>
-                <li class="list-group-item">
-                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </li>
-                <li class="list-group-item">
-                    <h4 class="list-group-item-heading">First List Group Item Heading</h4>
-                    <p class="list-group-item-text">List Group Item Text</p>
-                </li>
+                @foreach (var item in Model)
+                {
+                    <li class="list-group-item">
+                        <h4 class="list-group-item-heading">@Html.DisplayFor(modelItem => item.AssetTicker)</h4>
+                        <p class="list-group-item-text">@Html.DisplayFor(modelItem => item.AssetType) - @Html.DisplayFor(modelItem => item.AssetName)</p>
+                    </li>
+                }
+                
             </ul>
         </div>
     </div>
@@ -75,12 +48,13 @@
                         </tr>
                     </thead>
                     <tbody class="stock-body"></tbody>
-                    <tbody></tbody>
+                    
                 </table>
             </div>
 
             <div class="col-md-1">
-                @Html.ActionLink("Cancel", "UserAddStock", "Account", null, new { @class = "btn btn-danger btn-lg", style = "outline:none" })
+                <a class="btn btn-danger btn-lg" id="CancelButton" >Cancel</a>
+               
 
             </div>
             <div class="col-md-2 col-md-offset-9">

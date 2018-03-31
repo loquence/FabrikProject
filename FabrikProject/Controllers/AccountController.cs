@@ -175,7 +175,9 @@ namespace FabrikProject.Controllers
         [AllowAnonymous]
         public ActionResult UserAddStock()
         {
-            return View();
+            List<Csv> model = new List<Csv>();
+            model = ReturnStockTable();
+            return View( model);
         }
         
         [HttpPost]
@@ -188,7 +190,7 @@ namespace FabrikProject.Controllers
             {
                 foreach (var m in model)
                 {
-                    var stock = new UserStock { Stock = m.Stock, Email = User.Identity.GetUserName(), Quantity = m.Quantity, DatePrice = m.DatePrice, PriceWhenBought = m.PriceWhenBought };
+                    var stock = new UserStock { AssetName = m.AssetName, AssetTicker = m.AssetTicker, Email = User.Identity.GetUserName(), Quantity = m.Quantity, DatePrice = m.DatePrice, PriceWhenBought = m.PriceWhenBought };
                     context.UserStock.Add(stock);
                     await context.SaveChangesAsync();
                 }
@@ -199,7 +201,39 @@ namespace FabrikProject.Controllers
             return View("Home");
             
         }
-        
+
+        private List<Models.Csv> ReturnStockTable()
+        {
+            string path = Server.MapPath("~/App_Data/assets.csv");
+            using (var reader = new System.IO.StreamReader(path))
+            {
+                List<FabrikProject.Models.Csv> list = new List<Models.Csv>();
+                var count = 0;
+                while (!reader.EndOfStream)
+                {
+
+
+                    var lin = reader.ReadLine();
+                    var values = lin.Split(',');
+                    if (count != 0)
+                    {
+                        Models.Csv temp = new Models.Csv();
+                        temp.AssetTicker = values[0];
+                        temp.AssetName = values[1];
+                        temp.AssetType = values[2];
+                        list.Add(temp);
+                    }
+                    else
+                    {
+                        count++;
+                    }
+                    
+                }
+                return list;
+            }
+
+        }
+
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -343,6 +377,20 @@ namespace FabrikProject.Controllers
                 return View("Error");
             }
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
+        }
+
+        [AllowAnonymous]
+        public ActionResult Edit(int id, FabrikProject.Models.ApplicationDbContext context)
+        {
+            UserStock stock = context.UserStock.Find(id);
+            return View(stock);
+        }
+
+        [AllowAnonymous]
+        public ActionResult Delete(int id, FabrikProject.Models.ApplicationDbContext context)
+        {
+            UserStock stock = context.UserStock.Find(id);
+            return View(stock);
         }
 
         //
