@@ -42,6 +42,7 @@ namespace FabrikProject.Models
         {
             return new ApplicationDbContext();
         }
+
     }
 
     public class EmailService

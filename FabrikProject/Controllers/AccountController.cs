@@ -393,6 +393,23 @@ namespace FabrikProject.Controllers
             return View(stock);
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(UserStock model, FabrikProject.Models.ApplicationDbContext context)
+        {
+            if (!ModelState.IsValid)
+            {
+                var toDelete = context.UserStock.Find(model.ID);
+                context.UserStock.Remove(toDelete);
+                await context.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction("Error", "Manage");
+            
+        }
+
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
@@ -473,6 +490,14 @@ namespace FabrikProject.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
+        }
+
+        [ChildActionOnly]
+        public ActionResult _LoginPartial(FabrikProject.Models.ApplicationDbContext context)
+        {
+            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
+            
+            return PartialView(user);
         }
 
         //
