@@ -11,8 +11,10 @@
 {
     <h1></h1>
     <div class="row">
-        <div class="form-group input-group-prepend">
-            <i class="glyphicon glyphicon-search form-control-feedback"></i>
+        <div class="form-group input-group">
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-search"></i>
+            </span>
             <input class="form-control" id="myInput" type="text" placeholder="Search.." />
         </div>
         <div class="col-md-5" style="overflow-y:scroll; height:280px; text-align:center; background-color:gray">
@@ -40,11 +42,12 @@
                 <table class="table table-bordered table-response table-striped">
                     <thead>
                         <tr>
-                            <td>Stock</td>
+                            <td>Asset</td>
                             <td>Ticker</td>
                             <td>Quantity</td>
-                            <td>Date Price</td>
-                            <td>Value</td>
+                            <td>Price Per Share</td>
+                            <td>Initial Investment</td>
+                            <td>Date Purchased</td>
                         </tr>
                     </thead>
                     <tbody class="stock-body"></tbody>

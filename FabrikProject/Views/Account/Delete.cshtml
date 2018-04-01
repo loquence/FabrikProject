@@ -6,11 +6,22 @@
 
 
 
-    <h3>Really Delete: </h3>
-    <div class="col-md-8 col-md-offset-2">
-        @Html.DisplayFor(s => Model.AssetTicker)
-        @Html.DisplayFor(s => Model.DatePrice)
-    </div>
+    
+<div class="col-md-8 col-md-offset-2">
+    <h4>Really Delete: </h4>
+
+    @Html.LabelFor(s => Model.AssetName)
+    @Html.DisplayFor(s => Model.AssetName)
+
+    @Html.LabelFor(s => Model.AssetTicker)
+    @Html.DisplayFor(s => Model.AssetTicker)
+
+    @Html.LabelFor(s => Model.DatePurchased)
+    @Html.DisplayFor(s => Model.DatePurchased)
+
+    @Html.LabelFor(s => Model.InitialInvestment)
+    @Html.DisplayFor(s => Model.InitialInvestment)
+</div>
 
 <br />
 <br />

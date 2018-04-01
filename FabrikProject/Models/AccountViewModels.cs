@@ -137,12 +137,12 @@ namespace FabrikProject.Models
         */
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name ="Ticker")]
+        [Display(Name ="Asset Ticker")]
         public string AssetTicker { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name ="Asset")]
+        [Display(Name ="Asset Name")]
         public string AssetName { get; set; }
 
         [Required]
@@ -151,11 +151,15 @@ namespace FabrikProject.Models
 
         [Required]
         [Display(Name ="Date Purchased")]
-        public DateTime DatePrice { get; set; }
+        public DateTime DatePurchased { get; set; }
 
         [Required]
-        [Display(Name ="Original Value")]
-        public double PriceWhenBought { get; set; }
+        [Display(Name ="Initial Investment")]
+        public double InitialInvestment { get; set; }
+
+        [Required]
+        [Display(Name ="Share Price")]
+        public double SharePrice { get; set; }
     }
 
     public class UserStockViewModel
@@ -165,12 +169,14 @@ namespace FabrikProject.Models
         [Required]
         public int Quantity { get; set; }
         [Required]
-        public DateTime DatePrice { get; set; }
+        public DateTime DatePurchased { get; set; }
         [Required]
-        public double PriceWhenBought { get; set; }
+        public double InitialInvestment { get; set; }
         [Required]
         public string AssetName { get; set; }
-        
+        [Required]
+        public double SharePrice { get; set; }
+
     }
 
     public class Csv
