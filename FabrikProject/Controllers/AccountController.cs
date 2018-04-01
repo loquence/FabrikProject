@@ -182,7 +182,7 @@ namespace FabrikProject.Controllers
 
 
         [ChildActionOnly]
-        public ActionResult _LoginPartial()
+        public ActionResult _NamePartial()
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             var name = user.FirstName;
