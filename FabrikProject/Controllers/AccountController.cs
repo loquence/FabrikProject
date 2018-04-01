@@ -179,6 +179,16 @@ namespace FabrikProject.Controllers
             model = ReturnStockTable();
             return View( model);
         }
+
+
+        [ChildActionOnly]
+        public ActionResult _LoginPartial()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            var name = user.FirstName;
+            ViewBag.Name = name;
+            return PartialView();
+        }
         
         [HttpPost]
         [AllowAnonymous]
