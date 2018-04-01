@@ -1,5 +1,4 @@
-﻿@using FabrikProject.Models
-@model ApplicationUser
+﻿@using Microsoft.AspNet.Identity
 
 
 @if (Request.IsAuthenticated)
@@ -15,7 +14,7 @@
         @Html.AntiForgeryToken()
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Welcome" + Model.FirstName + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "navbar-brand" })
+                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "navbar-brand" })
             </li>
             <li><a class="navbar-brand" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
