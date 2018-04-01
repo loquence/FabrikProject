@@ -393,6 +393,20 @@ namespace FabrikProject.Controllers
             return View(stock);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
+        public async Task<ActionResult> Delete(UserStock model, FabrikProject.Models.ApplicationDbContext context)
+        {
+            if (!ModelState.IsValid)
+            {
+                var toDelete = context.UserStock.Find(model.ID);
+                context.UserStock.Remove(toDelete);
+                await context.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Index", "Home");
+        }
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]

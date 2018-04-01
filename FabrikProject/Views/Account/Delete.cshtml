@@ -10,33 +10,54 @@
 <div class="col-md-8 col-md-offset-2">
     <h4>Really Delete: </h4>
 
-    @Html.LabelFor(s => Model.AssetName)
-    @Html.DisplayFor(s => Model.AssetName)
-
-    @Html.LabelFor(s => Model.AssetTicker)
-    @Html.DisplayFor(s => Model.AssetTicker)
-
-    @Html.LabelFor(s => Model.DatePurchased)
-    @Html.DisplayFor(s => Model.DatePurchased)
-
-    @Html.LabelFor(s => Model.InitialInvestment)
-    @Html.DisplayFor(s => Model.InitialInvestment)
+    <div>
+        @Html.LabelFor(s => Model.AssetName):
+        @Html.DisplayFor(s => Model.AssetName)
+    </div>
+    <div>
+        @Html.LabelFor(s => Model.AssetTicker):
+        @Html.DisplayFor(s => Model.AssetTicker)
+    </div>
+    <div>
+        @Html.LabelFor(s => Model.Quantity):
+        @Html.DisplayFor(s => Model.Quantity)
+    </div>
+    <div>
+        @Html.LabelFor(s => Model.DatePurchased):
+        @Html.DisplayFor(s => Model.DatePurchased)
+    </div>
+    <div>
+        @Html.LabelFor(s => Model.InitialInvestment):
+        @Html.DisplayFor(s => Model.InitialInvestment)
+    </div>
+    <div>
+        @Html.LabelFor(s => Model.SharePrice):
+        @Html.DisplayFor(s => Model.SharePrice)
+    </div>
+    <div>
+        @Html.ActionLink("Cancel","Index","Home", new {@class="btn btn-success btn-xs" })
+        @using (Html.BeginForm("Delete","Account", new {@class="form-horizontal", role="form" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="submit" class="btn btn-danger btn-xs" />
+        }
+    </div>
 </div>
 
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
