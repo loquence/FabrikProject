@@ -39,7 +39,7 @@
         </table>
     </div>
     <div class="col-md-8">
-        <img src="~/Content/Images/portfolioOverview.png" />s
+        <img src="~/Content/Images/portfolioOverview.png" />
     </div>
 </div>
 
@@ -49,11 +49,17 @@
         <table class="table table-bordered table-responsive">
             <thead>
                 <tr class="active">
-                    <th>Stock</th>
+                    <th>Asset</th>
                     <th>Ticker</th>
                     <th>Quantity</th>
                     <th>Mkt Price</th>
+                    <th>Weight</th>
                     <th>Value</th>
+                    <th>Initial Investment</th>
+                    <th>Commissions</th>
+                    <th>Returns</th>
+                    <td>Date Purchased</td>
+                    <td>Actions</td>
                 </tr>
             </thead>
             <tbody>
@@ -63,11 +69,16 @@
                     <td>@Html.DisplayFor(modelItem => item.AssetName)</td>
                     <td>@Html.DisplayFor(modelItem => item.AssetTicker)</td>
                     <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
-                    <td>@Html.DisplayFor(modelItem => item.DatePurchased)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td>@Html.DisplayFor(modelItem => item.InitialInvestment)</td>
+                    <td>@Html.DisplayFor(s => item.Commissions)</td>
+                    <td></td>
+                    <td>@Html.DisplayFor(modelItem => item.DatePurchased)</td>
                     <td>
-                        @Html.ActionLink("Edit","Edit","Account", new { id = item.ID },null)
-                        @Html.ActionLink("Delete","Delete","Account", new { id = item.ID }, null)
+                        @Html.ActionLink("Edit", "Edit", "Account", new { id = item.ID }, null)
+                        @Html.ActionLink("Delete", "Delete", "Account", new { id = item.ID }, null)
                     </td>
                 </tr>
                 }

@@ -179,6 +179,16 @@ namespace FabrikProject.Controllers
             model = ReturnStockTable();
             return View( model);
         }
+
+
+        [ChildActionOnly]
+        public ActionResult _NamePartial()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            var name = user.FirstName;
+            ViewBag.Name = name;
+            return PartialView();
+        }
         
         [HttpPost]
         [AllowAnonymous]
@@ -190,7 +200,7 @@ namespace FabrikProject.Controllers
             {
                 foreach (var m in model)
                 {
-                    var stock = new UserStock { AssetName = m.AssetName, AssetTicker = m.AssetTicker, Email = User.Identity.GetUserName(), Quantity = m.Quantity, DatePurchased = m.DatePurchased, InitialInvestment = m.InitialInvestment, SharePrice = m.SharePrice };
+                    var stock = new UserStock { AssetName = m.AssetName, AssetTicker = m.AssetTicker, Email = User.Identity.GetUserName(), Quantity = m.Quantity, DatePurchased = m.DatePurchased, InitialInvestment = m.InitialInvestment, SharePrice = m.SharePrice, Commissions = m.Commissions };
                     context.UserStock.Add(stock);
                     await context.SaveChangesAsync();
                 }
