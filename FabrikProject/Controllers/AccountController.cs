@@ -200,7 +200,7 @@ namespace FabrikProject.Controllers
             {
                 foreach (var m in model)
                 {
-                    var stock = new UserStock { AssetName = m.AssetName, AssetTicker = m.AssetTicker, Email = User.Identity.GetUserName(), Quantity = m.Quantity, DatePurchased = m.DatePurchased, InitialInvestment = m.InitialInvestment, SharePrice = m.SharePrice };
+                    var stock = new UserStock { AssetName = m.AssetName, AssetTicker = m.AssetTicker, Email = User.Identity.GetUserName(), Quantity = m.Quantity, DatePurchased = m.DatePurchased, InitialInvestment = m.InitialInvestment, SharePrice = m.SharePrice, Commissions = m.Commissions };
                     context.UserStock.Add(stock);
                     await context.SaveChangesAsync();
                 }
