@@ -200,9 +200,19 @@ namespace FabrikProject.Models
         public UserStock userstock;
 
         [Required]
-        [Display(Name ="Market Value")]
+        [Display(Name ="Mkt Price")]
         [DataType(DataType.Currency)]
         public double CurrentPrice { get; set; }
+
+        [Required]
+        [Display(Name = "Value")]
+        [DataType(DataType.Currency)]
+        public double Value { get; set; }
+
+        [Required]
+        [Display(Name = "Returns")]
+        [DisplayFormat(DataFormatString = "{0:#,##0.000#}", ApplyFormatInEditMode = true)]
+        public double Returns { get; set; }
     }
 
     public class StockTableViewModel
@@ -211,17 +221,17 @@ namespace FabrikProject.Models
         public IEnumerable<StockViewModel> list;
 
         [Required]
-        [Display(Name ="Total Value")]
+        [Display(Name ="Value")]
         [DataType(DataType.Currency)]
         public double TotalValue { get; set; }
 
         [Required]
         [Display(Name ="Returns")]
-        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:#,##0.00#}", ApplyFormatInEditMode = true)]
         public double Returns { get; set; }
 
         [Required]
-        [Display(Name = "Returns")]
+        [Display(Name = "Initial Investment")]
         [DataType(DataType.Currency)]
         public double InitialInvestment { get; set; }
     }
