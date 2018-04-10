@@ -19,13 +19,13 @@
                 
                     @if (Model.Returns > 0)
                     {
-                    <td style="color:green">
+                    <td style="color:#00FF00">
                        + @Html.DisplayFor(m => Model.Returns, new { style = "color:green" })%
                     </td>
                     }
                     else
                     {
-                    <td style="color:red">
+                    <td style="color:#FF0000;">
                         @Html.DisplayFor(m => Model.Returns, new { style = "color:green" })%
                     </td>
                     }
@@ -84,14 +84,30 @@
                     <td>@Html.DisplayFor(modelItem => item.userstock.Quantity)</td>
                     <td>@Html.DisplayFor(modelItem => item.CurrentPrice)</td>
                     <td></td>
-                    <td>@Html.DisplayFor(modelItem =>item.Value)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Value)</td>
                     <td>@Html.DisplayFor(modelItem => item.userstock.InitialInvestment)</td>
                     <td>@Html.DisplayFor(s => item.userstock.Commissions)</td>
-                    <td>@Html.DisplayFor(s => item.Returns)</td>
+                    @if (item.Returns > 0)
+    {
+                <td style="color:#00FF00">
+                    @Html.DisplayFor(s => item.Returns)
+                </td>
+}
+else
+{
+                <td style="color:#FF0000">
+                    @Html.DisplayFor(s => item.Returns)
+                </td>
+}
                     <td>@Html.DisplayFor(modelItem => item.userstock.DatePurchased)</td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "Account", new { id = item.userstock.ID }, null)
-                        @Html.ActionLink("Delete", "Delete", "Account", new { id = item.userstock.ID }, null)
+                        <a href="/Account/Edit/@item.userstock.ID" class="btn btn-default">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                        <a href="/Account/Delete/@item.userstock.ID" class="btn btn-default">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+
                     </td>
                 </tr>
                 }
