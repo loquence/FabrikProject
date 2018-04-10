@@ -234,6 +234,10 @@ namespace FabrikProject.Models
         [Display(Name = "Initial Investment")]
         [DataType(DataType.Currency)]
         public double InitialInvestment { get; set; }
+
+        [Required]
+        [Display(Name ="Number of Assets")]
+        public int NumAssets { get; set; }
     }
 
     public class Csv

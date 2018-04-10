@@ -20,13 +20,13 @@
                     @if (Model.Returns > 0)
                     {
                     <td style="color:green">
-                        @Html.DisplayFor(m => Model.Returns, new { style = "color:green" })
+                       + @Html.DisplayFor(m => Model.Returns, new { style = "color:green" })%
                     </td>
                     }
                     else
                     {
                     <td style="color:red">
-                        @Html.DisplayFor(m => Model.Returns, new { style = "color:green" })
+                        @Html.DisplayFor(m => Model.Returns, new { style = "color:green" })%
                     </td>
                     }
 
@@ -44,7 +44,7 @@
                     Asset Count
                 </td>
                 <td>
-                    some number
+                    @Html.DisplayFor(m => Model.NumAssets)
                 </td>
             </tr>
         </table>

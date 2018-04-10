@@ -46,7 +46,7 @@ namespace FabrikProject.Controllers
         }
 
         [ChildActionOnly]
-        public async Task<ActionResult> _StockTable(FabrikProject.Models.ApplicationDbContext context)
+        public ActionResult _StockTable(FabrikProject.Models.ApplicationDbContext context)
         {
             var email = User.Identity.GetUserName();
             var list = context.UserStock.Where(r => r.Email == email).ToList();
@@ -55,22 +55,30 @@ namespace FabrikProject.Controllers
 
 
             double totalInitialInvestment = 0;
-            string apiKey = ConfigurationManager.AppSettings["AvapiKey"];
+            string apiKey = ConfigurationManager.AppSettings["StockKey"];
             string tickers= "";
-            string cryptos = "";
+            List<string> cryptos = new List<string>();
             string prev = "";
+            int size = SortedList.Count();
             foreach (var s in SortedList)
             {
                 totalInitialInvestment += s.InitialInvestment + s.Commissions;
                 if (prev.Equals(""))
                 {
-                    if (s.AssetType.Equals("Stock") || true)
+                    if (s.AssetType.Equals("Stock"))
                     {
-                        tickers = tickers + s.AssetTicker;
+                        if (tickers.Equals(""))
+                        {
+                            tickers = tickers + s.AssetTicker;
+                        }
+                        else
+                        {
+                            tickers =tickers +","+ s.AssetTicker;
+                        }
                     }
                     else
                     {
-                        cryptos = cryptos + s.AssetTicker;
+                        cryptos.Add(s.AssetTicker);
                     }
                 }
                 else
@@ -81,20 +89,27 @@ namespace FabrikProject.Controllers
                     }
                     else
                     {
-                        if (s.AssetType.Equals("Stock") || true)
+                        if (s.AssetType.Equals("Stock"))
                         {
-                            tickers = tickers + s.AssetTicker;
+                            if (tickers.Equals(""))
+                            {
+                                tickers = tickers + s.AssetTicker;
+                            }
+                            else
+                            {
+                                tickers = tickers + "," + s.AssetTicker;
+                            }
                         }
                         else
                         {
-                            cryptos = cryptos + s.AssetTicker;
+                            cryptos.Add(s.AssetTicker);
                         }
                     }
                 }
                 prev = s.AssetTicker;
             }
 
-            WebRequest request = WebRequest.Create("https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols=MSFT,FB,AAPL&apikey=demo");
+            WebRequest request = WebRequest.Create("https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols="+tickers+ "&apikey=BECFPZPO9R3JIDAN");
             request.Credentials = CredentialCache.DefaultCredentials;
             WebResponse response = request.GetResponse();
             Console.WriteLine(((HttpWebResponse)response).StatusDescription);
@@ -110,7 +125,7 @@ namespace FabrikProject.Controllers
             {
                 if (s.AssetType.Equals("Stock") || true)
                 {
-                    double currentprice = Convert.ToDouble(batchstock[0]["2. price"]);
+                    double currentprice = Convert.ToDouble(batchstock[count]["2. price"]);
                     double value = s.Quantity * currentprice;
                     totalVal += value;
                     double prereturns = value / (s.InitialInvestment + s.Commissions);
@@ -130,7 +145,7 @@ namespace FabrikProject.Controllers
             {
                 totalReturns = 0;
             }
-            StockTableViewModel allInfo = new StockTableViewModel { list = SortedStock, Returns = totalReturns, InitialInvestment = totalInitialInvestment, TotalValue = totalVal };
+            StockTableViewModel allInfo = new StockTableViewModel { list = SortedStock, Returns = totalReturns, InitialInvestment = totalInitialInvestment, TotalValue = totalVal, NumAssets =size  };
            
 
 
