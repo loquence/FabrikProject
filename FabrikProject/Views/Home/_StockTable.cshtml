@@ -1,5 +1,5 @@
 ﻿@using FabrikProject.Models
-@model IEnumerable<UserStock>
+@model StockTableViewModel
 
 <div class="row">
     <div class="col-md-4">
@@ -9,23 +9,34 @@
                     Total Value
                 </td>
                 <td>
-                    $390,000
+                    @Html.DisplayFor(m=>Model.TotalValue)
                 </td>
             </tr>
             <tr>
                 <td>
                     Returns
                 </td>
-                <td>
-                    + $5,000
-                </td>
-            </tr>
+                
+                    @if (Model.Returns > 0)
+                    {
+                    <td style="color:green">
+                        @Html.DisplayFor(m => Model.Returns, new { style = "color:green" })
+                    </td>
+                    }
+                    else
+                    {
+                    <td style="color:red">
+                        @Html.DisplayFor(m => Model.Returns, new { style = "color:green" })
+                    </td>
+                    }
+
+</tr>
             <tr>
                 <td>
                     Initial Investment
                 </td>
                 <td>
-                    $385,000
+                    @Html.DisplayFor(m => Model.InitialInvestment)
                 </td>
             </tr>
             <tr>
@@ -33,7 +44,7 @@
                     Asset Count
                 </td>
                 <td>
-                    3
+                    some number
                 </td>
             </tr>
         </table>
@@ -51,6 +62,7 @@
                 <tr class="active">
                     <th>Asset</th>
                     <th>Ticker</th>
+                    <th>Type</th>
                     <th>Quantity</th>
                     <th>Mkt Price</th>
                     <th>Weight</th>
@@ -58,27 +70,28 @@
                     <th>Initial Investment</th>
                     <th>Commissions</th>
                     <th>Returns</th>
-                    <td>Date Purchased</td>
-                    <td>Actions</td>
+                    <th>Date Purchased</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in Model.list)
                 {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.AssetName)</td>
-                    <td>@Html.DisplayFor(modelItem => item.AssetTicker)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                    <td>@Html.DisplayFor(modelItem => item.userstock.AssetName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.userstock.AssetTicker)</td>
+                    <td>@Html.DisplayFor(modelItem => item.userstock.AssetType)</td>
+                    <td>@Html.DisplayFor(modelItem => item.userstock.Quantity)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CurrentPrice)</td>
                     <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>@Html.DisplayFor(modelItem => item.InitialInvestment)</td>
-                    <td>@Html.DisplayFor(s => item.Commissions)</td>
-                    <td></td>
-                    <td>@Html.DisplayFor(modelItem => item.DatePurchased)</td>
+                    <td>@Html.DisplayFor(modelItem =>item.Value)</td>
+                    <td>@Html.DisplayFor(modelItem => item.userstock.InitialInvestment)</td>
+                    <td>@Html.DisplayFor(s => item.userstock.Commissions)</td>
+                    <td>@Html.DisplayFor(s => item.Returns)</td>
+                    <td>@Html.DisplayFor(modelItem => item.userstock.DatePurchased)</td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "Account", new { id = item.ID }, null)
-                        @Html.ActionLink("Delete", "Delete", "Account", new { id = item.ID }, null)
+                        @Html.ActionLink("Edit", "Edit", "Account", new { id = item.userstock.ID }, null)
+                        @Html.ActionLink("Delete", "Delete", "Account", new { id = item.userstock.ID }, null)
                     </td>
                 </tr>
                 }

@@ -146,6 +146,11 @@ namespace FabrikProject.Models
         public string AssetName { get; set; }
 
         [Required]
+        [DataType(DataType.Text)]
+        [Display(Name ="Asset Type")]
+        public string AssetType { get; set; }
+
+        [Required]
         [Display(Name = "Quantity")]
         public int Quantity { get; set; }
 
@@ -187,6 +192,48 @@ namespace FabrikProject.Models
         [Required]
         public double Commissions { get; set; }
 
+    }
+
+    public class StockViewModel
+    {
+        [Required]
+        public UserStock userstock;
+
+        [Required]
+        [Display(Name ="Mkt Price")]
+        [DataType(DataType.Currency)]
+        public double CurrentPrice { get; set; }
+
+        [Required]
+        [Display(Name = "Value")]
+        [DataType(DataType.Currency)]
+        public double Value { get; set; }
+
+        [Required]
+        [Display(Name = "Returns")]
+        [DisplayFormat(DataFormatString = "{0:#,##0.000#}", ApplyFormatInEditMode = true)]
+        public double Returns { get; set; }
+    }
+
+    public class StockTableViewModel
+    {
+        [Required]
+        public IEnumerable<StockViewModel> list;
+
+        [Required]
+        [Display(Name ="Value")]
+        [DataType(DataType.Currency)]
+        public double TotalValue { get; set; }
+
+        [Required]
+        [Display(Name ="Returns")]
+        [DisplayFormat(DataFormatString = "{0:#,##0.00#}", ApplyFormatInEditMode = true)]
+        public double Returns { get; set; }
+
+        [Required]
+        [Display(Name = "Initial Investment")]
+        [DataType(DataType.Currency)]
+        public double InitialInvestment { get; set; }
     }
 
     public class Csv

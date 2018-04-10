@@ -25,14 +25,6 @@ $(function () {
              stock = $(e.target).find("p").text();
          }
          var url = 'https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols=' + ticker + '&apikey=' + apiKey;
-         $.ajax({
-             url: url,
-             dataType: 'json',
-             contentType: "application/json",
-             success: function (data) {
-                 price = data['Stock Quotes']['0']['2. price'];
-                 console.log(price);
-                 console.log(data['Stock Quotes']['0']['2. price']);
                  var rand = Math.random();
                  var randNum = rand * 10000;
                  $(".stock-body").append("<tr>\n<td>" + stock + "</td>\n<td>" + ticker + "</td>\n<td class=\"custom-td\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">#</span>\n<input type=\"number\" class=\"form-control currency\" name=\"[" + numb
@@ -45,8 +37,7 @@ $(function () {
                      "].AssetName\" value=\"" + stock + "\" />");
                  numb++;
                  
-             }
-         });
+             
          
          
 
