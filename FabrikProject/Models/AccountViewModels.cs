@@ -213,31 +213,33 @@ namespace FabrikProject.Models
         [Display(Name = "Returns")]
         [DisplayFormat(DataFormatString = "{0:#,##0.000#}", ApplyFormatInEditMode = true)]
         public double Returns { get; set; }
+
+        [Required]
+        [Display(Name ="Weight")]
+        [DisplayFormat(DataFormatString = "{0:#,##0.000#}", ApplyFormatInEditMode = true)]
+        public double Weight { get; set; }
     }
 
     public class StockTableViewModel
     {
         [Required]
         public IEnumerable<StockViewModel> list;
+    }
+
+    public class PortfolioMeta
+    {
+        [Key]
+        [Required]
+        [Display(Name ="User Email")]
+        public string Email { get; set; }
 
         [Required]
-        [Display(Name ="Value")]
-        [DataType(DataType.Currency)]
-        public double TotalValue { get; set; }
+        [Display(Name ="Initial Investment")]
+        public double InitialInvestmen { get; set; }
 
         [Required]
-        [Display(Name ="Returns")]
-        [DisplayFormat(DataFormatString = "{0:#,##0.00#}", ApplyFormatInEditMode = true)]
-        public double Returns { get; set; }
-
-        [Required]
-        [Display(Name = "Initial Investment")]
-        [DataType(DataType.Currency)]
-        public double InitialInvestment { get; set; }
-
-        [Required]
-        [Display(Name ="Number of Assets")]
-        public int NumAssets { get; set; }
+        [Display(Name ="Total Assets")]
+        public int TotalAssets { get; set; }
     }
 
     public class Csv

@@ -1,80 +1,11 @@
 ﻿@using FabrikProject.Models
 @model StockTableViewModel
 
-<div class="row">
-    <div class="col-md-4">
-        <table class="table table-bordered table-responsive custom-table" style="border-width: medium;border-color:#565656;">
-            <tr>
-                <td>
-                    Total Value
-                </td>
-                <td>
-                    @Html.DisplayFor(m=>Model.TotalValue)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Returns
-                </td>
-                
-                    @if (Model.Returns > 0)
-                    {
-                    <td style="color:#00FF00">
-                       + @Html.DisplayFor(m => Model.Returns, new { style = "color:green" })%
-                    </td>
-                    }
-                    else
-                    {
-                    <td style="color:#FF0000;">
-                        @Html.DisplayFor(m => Model.Returns, new { style = "color:green" })%
-                    </td>
-                    }
-
-</tr>
-            <tr>
-                <td>
-                    Initial Investment
-                </td>
-                <td>
-                    @Html.DisplayFor(m => Model.InitialInvestment)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Asset Count
-                </td>
-                <td>
-                    @Html.DisplayFor(m => Model.NumAssets)
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class="col-md-8">
-        <img src="~/Content/Images/portfolioOverview.png" />
-    </div>
-</div>
 
 
-<div class="row">
-    <div class="col-md-12">
-        <table class="table table-bordered table-responsive">
-            <thead>
-                <tr class="active">
-                    <th>Asset</th>
-                    <th>Ticker</th>
-                    <th>Type</th>
-                    <th>Quantity</th>
-                    <th>Mkt Price</th>
-                    <th>Weight</th>
-                    <th>Value</th>
-                    <th>Initial Investment</th>
-                    <th>Commissions</th>
-                    <th>Returns</th>
-                    <th>Date Purchased</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
+
+
+          
                 @foreach (var item in Model.list)
                 {
                 <tr>
@@ -83,20 +14,20 @@
                     <td>@Html.DisplayFor(modelItem => item.userstock.AssetType)</td>
                     <td>@Html.DisplayFor(modelItem => item.userstock.Quantity)</td>
                     <td>@Html.DisplayFor(modelItem => item.CurrentPrice)</td>
-                    <td></td>
+                    <td>@Html.DisplayFor(modelItem=> item.Weight)%</td>
                     <td>@Html.DisplayFor(modelItem => item.Value)</td>
                     <td>@Html.DisplayFor(modelItem => item.userstock.InitialInvestment)</td>
                     <td>@Html.DisplayFor(s => item.userstock.Commissions)</td>
                     @if (item.Returns > 0)
     {
-                <td style="color:#00FF00">
-                    @Html.DisplayFor(s => item.Returns)
+                <td style="color:#55AE3A">
+                    +@Html.DisplayFor(s => item.Returns)%
                 </td>
 }
 else
 {
                 <td style="color:#FF0000">
-                    @Html.DisplayFor(s => item.Returns)
+                    @Html.DisplayFor(s => item.Returns)%
                 </td>
 }
                     <td>@Html.DisplayFor(modelItem => item.userstock.DatePurchased)</td>
@@ -111,13 +42,8 @@ else
                     </td>
                 </tr>
                 }
-            </tbody>
-        </table>
-    </div>
-</div>
+          
+       
 
-    
-<div class="col-md-2 col-md-offset-10">
-    @Html.ActionLink("Add Asset", "UserAddStock", "Account", null, new { @class = "btn btn-success btn-large" })
-</div>
+
 

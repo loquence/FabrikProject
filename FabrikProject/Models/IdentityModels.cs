@@ -37,7 +37,7 @@ namespace FabrikProject.Models
         }
 
         public DbSet<UserStock> UserStock { get; set; }
-
+        public DbSet<PortfolioMeta> PortfolioMeta { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

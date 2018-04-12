@@ -19,11 +19,18 @@ namespace FabrikProject.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(FabrikProject.Models.ApplicationDbContext context)
         {
-            return View();
+            
+            PortfolioMeta pm = context.PortfolioMeta.Find(User.Identity.GetUserName());
+            return View(pm);
         }
-
+        
+        [ChildActionOnly]
+        public PartialViewResult RegisterPartial()
+        {
+            return PartialView();
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -45,7 +52,7 @@ namespace FabrikProject.Controllers
             return View();
         }
 
-        [ChildActionOnly]
+        [AllowAnonymous]
         public ActionResult _StockTable(FabrikProject.Models.ApplicationDbContext context)
         {
             var email = User.Identity.GetUserName();
@@ -53,99 +60,22 @@ namespace FabrikProject.Controllers
             var SortedList = list.OrderBy(s => s.AssetTicker).ToList();
             List<StockViewModel> SortedStock = new List<StockViewModel>();
 
-
+            PortfolioMeta pm = context.PortfolioMeta.Find(email);
             double totalInitialInvestment = 0;
-            string apiKey = ConfigurationManager.AppSettings["StockKey"];
-            string tickers= "";
             List<string> cryptos = new List<string>();
-            string prev = "";
+            
             int size = SortedList.Count();
-            foreach (var s in SortedList)
-            {
-                totalInitialInvestment += s.InitialInvestment + s.Commissions;
-                if (prev.Equals(""))
-                {
-                    if (s.AssetType.Equals("Stock"))
-                    {
-                        if (tickers.Equals(""))
-                        {
-                            tickers = tickers + s.AssetTicker;
-                        }
-                        else
-                        {
-                            tickers =tickers +","+ s.AssetTicker;
-                        }
-                    }
-                    else
-                    {
-                        cryptos.Add(s.AssetTicker);
-                    }
-                }
-                else
-                {
-                    if (prev.Equals(s.AssetTicker))
-                    {
-
-                    }
-                    else
-                    {
-                        if (s.AssetType.Equals("Stock"))
-                        {
-                            if (tickers.Equals(""))
-                            {
-                                tickers = tickers + s.AssetTicker;
-                            }
-                            else
-                            {
-                                tickers = tickers + "," + s.AssetTicker;
-                            }
-                        }
-                        else
-                        {
-                            cryptos.Add(s.AssetTicker);
-                        }
-                    }
-                }
-                prev = s.AssetTicker;
-            }
-
-            WebRequest request = WebRequest.Create("https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols="+tickers+ "&apikey=BECFPZPO9R3JIDAN");
-            request.Credentials = CredentialCache.DefaultCredentials;
-            WebResponse response = request.GetResponse();
-            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-            Stream dataStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(dataStream);
-            var responseFromServer = reader.ReadToEnd();
-            var stock = JsonConvert.DeserializeObject<dynamic>(responseFromServer);
-            var batchstock = stock["Stock Quotes"];
-            int count = 0;
             double totalVal = 0;
-            double totalReturns = 0;
-            foreach (var s in SortedList)
-            {
-                if (s.AssetType.Equals("Stock") || true)
-                {
-                    double currentprice = Convert.ToDouble(batchstock[count]["2. price"]);
-                    double value = s.Quantity * currentprice;
-                    totalVal += value;
-                    double prereturns = value / (s.InitialInvestment + s.Commissions);
-                    double returns = (prereturns - 1) * 100;  
-                    StockViewModel model = new StockViewModel { CurrentPrice = currentprice, userstock = s, Value = value, Returns = returns };
-                    SortedStock.Add(model);
-                    count++;
-                }
-            }
 
-            double tPreReturns = (totalInitialInvestment > 0)? totalVal / totalInitialInvestment : 0;
-            if (tPreReturns > 0)
+            //string alphavantage = "https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols=" + tickers + "&apikey=BECFPZPO9R3JIDAN";
+            SortedStock = GetPrices(SortedList,ref totalVal);
+            
+            foreach (var s in SortedStock)
             {
-                totalReturns = (tPreReturns - 1) * 100; 
+                s.Weight = (s.Value / totalVal) * 100;
             }
-            else
-            {
-                totalReturns = 0;
-            }
-            StockTableViewModel allInfo = new StockTableViewModel { list = SortedStock, Returns = totalReturns, InitialInvestment = totalInitialInvestment, TotalValue = totalVal, NumAssets =size  };
+            
+            StockTableViewModel allInfo = new StockTableViewModel { list = SortedStock};
            
 
 
@@ -158,7 +88,87 @@ namespace FabrikProject.Controllers
             return PartialView(allInfo);
         }
 
-        
-        
+        public ActionResult TotalValue(FabrikProject.Models.ApplicationDbContext context)
+        {
+            string email = User.Identity.GetUserName();
+            var list = context.UserStock.Where(s => s.Email == email);
+            var SortedList = list.OrderBy(s => s.AssetTicker).ToList();
+            double ttv = 0;
+            var pricelist = GetPrices(SortedList,ref ttv);
+            ViewBag.TotalValue = ttv;
+            return PartialView();
+        }
+        public ActionResult Returns(FabrikProject.Models.ApplicationDbContext context)
+        {
+            string email = User.Identity.GetUserName();
+            var list = context.UserStock.Where(s => s.Email == email);
+            var portfolio = context.PortfolioMeta.Find(email);
+            var SortedList = list.OrderBy(s => s.AssetTicker).ToList();
+            double ttv = 0;
+            var pricelist = GetPrices(SortedList, ref ttv);
+            double returns = (ttv / portfolio.InitialInvestmen - 1) * 100;
+            ViewBag.Returns = returns;
+            return PartialView();
+        }
+
+
+        private List<StockViewModel> GetPrices(List<UserStock> list, ref double ttv)
+        {
+            WebRequest request;
+            List<StockViewModel> SortedStock = new List<StockViewModel>();
+
+            WebResponse response;
+            Stream dataStream;//= response.GetResponseStream();
+            StreamReader reader; //= new StreamReader(dataStream);
+
+            //var stock = JsonConvert.DeserializeObject<dynamic>(responseFromServer);
+            //var batchstock = stock["Stock Quotes"];
+            //int count = 0;
+            double totalVal = 0;
+            
+            foreach (var s in list)
+            {
+                if (s.AssetType.Equals("Stock", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    string IEX = "https://api.iextrading.com/1.0/stock/" + s.AssetTicker + "/price";
+                    request = WebRequest.Create(IEX);
+                    request.Credentials = CredentialCache.DefaultCredentials;
+                    response = request.GetResponse();
+                    dataStream = response.GetResponseStream();
+                    reader = new StreamReader(dataStream);
+                    var responseFromServer = reader.ReadToEnd();
+                    double currentprice = Convert.ToDouble(responseFromServer);
+                    double value = s.Quantity * currentprice;
+                    totalVal += value;
+                    double prereturns = value / (s.InitialInvestment + s.Commissions);
+                    double returns = (prereturns - 1) * 100;
+                    StockViewModel model = new StockViewModel { CurrentPrice = currentprice, userstock = s, Value = value, Returns = returns };
+                    SortedStock.Add(model);
+                    //count++;
+                }
+                if (s.AssetType.Equals("Crypto", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    string crypto = "https://min-api.cryptocompare.com/data/price?fsym=" + s.AssetTicker + "&tsyms=USD";
+                    request = WebRequest.Create(crypto);
+                    request.Credentials = CredentialCache.DefaultCredentials;
+                    response = request.GetResponse();
+                    dataStream = response.GetResponseStream();
+                    reader = new StreamReader(dataStream);
+                    var responseFromServer = reader.ReadToEnd();
+                    var cpt = JsonConvert.DeserializeObject<dynamic>(responseFromServer);
+                    var price = cpt["USD"];
+                    double currentprice = Convert.ToDouble(price);
+                    double value = s.Quantity * currentprice;
+                    totalVal += value;
+                    double prereturns = value / (s.InitialInvestment + s.Commissions);
+                    double returns = (prereturns - 1) * 100;
+                    StockViewModel model = new StockViewModel { CurrentPrice = currentprice, userstock = s, Value = value, Returns = returns };
+                    SortedStock.Add(model);
+                }
+            }
+            ttv = totalVal;
+            return SortedStock;
+
+        }
     }
 }

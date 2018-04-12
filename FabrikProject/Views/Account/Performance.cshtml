@@ -1,7 +1,55 @@
-﻿@{
+﻿@model List<FabrikProject.Models.UserStock>
+
+@{
     ViewBag.Title = "Performance";
 
 }
-<br />
-<img src="~/Content/Images/eachAssetReturns.png" />
-<img src="~/Content/Images/portfolioComposition.png" />
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr class="active">
+            <th>Asset</th>
+            <th>Ticker</th>
+            <th>Type</th>
+            <th>Quantity</th>
+            <th>Mkt Price</th>
+            <th>Weight</th>
+            <th>Value</th>
+            <th>Initial Investment</th>
+            <th>Commissions</th>
+            <th>Returns</th>
+            <th>Date Purchased</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody >
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.AssetName)</td>
+                <td>@Html.DisplayFor(modelItem => item.AssetTicker)</td>
+                <td>@Html.DisplayFor(modelItem => item.AssetType)</td>
+                <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@Html.DisplayFor(modelItem => item.InitialInvestment)</td>
+                <td>@Html.DisplayFor(s => item.Commissions)</td>
+                <td></td>
+                <td>@Html.DisplayFor(modelItem => item.DatePurchased)</td>
+                <td>
+                    <a href="/Account/Edit/@item.ID" class="btn btn-default">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                    <a href="/Account/Delete/@item.ID" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+        <br />
+        <img src="~/Content/Images/eachAssetReturns.png" />
+        <img src="~/Content/Images/portfolioComposition.png" />
