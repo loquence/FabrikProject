@@ -61,7 +61,7 @@ namespace FabrikProject.Controllers
             List<StockViewModel> SortedStock = new List<StockViewModel>();
 
             PortfolioMeta pm = context.PortfolioMeta.Find(email);
-            double totalInitialInvestment = 0;
+            
             List<string> cryptos = new List<string>();
             
             int size = SortedList.Count();
@@ -131,11 +131,19 @@ namespace FabrikProject.Controllers
                     cryptop += s.Value;
                 }
             }
-            var stocks = 0;
-            var cryptos = 0;
             return Json(new { stocks = stockp, cryptos = cryptop });
         }
 
+        public ActionResult PerformanceChartStacked(FabrikProject.Models.ApplicationDbContext context)
+        {
+            var email = User.Identity.GetUserName();
+            var list = context.UserStock.Where(s => s.Email == email);
+            var slist = list.OrderBy(s => s.AssetTicker).ToList();
+            double ttv = 0;
+            var pricelist = GetPricesStacked(slist, ref ttv);
+            
+            return Json(new { pricelist });
+        }
 
         private List<StockViewModel> GetPrices(List<UserStock> list, ref double ttv)
         {
@@ -188,6 +196,64 @@ namespace FabrikProject.Controllers
                     double prereturns = value / (s.InitialInvestment + s.Commissions);
                     double returns = (prereturns - 1) * 100;
                     StockViewModel model = new StockViewModel { CurrentPrice = currentprice, userstock = s, Value = value, Returns = returns };
+                    SortedStock.Add(model);
+                }
+            }
+            ttv = totalVal;
+            return SortedStock;
+
+        }
+        private List<StackedChartReturn> GetPricesStacked(List<UserStock> list, ref double ttv)
+        {
+            WebRequest request;
+            List<StackedChartReturn> SortedStock = new List<StackedChartReturn>();
+
+            WebResponse response;
+            Stream dataStream;//= response.GetResponseStream();
+            StreamReader reader; //= new StreamReader(dataStream);
+
+            //var stock = JsonConvert.DeserializeObject<dynamic>(responseFromServer);
+            //var batchstock = stock["Stock Quotes"];
+            //int count = 0;
+            double totalVal = 0;
+
+            foreach (var s in list)
+            {
+                if (s.AssetType.Equals("Stock", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    string IEX = "https://api.iextrading.com/1.0/stock/" + s.AssetTicker + "/price";
+                    request = WebRequest.Create(IEX);
+                    request.Credentials = CredentialCache.DefaultCredentials;
+                    response = request.GetResponse();
+                    dataStream = response.GetResponseStream();
+                    reader = new StreamReader(dataStream);
+                    var responseFromServer = reader.ReadToEnd();
+                    double currentprice = Convert.ToDouble(responseFromServer);
+                    double value = s.Quantity * currentprice;
+                    totalVal += value;
+                    double prereturns = value / (s.InitialInvestment + s.Commissions);
+                    double returns = (prereturns - 1) * 100;
+                    StackedChartReturn model = new StackedChartReturn { Value = value, AssetName = s.AssetName };
+                    SortedStock.Add(model);
+                    //count++;
+                }
+                if (s.AssetType.Equals("Crypto", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    string crypto = "https://min-api.cryptocompare.com/data/price?fsym=" + s.AssetTicker + "&tsyms=USD";
+                    request = WebRequest.Create(crypto);
+                    request.Credentials = CredentialCache.DefaultCredentials;
+                    response = request.GetResponse();
+                    dataStream = response.GetResponseStream();
+                    reader = new StreamReader(dataStream);
+                    var responseFromServer = reader.ReadToEnd();
+                    var cpt = JsonConvert.DeserializeObject<dynamic>(responseFromServer);
+                    var price = cpt["USD"];
+                    double currentprice = Convert.ToDouble(price);
+                    double value = s.Quantity * currentprice;
+                    totalVal += value;
+                    double prereturns = value / (s.InitialInvestment + s.Commissions);
+                    double returns = (prereturns - 1) * 100;
+                    StackedChartReturn model = new StackedChartReturn { Value = value, AssetName = s.AssetName };
                     SortedStock.Add(model);
                 }
             }
