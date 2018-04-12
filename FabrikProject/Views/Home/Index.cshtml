@@ -45,7 +45,7 @@
             </table>
         </div>
         <div class="col-md-8">
-            <img src="~/Content/Images/portfolioOverview.png" />
+            <div id="donutchart" style="width: 900px; height: 400px;"></div>
         </div>
     </div>
     <div class="row">
@@ -91,7 +91,28 @@
     <br />
     <br />
     <br />
+    <script type="text/javascript">
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            $.post("/Home/Chart", function (data) {
+                var options = {
+                    title: 'My Portfolio',
+                    pieHole: 0.4,
+                    colors: ['#A3D977','#556B2F']
+                };
+                console.log(data);
+                var datas = google.visualization.arrayToDataTable([
+                    ['Assets', 'Asset Value'],
+                    ['Stocks', data['stocks']],
+                    ['Cryptos', data['cryptos']]]);
+                var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+                chart.draw(datas, options);
+            });
 
+            
+        }
+    </script>
 }
 else
 {

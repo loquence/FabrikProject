@@ -251,10 +251,17 @@ namespace FabrikProject.Models
         [Required]
         public string AssetType { get; set; }
     }
+    public class StackedChartReturn
+    {
+        [Required]
+        public string AssetName { get; set; }
+        [Required]
+        public double Value { get; set; }
+    }
 
- 
 
 
 
-   
+
+
 }
