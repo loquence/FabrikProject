@@ -1,0 +1,14 @@
+﻿
+@if (ViewBag.Returns > 0)
+{
+    <div style="color:#55AE3A">
+        + @(((decimal)ViewBag.Returns).ToString("C2"))%
+    </div>
+}
+else
+{
+    <div style="color:#FF0000">
+        @(((decimal)ViewBag.Returns).ToString("C2"))%
+    </div>
+
+}

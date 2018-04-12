@@ -322,6 +322,10 @@
     <Content Include="Views\Account\Delete.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Shared\_NamePartial.cshtml" />
+    <Content Include="Views\Home\RegisterPartial.cshtml" />
+    <Content Include="Views\Account\StockList.cshtml" />
+    <Content Include="Views\Home\TotalValue.cshtml" />
+    <Content Include="Views\Home\Returns.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />

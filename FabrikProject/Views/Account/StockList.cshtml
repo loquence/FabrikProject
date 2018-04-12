@@ -1,0 +1,12 @@
+﻿@using FabrikProject.Models
+@model List<Csv>
+<ul class="list-group stock" id="myList" style="border-width: medium;border-color:#565656;">
+    @foreach (var item in Model)
+    {
+        <li class="list-group-item" onclick="addToTable(this)">
+            <h4 class="list-group-item-heading" >@Html.DisplayFor(modelItem => item.AssetTicker)</h4>
+            <p class="list-group-item-text" >@Html.DisplayFor(modelItem => item.AssetType) - @Html.DisplayFor(modelItem => item.AssetName)</p>
+        </li>
+    }
+
+</ul>

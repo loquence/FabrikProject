@@ -67,7 +67,7 @@ namespace FabrikProject.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl, FabrikProject.Models.ApplicationDbContext context)
         {
             if (!ModelState.IsValid)
             {
@@ -80,7 +80,31 @@ namespace FabrikProject.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    {
+                        var portfolio = context.PortfolioMeta.Find(model.Email);
+                        var list = context.UserStock.Where(r => r.Email == model.Email).ToList();
+                        double II = 0;
+                        foreach (var s in list)
+                        {
+                            II += s.InitialInvestment;
+                        }
+                        int size = list.Count();
+                        if (portfolio == null)
+                        {
+                            PortfolioMeta pm = new PortfolioMeta { Email = model.Email, InitialInvestmen = II, TotalAssets = size };
+                            context.PortfolioMeta.Add(pm);
+                        }
+                        else
+                        {
+                            var p = context.PortfolioMeta.Find(model.Email);
+                            p.InitialInvestmen = II;
+                            p.TotalAssets = size;
+                        }
+                        await context.SaveChangesAsync();
+                        
+                       
+                        return RedirectToLocal(returnUrl);
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -148,7 +172,7 @@ namespace FabrikProject.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, FabrikProject.Models.ApplicationDbContext context)
         {
             if (ModelState.IsValid)
             {
@@ -157,7 +181,8 @@ namespace FabrikProject.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    PortfolioMeta pm = new PortfolioMeta { Email = model.Email, InitialInvestmen = 0, TotalAssets = 0 };
+                    context.PortfolioMeta.Add(pm);
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -175,9 +200,16 @@ namespace FabrikProject.Controllers
         [AllowAnonymous]
         public ActionResult UserAddStock()
         {
+            
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult StockList()
+        {
             List<Csv> model = new List<Csv>();
             model = ReturnStockTable();
-            return View( model);
+            return PartialView(model);
         }
 
 
@@ -452,11 +484,14 @@ namespace FabrikProject.Controllers
 
         
         [AllowAnonymous]
-        public ActionResult Performance()
+        public ActionResult Performance(FabrikProject.Models.ApplicationDbContext context)
         {
             if (User.Identity.IsAuthenticated)
             {
-                return View();
+                var email = User.Identity.GetUserName();
+                var list = context.UserStock.Where(r => r.Email == email).ToList();
+                var SortedList = list.OrderBy(s => s.AssetTicker).ToList();
+                return View(SortedList);
             }
             else
             {
