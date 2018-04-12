@@ -111,6 +111,31 @@ namespace FabrikProject.Controllers
             return PartialView();
         }
 
+        public ActionResult Chart(FabrikProject.Models.ApplicationDbContext context)
+        {
+            var email = User.Identity.GetUserName();
+            var list = context.UserStock.Where(s => s.Email == email);
+            var slist = list.OrderBy(s => s.AssetTicker).ToList();
+            double ttv = 0;
+            var pricelist = GetPrices(slist, ref ttv);
+            double stockp = 0;
+            double cryptop = 0;
+            foreach(var s in pricelist)
+            {
+                if(s.userstock.AssetType.Equals("Stock", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    stockp += s.Value;
+                }
+                else
+                {
+                    cryptop += s.Value;
+                }
+            }
+            var stocks = 0;
+            var cryptos = 0;
+            return Json(new { stocks = stockp, cryptos = cryptop });
+        }
+
 
         private List<StockViewModel> GetPrices(List<UserStock> list, ref double ttv)
         {
