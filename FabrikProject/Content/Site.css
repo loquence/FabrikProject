@@ -104,3 +104,51 @@ a:hover, a:focus {
 .custom-td-cm {
     width:18%;
 }
+
+.dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #674aa5;
+    position: relative;
+    margin: auto;
+}
+
+.dot-inner {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background-color: #362a61;
+    border: 5px solid #0a0b21;
+}
+
+.line {
+    height: 115px;
+    width: 3px;
+    text-align: center;
+    margin: auto;
+    background-color: #674aa5;
+}
+
+.roadmap-header{
+    text-align:center
+}
+
+.left {
+    position:absolute;
+    text-align: right;
+    margin-right: 53%;
+    width: 70%;
+    right: 0; 
+    padding-left: 25px;
+}
+
+.right {
+    position:absolute;
+    text-align:left;
+    margin-left:53%;
+    width:70%;
+    left:0;
+    padding-right:25px;
+}
