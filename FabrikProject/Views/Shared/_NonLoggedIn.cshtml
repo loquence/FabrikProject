@@ -6,10 +6,10 @@
         @Html.AntiForgeryToken()
         
     <div class="form-group">
-        @Html.TextBoxFor(m => Model.Email, new { @class = "form-control", style="display:inline;" })
+        @Html.TextBoxFor(m => Model.Email, new { @class = "form-control", style="display:inline;", placeholder = "Email" })
     </div>
     <div class="form-group">
-        @Html.PasswordFor(m => Model.Password, new { @class = "form-control", style = "display:inline;" })
+        @Html.PasswordFor(m => Model.Password, new { @class = "form-control", style = "display:inline;", placeholder="Password" })
     </div>
     <input type="submit" value="Log in" class="btn btn-default navbar-right" />   
     }

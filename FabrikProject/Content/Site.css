@@ -104,3 +104,11 @@ a:hover, a:focus {
 .custom-td-cm {
     width:18%;
 }
+
+.signup-input {
+    max-width:100% !important;
+}
+.signup-button {
+    width:400px !important;
+    font-size:22px;
+}
