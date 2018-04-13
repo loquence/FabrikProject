@@ -104,7 +104,14 @@ a:hover, a:focus {
 .custom-td-cm {
     width:18%;
 }
+.signup-input {
+    max-width: 100% !important;
+}
 
+.signup-button {
+    width: 400px !important;
+    font-size: 22px;
+}
 .dot {
     width: 40px;
     height: 40px;
@@ -131,24 +138,24 @@ a:hover, a:focus {
     background-color: #674aa5;
 }
 
-.roadmap-header{
-    text-align:center
+.roadmap-header {
+    text-align: center
 }
 
 .left {
-    position:absolute;
+    position: absolute;
     text-align: right;
     margin-right: 53%;
     width: 70%;
-    right: 0; 
+    right: 0;
     padding-left: 25px;
 }
 
 .right {
-    position:absolute;
-    text-align:left;
-    margin-left:53%;
-    width:70%;
-    left:0;
-    padding-right:25px;
+    position: absolute;
+    text-align: left;
+    margin-left: 53%;
+    width: 70%;
+    left: 0;
+    padding-right: 25px;
 }
