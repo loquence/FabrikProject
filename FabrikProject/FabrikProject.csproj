@@ -255,6 +255,8 @@
     <Content Include="Content\Images\eLogo.png" />
     <Content Include="Content\Images\eLogo2.png" />
     <Content Include="Content\Images\logo2.png" />
+    <Content Include="Content\Images\logo.svg" />
+    <Content Include="Content\Images\minorlogo.svg" />
     <Content Include="Content\Images\portfolioComposition.png" />
     <Content Include="Content\Images\portfolioOverview.png" />
     <Content Include="favicon.ico" />

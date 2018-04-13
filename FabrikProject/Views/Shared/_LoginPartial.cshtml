@@ -1,15 +1,35 @@
 ﻿@using FabrikProject.Models
-
+@{ 
+    var controller = (ViewContext.RouteData.Values["controller"] ?? "").ToString().ToLower();
+}
 
 
 @if (Request.IsAuthenticated)
 {
     
-    <ul class="nav navbar-nav">
+<ul class="nav navbar-nav">
+
+    @if (controller == "home")
+    {
+        <li class="active">
+            @Html.ActionLink("Home", "Index", "Home")
+        </li>
         <li>
             @Html.ActionLink("Performance", "Performance", "Account")
         </li>
-    </ul>
+    }
+    else if (controller == "account")
+    {
+        <li>
+            @Html.ActionLink("Home", "Index", "Home")
+        </li>
+        <li class="active">
+            @Html.ActionLink("Performance", "Performance", "Account")
+        </li>
+    }
+
+
+</ul>
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()

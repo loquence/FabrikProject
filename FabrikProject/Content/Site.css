@@ -37,10 +37,15 @@ textarea {
     
 }
 
-a:hover, a:focus {
-    background-color: #A3D977;
-    color: white;
+.navbar-inverse .navbar-nav > .active > a {
+    background-color:#A9A9A9;
 }
+
+
+    .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+        background-color: #556B2F;
+    }
+
 
 .div-custom {
     text-align: center;
