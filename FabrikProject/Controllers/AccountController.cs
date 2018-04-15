@@ -246,6 +246,22 @@ namespace FabrikProject.Controllers
             return View("Home");
             
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search(FabrikProject.Models.ApplicationDbContext context)
+        {
+            string search = Request.Form["search"];
+            var list = ReturnStockTable();
+            List<Models.Csv> slist = new List<Models.Csv>();
+            foreach(var k in list)
+            {
+                if (k.AssetName.Contains(search))
+                {
+                    slist.Add(k);
+                }
+            }
+            return Json(new { slist });
+        }
 
         private List<Models.Csv> ReturnStockTable()
         {

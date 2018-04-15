@@ -1,42 +1,54 @@
 ﻿@using FabrikProject.Models
-@{ 
-    var controller = (ViewContext.RouteData.Values["controller"] ?? "").ToString().ToLower();
+@{ #line 2 "C:\Users\ryand\source\repos\FabrikProject\FabrikProject\Views\Shared\_LoginPartial.cshtml"
+                /**/
+
+                var controller = (ViewContext.RouteData.Values["controller"] ?? "").ToString().ToLower();
 }
 
 
 @if (Request.IsAuthenticated)
 {
-    
-<ul class="nav navbar-nav">
 
-    @if (controller == "home")
+    <ul class="nav navbar-nav">
+
+        @if (controller == "home")
+        {
+            <li class="active">
+                @Html.ActionLink("Home", "Index", "Home")
+            </li>
+            <li>
+                @Html.ActionLink("Performance", "Performance", "Account")
+            </li>
+        }
+        else if (controller == "account")
+        {
+            <li>
+                @Html.ActionLink("Home", "Index", "Home")
+            </li>
+            <li class="active">
+                @Html.ActionLink("Performance", "Performance", "Account")
+            </li>
+        }
+    </ul>
+    using (Html.BeginForm("Search", "Account", FormMethod.Post, new { id = "searchform", @class = "navbar-form navbar-left" }))
     {
-        <li class="active">
-            @Html.ActionLink("Home", "Index", "Home")
-        </li>
-        <li>
-            @Html.ActionLink("Performance", "Performance", "Account")
-        </li>
+        @Html.AntiForgeryToken()
+    <div class="input-group">
+        <input type="text" class="form-control" name="search" id="search" placeholder="Search" />
+        <div class="input-group-btn">
+            <button class="btn btn-default" onclick="searchStocks()">
+                <i class="glyphicon glyphicon-search"></i>
+            </button>
+        </div>
+    </div>
     }
-    else if (controller == "account")
-    {
-        <li>
-            @Html.ActionLink("Home", "Index", "Home")
-        </li>
-        <li class="active">
-            @Html.ActionLink("Performance", "Performance", "Account")
-        </li>
-    }
-
-
-</ul>
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
         <ul class="nav navbar-nav navbar-right">
             <li>
-                
-                @Html.Action("_NamePartial","Account")
+
+                @Html.Action("_NamePartial", "Account")
             </li>
             <li><a class="navbar-brand" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>

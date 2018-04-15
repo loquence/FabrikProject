@@ -87,6 +87,7 @@ namespace FabrikProject.Controllers
             }
             return PartialView(allInfo);
         }
+        
 
         public ActionResult TotalValue(FabrikProject.Models.ApplicationDbContext context)
         {

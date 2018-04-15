@@ -1,8 +1,21 @@
 ﻿var numb = 0;
 var apiKey = 'BECFPZPO9R3JIDAN';
 $(function () {
+    var search = $('#searchform');
+    search.submit(function (e) {
+        e.preventDefault();
 
-    $('#defaultOpen').click();
+        $.ajax({
+            type: search.attr('method'),
+            url: search.attr('action'),
+            data: search.serialize(),
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    });
+
+     $('#defaultOpen').click();
 
      $("#myInput").on("keyup", function () {
             var value = $(this).val().toLowerCase();
@@ -61,6 +74,19 @@ $(function () {
 
 
 });
+
+function searchStocks(e) {
+    
+    var search = $('#searchform');
+    $.ajax({
+        type: search.attr('method'),
+        url: search.attr('action'),
+        data: search.serialize(),
+        success: function (data) {
+            
+        }
+    });
+}
 
 function addToTable(e) {
     //var check = $(e.target).parent();
