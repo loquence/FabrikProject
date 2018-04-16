@@ -5,44 +5,49 @@ $(function () {
     var search = $('#searchform');
     search.on("keyup",function (e) {
         e.preventDefault();
+        var x = $('#search-input').val();
+        
+        if (x == "") {
+            $('.autocomplete-items').empty();
+        }
+        
+        else {
+            $.ajax({
+                type: search.attr('method'),
+                url: search.attr('action'),
+                data: search.serialize(),
+                success: function (data) {
 
-        $.ajax({
-            type: search.attr('method'),
-            url: search.attr('action'),
-            data: search.serialize(),
-            success: function (data) {
-                console.log(data);
-                var datalist = $('#json-datalist');
-                var val1 = data["String"];
-                var val2 = data["slist"];
-                
-                if (drew == false) {
-                    
-                    drew = true;
-                    $('#res').on("click", "li", function () {
 
-                    });
-                }
-                else {
-                    datalist.empty();
-                }
-                if (val1 != null) {
-                    datalist.empty();
-                    console.log(val1);
-                    datalist.append('<option value="' + val1 + '...">');
-                }
-                else {
-                    datalist.empty();
-                    for (var i = 0; i < val2.length; i++) {
-                        
-                        datalist.append('<option value="' + val2[i]['AssetName'] + ' ' + val2[i]['AssetTicker']+ '">');
+                    var val1 = data["String"];
+                    var val2 = data["slist"];
+                    $('.autocomplete-items').empty();
+
+
+
+
+                    if (val1 != null) {
+                        /* datalist.empty();
+                         console.log(val1);
+                         datalist.append('<option value="' + val1 + '...">');*/
+                        $('.autocomplete-items').empty();
+
+                        $('.autocomplete-items').append("<div>narrow your search</div>");
                     }
-                    
-                }
+                    else {
+                        $('.autocomplete-items').empty();
+                        for (var i = 0; i < val2.length; i++) {
 
-                
-            }
-        });
+                            $('.autocomplete-items').append('<div>' + val2[i]["AssetName"] + ' - ' + val2[i]["AssetTicker"] + '</div>');
+                        }
+
+                    }
+
+
+                }
+            });
+        }
+        
     });
 
      $('#defaultOpen').click();
@@ -106,18 +111,6 @@ $(function () {
 
 });
 
-function searchStocks(e) {
-    
-    var search = $('#searchform');
-    $.ajax({
-        type: search.attr('method'),
-        url: search.attr('action'),
-        data: search.serialize(),
-        success: function (data) {
-            
-        }
-    });
-}
 
 function addToTable(e) {
     //var check = $(e.target).parent();

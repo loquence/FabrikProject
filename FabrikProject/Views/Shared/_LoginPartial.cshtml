@@ -30,17 +30,17 @@
             </li>
         }
     </ul>
-    using (Html.BeginForm("Search", "Account", FormMethod.Post, new { id = "searchform", @class = "navbar-form navbar-left col-md-8" }))
+    using (Html.BeginForm("Search", "Account", FormMethod.Post, new { id = "searchform", @class = "navbar-form navbar-left", autocomplete="off", autofocus="autofocus" }))
     {
         @Html.AntiForgeryToken()
-    <div class="form-group" style="display:inline;">
-        <div class="input-group" style="display:table;">
-            <input type="text" class="form-control" name="search" id="searchform" placeholder="Search" list="json-datalist" autocomplete="off" autofocus="autofocus"/>
-            <datalist id="json-datalist"></datalist>
-            <div class="input-group-btn">
-                <button class="btn btn-default" onclick="searchStocks()">
-                    <i class="glyphicon glyphicon-search"></i>
-                </button>
+    <div class="form-group" style="display:inline">
+        <div class="input-group autocomplete" style="display:table">
+            <span class="input-group-addon" style=""><span class="glyphicon glyphicon-search"></span></span>
+            <input type="text" class="form-control" name="search" id="search-input" placeholder="Search" list="json-datalist" style="width:500px" />
+
+
+            <div class="autocomplete-items" style="overflow-y:scroll; max-height:280px; text-align:center;">
+
             </div>
         </div>
     </div>
