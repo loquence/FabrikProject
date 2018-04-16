@@ -1,8 +1,9 @@
 ﻿var numb = 0;
 var apiKey = 'BECFPZPO9R3JIDAN';
 $(function () {
+    var drew = false;
     var search = $('#searchform');
-    search.submit(function (e) {
+    search.on("keyup",function (e) {
         e.preventDefault();
 
         $.ajax({
@@ -11,6 +12,35 @@ $(function () {
             data: search.serialize(),
             success: function (data) {
                 console.log(data);
+                var datalist = $('#json-datalist');
+                var val1 = data["String"];
+                var val2 = data["slist"];
+                
+                if (drew == false) {
+                    
+                    drew = true;
+                    $('#res').on("click", "li", function () {
+
+                    });
+                }
+                else {
+                    datalist.empty();
+                }
+                if (val1 != null) {
+                    datalist.empty();
+                    console.log(val1);
+                    datalist.append('<option value="' + val1 + '...">');
+                }
+                else {
+                    datalist.empty();
+                    for (var i = 0; i < val2.length; i++) {
+                        
+                        datalist.append('<option value="' + val2[i]['AssetName'] + ' ' + val2[i]['AssetTicker']+ '">');
+                    }
+                    
+                }
+
+                
             }
         });
     });
@@ -23,6 +53,7 @@ $(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
             });
      });
+    
 
      $(".stock li").click(function (e) {
          var check = $(e.target).parent();

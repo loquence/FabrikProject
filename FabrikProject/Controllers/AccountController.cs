@@ -250,15 +250,22 @@ namespace FabrikProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Search(FabrikProject.Models.ApplicationDbContext context)
         {
-            string search = Request.Form["search"];
+            string search = Request.Form["search"].ToLower();
             var list = ReturnStockTable();
             List<Models.Csv> slist = new List<Models.Csv>();
             foreach(var k in list)
             {
-                if (k.AssetName.Contains(search))
+                string name = k.AssetName.ToLower();
+                string ticker = k.AssetTicker.ToLower();
+                if (k.AssetName.StartsWith(search,StringComparison.OrdinalIgnoreCase) || k.AssetTicker.StartsWith(search,StringComparison.OrdinalIgnoreCase))
                 {
                     slist.Add(k);
                 }
+            }
+            if (slist.Count() > 100)
+            {
+                return Json(new { String ="narrow your search" });
+
             }
             return Json(new { slist });
         }
