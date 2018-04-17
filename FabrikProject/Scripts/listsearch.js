@@ -7,7 +7,7 @@ $(function () {
         e.preventDefault();
         var x = $('#search-input').val();
         
-        if (x === "") {
+        if (x == "") {
             $('.autocomplete-items').empty();
         }
         
@@ -26,7 +26,7 @@ $(function () {
 
 
 
-                    if (val1 !== null) {
+                    if (val1 != null) {
                         /* datalist.empty();
                          console.log(val1);
                          datalist.append('<option value="' + val1 + '...">');*/
@@ -38,7 +38,7 @@ $(function () {
                         $('.autocomplete-items').empty();
                         for (var i = 0; i < val2.length; i++) {
 
-                            $('.autocomplete-items').append('<div>' + val2[i]["AssetName"] + ' - ' + val2[i]["AssetTicker"] + '</div>');
+                            $('.autocomplete-items').append('<div><a href="/Account/AddStock/assetticker='+ val2[i]['AssetTicker']+'">' + val2[i]["AssetName"] + ' - ' + val2[i]["AssetTicker"] + '</a></div>');
                         }
 
                     }

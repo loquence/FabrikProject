@@ -1,0 +1,12 @@
+﻿<div class="container">
+    <div class="col-md-8">
+        The Chart will go here
+    </div>
+    <div class="col-md-4">
+        @using(Html.BeginForm("AddStock","Account", FormMethod.Post, new { @class = "form-control" }))
+        {
+            @Html.AntiForgeryToken();
+            <h4>Buy @ViewBag.Ticker</h4>
+        }
+    </div>
+</div>
