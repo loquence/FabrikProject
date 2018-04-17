@@ -249,6 +249,10 @@
     <None Include="App_Data\apiKeys.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="App_Data\aspnet-FabrikProject-20180320125721.mdf" />
+    <Content Include="App_Data\aspnet-FabrikProject-20180320125721_log.ldf">
+      <DependentUpon>aspnet-FabrikProject-20180320125721.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\eachAssetReturns.png" />
@@ -282,6 +286,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Views\Home\TestAPI.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -372,7 +377,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53847</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
