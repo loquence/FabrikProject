@@ -107,7 +107,16 @@ namespace FabrikProject.Controllers
             var SortedList = list.OrderBy(s => s.AssetTicker).ToList();
             double ttv = 0;
             var pricelist = GetPrices(SortedList, ref ttv);
-            double returns = (ttv / portfolio.InitialInvestmen - 1) * 100;
+            double returns;
+            if (portfolio.InitialInvestmen == 0)
+            {
+                returns = 0;
+            }
+            else
+            {
+                returns = (ttv / portfolio.InitialInvestmen - 1) * 100;
+            }
+           
             ViewBag.Returns = returns;
             return PartialView();
         }
