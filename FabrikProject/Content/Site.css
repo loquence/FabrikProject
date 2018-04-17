@@ -24,20 +24,32 @@ textarea {
 }
 
 .navbar-custom {
-    /*background-color: #A3D977;*/
-    border-color:black;
-}
-.navbar-brand {
-    color: black;
-    font-size: 22px;
-    font-family: 'Facebook Letter Faces';
+    background-color: #A3D977;
 }
 
+.nav > li > a {
+    background-color: #A3D977;
+}
+
+.navbar-brand {
+
+    color: black;
+    
+}
+
+.navbar-inverse .navbar-nav > .active > a {
+    background-color:#A9A9A9;
+}
+
+
+    .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+        background-color: #556B2F;
+    }
 
 
 .div-custom {
-    text-align:center;
-    vertical-align:middle;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .homepageImg {
@@ -45,5 +57,137 @@ textarea {
 }
 
 
+.table tbody > tr > td  {
+    text-align:center;
+    vertical-align:middle !important;
+}
 
 
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.title {
+    color: grey;
+}
+
+.column {
+    float: left;
+    width: 33.3%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: black;
+}
+
+.navbar-inverse .navbar-brand {
+    color:black;
+}
+
+
+.table > td,
+.table > th {
+    white-space: nowrap;
+    width: 1%;
+}
+
+.custom-table-div {
+    
+    float:right;
+}
+
+.custom-td {
+    width:15%;
+
+}
+
+.custom-td-pps {
+    width:18%;
+}
+
+.custom-td-cm {
+    width:18%;
+}
+.signup-input {
+    max-width: 100% !important;
+}
+
+.signup-button {
+    width: 400px !important;
+    font-size: 22px;
+}
+.dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #a9a9a9;
+    position: relative;
+    margin: auto;
+}
+
+.dot-inner {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background-color: #a9a9a9;
+    border: 5px solid #a9a9a9;
+}
+
+.line {
+    height: 200px;
+    width: 3px;
+    text-align: center;
+    margin: auto;
+    background-color: #a9a9a9;
+}
+
+.roadmap-header {
+    text-align: center
+}
+
+.left {
+    position: absolute;
+    text-align: right;
+    margin-right: 53%;
+    width: 70%;
+    right: 0;
+    padding-left: 25px;
+}
+
+.right {
+    position: absolute;
+    text-align: left;
+    margin-left: 53%;
+    width: 70%;
+    left: 0;
+    padding-right: 25px;
+}
+
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+    .autocomplete-items div {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #fff;
+        border-bottom: 1px solid #d4d4d4;
+    }
+.autocomplete-items div:hover {
+            /*when hovering an item:*/
+            background-color: #e9e9e9;
+
+        }
+.autocomplete-active {
+    /*when navigating through the items using the arrow keys:*/
+    background-color: DodgerBlue !important;
+    color: #ffffff;
+}

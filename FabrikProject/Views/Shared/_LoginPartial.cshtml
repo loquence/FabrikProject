@@ -1,17 +1,60 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using FabrikProject.Models
+@{ 
+                /**/
+                
+                var controller = (ViewContext.RouteData.Values["controller"] ?? "").ToString().ToLower();
+}
 
 
 @if (Request.IsAuthenticated)
 {
+
+    <ul class="nav navbar-nav">
+
+        @if (controller == "home")
+        {
+            <li class="active">
+                @Html.ActionLink("Home", "Index", "Home")
+            </li>
+            <li>
+                @Html.ActionLink("Performance", "Performance", "Account")
+            </li>
+        }
+        else if (controller == "account")
+        {
+            <li>
+                @Html.ActionLink("Home", "Index", "Home")
+            </li>
+            <li class="active">
+                @Html.ActionLink("Performance", "Performance", "Account")
+            </li>
+        }
+    </ul>
+    using (Html.BeginForm("Search", "Account", FormMethod.Post, new { id = "searchform", @class = "navbar-form navbar-left", autocomplete="off", autofocus="autofocus" }))
+    {
+        @Html.AntiForgeryToken()
+    <div class="form-group" style="display:inline">
+        <div class="input-group autocomplete" style="display:table">
+            <span class="input-group-addon" style=""><span class="glyphicon glyphicon-search"></span></span>
+            <input type="text" class="form-control" name="search" id="search-input" placeholder="Search" list="json-datalist" style="width:500px" />
+
+
+            <div class="autocomplete-items" style="overflow-y:scroll; max-height:280px; text-align:center;">
+
+            </div>
+        </div>
+    </div>
+    
+    }
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+
+                @Html.Action("_NamePartial", "Account")
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            <li><a class="navbar-brand" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
     }
 }

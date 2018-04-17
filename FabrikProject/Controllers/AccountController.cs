@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FabrikProject.Models;
+using System.Collections.Generic;
 
 namespace FabrikProject.Controllers
 {
@@ -66,7 +67,7 @@ namespace FabrikProject.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl, FabrikProject.Models.ApplicationDbContext context)
         {
             if (!ModelState.IsValid)
             {
@@ -79,7 +80,31 @@ namespace FabrikProject.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    {
+                        var portfolio = context.PortfolioMeta.Find(model.Email);
+                        var list = context.UserStock.Where(r => r.Email == model.Email).ToList();
+                        double II = 0;
+                        foreach (var s in list)
+                        {
+                            II += s.InitialInvestment;
+                        }
+                        int size = list.Count();
+                        if (portfolio == null)
+                        {
+                            PortfolioMeta pm = new PortfolioMeta { Email = model.Email, InitialInvestmen = II, TotalAssets = size };
+                            context.PortfolioMeta.Add(pm);
+                        }
+                        else
+                        {
+                            var p = context.PortfolioMeta.Find(model.Email);
+                            p.InitialInvestmen = II;
+                            p.TotalAssets = size;
+                        }
+                        await context.SaveChangesAsync();
+                        
+                       
+                        return RedirectToLocal(returnUrl);
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -147,7 +172,7 @@ namespace FabrikProject.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, FabrikProject.Models.ApplicationDbContext context)
         {
             if (ModelState.IsValid)
             {
@@ -156,7 +181,8 @@ namespace FabrikProject.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    PortfolioMeta pm = new PortfolioMeta { Email = model.Email, InitialInvestmen = 0, TotalAssets = 0 };
+                    context.PortfolioMeta.Add(pm);
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -174,28 +200,108 @@ namespace FabrikProject.Controllers
         [AllowAnonymous]
         public ActionResult UserAddStock()
         {
+            
             return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult StockList()
+        {
+            List<Csv> model = new List<Csv>();
+            model = ReturnStockTable();
+            return PartialView(model);
+        }
+
+
+        [ChildActionOnly]
+        public ActionResult _NamePartial()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            var name = user.FirstName;
+            ViewBag.Name = name;
+            return PartialView();
         }
         
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> UserAddStock(UserStockViewModel model, FabrikProject.Models.ApplicationDbContext context)
+        public async Task<ActionResult> UserAddStock(ICollection<UserStockViewModel> model, FabrikProject.Models.ApplicationDbContext context)
         {
             
             if (ModelState.IsValid)
             {
+                foreach (var m in model)
+                {
+                    var asset = m.AssetName.Split('-');
+                    asset[0]=asset[0].Trim();
+                    asset[1] = asset[1].Trim();
+                    var stock = new UserStock { AssetType = asset[0], AssetName = asset[1], AssetTicker = m.AssetTicker, Email = User.Identity.GetUserName(), Quantity = m.Quantity, DatePurchased = m.DatePurchased, InitialInvestment = m.InitialInvestment, SharePrice = m.SharePrice, Commissions = m.Commissions };
+                    context.UserStock.Add(stock);
+                    await context.SaveChangesAsync();
+                }
                 
-                var stock = new UserStock { Stock = model.Stock, Email = User.Identity.GetUserName() };
-                context.UserStock.Add(stock);
-                await context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
                 
             }
             return View("Home");
             
         }
-        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search(FabrikProject.Models.ApplicationDbContext context)
+        {
+            string search = Request.Form["search"].ToLower();
+            var list = ReturnStockTable();
+            List<Models.Csv> slist = new List<Models.Csv>();
+            foreach(var k in list)
+            {
+                string name = k.AssetName.ToLower();
+                string ticker = k.AssetTicker.ToLower();
+                if (k.AssetName.StartsWith(search,StringComparison.OrdinalIgnoreCase) || k.AssetTicker.StartsWith(search,StringComparison.OrdinalIgnoreCase))
+                {
+                    slist.Add(k);
+                }
+            }
+            if (slist.Count() > 100)
+            {
+                return Json(new { String ="narrow your search" });
+
+            }
+            return Json(new { slist });
+        }
+
+        private List<Models.Csv> ReturnStockTable()
+        {
+            string path = Server.MapPath("~/App_Data/assets.csv");
+            using (var reader = new System.IO.StreamReader(path))
+            {
+                List<FabrikProject.Models.Csv> list = new List<Models.Csv>();
+                var count = 0;
+                while (!reader.EndOfStream)
+                {
+
+
+                    var lin = reader.ReadLine();
+                    var values = lin.Split(',');
+                    if (count != 0)
+                    {
+                        Models.Csv temp = new Models.Csv();
+                        temp.AssetTicker = values[0];
+                        temp.AssetName = values[1];
+                        temp.AssetType = values[2];
+                        list.Add(temp);
+                    }
+                    else
+                    {
+                        count++;
+                    }
+                    
+                }
+                return list;
+            }
+
+        }
+
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -341,6 +447,34 @@ namespace FabrikProject.Controllers
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
 
+        [AllowAnonymous]
+        public ActionResult Edit(int id, FabrikProject.Models.ApplicationDbContext context)
+        {
+            UserStock stock = context.UserStock.Find(id);
+            return View(stock);
+        }
+
+        [AllowAnonymous]
+        public ActionResult Delete(int id, FabrikProject.Models.ApplicationDbContext context)
+        {
+            UserStock stock = context.UserStock.Find(id);
+            return View(stock);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
+        public async Task<ActionResult> Delete(UserStock model, FabrikProject.Models.ApplicationDbContext context)
+        {
+            if (!ModelState.IsValid)
+            {
+                var toDelete = context.UserStock.Find(model.ID);
+                context.UserStock.Remove(toDelete);
+                await context.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Index", "Home");
+        }
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
@@ -368,6 +502,23 @@ namespace FabrikProject.Controllers
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+            }
+        }
+
+        
+        [AllowAnonymous]
+        public ActionResult Performance(FabrikProject.Models.ApplicationDbContext context)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var email = User.Identity.GetUserName();
+                var list = context.UserStock.Where(r => r.Email == email).ToList();
+                var SortedList = list.OrderBy(s => s.AssetTicker).ToList();
+                return View(SortedList);
+            }
+            else
+            {
+                return View("Login", "Account");
             }
         }
 

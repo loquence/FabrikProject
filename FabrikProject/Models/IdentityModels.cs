@@ -1,9 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Configuration;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Net;
+using System.Net.Mail;
+using System;
+using System.Web;
+using System.Net.Mime;
 
 namespace FabrikProject.Models
 {
@@ -31,10 +37,39 @@ namespace FabrikProject.Models
         }
 
         public DbSet<UserStock> UserStock { get; set; }
-
+        public DbSet<PortfolioMeta> PortfolioMeta { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+    }
+
+    public class EmailService
+    {
+
+        public void SendMail(IdentityMessage message)
+        {
+            #region formatter
+            string text = string.Format("Please click on this link to {0}: {1}", message.Subject, message.Body);
+            string html = "Please confirm your accountby clicking this link: <a href=\"" + message.Body + "\">link</a><br/>";
+
+            html += HttpUtility.HtmlEncode(@"Or click on the copy the following link on the browser:" + message.Body);
+            #endregion
+
+            MailMessage msg = new MailMessage();
+            msg.From = new MailAddress(ConfigurationManager.AppSettings["Gmail"]);
+            msg.To.Add(new MailAddress(message.Destination));
+            msg.Subject = message.Subject;
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html));
+
+            SmtpClient client = new SmtpClient("smtp.gmail.com", Convert.ToInt32(587));
+            NetworkCredential credentials = new NetworkCredential(ConfigurationManager.AppSettings["Gmail"], ConfigurationManager.AppSettings["Gmail Password"]);
+            client.Credentials = credentials;
+            client.EnableSsl = true;
+            client.Send(msg);
+        }
+
+
     }
 }

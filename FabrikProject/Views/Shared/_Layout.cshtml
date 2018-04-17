@@ -3,38 +3,107 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>@ViewBag.Title - Essential Portfolio</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     
+
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top navbar-custom">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                
-                @Html.ActionLink("Essential Portfolio", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <div class="container-fluid">
+            @if (!Request.IsAuthenticated)
+    {
+        <div class="navbar-header" style="position:absolute;bottom:25%;">
 
-            </div>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-left" href="/"><img src="~/Content/Images/minorlogo.svg" height="50" width="50" /></a>
+            @Html.ActionLink("Denarios", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+}
+else
+{
+        <div class="navbar-header">
+
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-left" href="/"><img src="~/Content/Images/minorlogo.svg" height="50" width="50" /></a>
+            @Html.ActionLink("Denarios", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+}
             <div class="navbar-collapse collapse">
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Essential Portfolio</p>
-        </footer>
-    </div>
+    <div class="container-fluid" style="background-color:#F8F8F8">
+        <div class="container">
+            <br />
+            <br />
+            <br />
+            <br />
+            @RenderBody()
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
 
+
+
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-md-4">
+
+                <h2>About Us.</h2>
+                <p>
+                    Come Meet the Team.
+                </p>
+                <p>@Html.ActionLink("Learn More", "About", "Home", null, new { @class = "btn btn-default" })</p>
+            </div>
+            <div class="col-md-4">
+                <h2>Investing Strategies.</h2>
+                <p>Take a look at some basic investing strategies.</p>
+                <p>@Html.ActionLink("Learn More", "Strategies", "Home", null, new { @class = "btn btn-default" })</p>
+            </div>
+            <div class="col-md-4">
+                <h2>Application Updates</h2>
+                <p>Here you can find the most recent updates to the website.</p>
+                <p>@Html.ActionLink("Learn More", "Updates", "Home", null, new { @class = "btn btn-default" })</p>
+            </div>
+        </div>
+        
+            
+            <br />
+            <p>&copy; @DateTime.Now.Year - Essential Portfolio</p>
+        
+    </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/listsearch.js")

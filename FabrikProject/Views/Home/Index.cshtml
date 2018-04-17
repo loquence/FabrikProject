@@ -1,90 +1,107 @@
-﻿@model FabrikProject.Models.RegisterViewModel
+﻿@model FabrikProject.Models.PortfolioMeta
 
 @{
     ViewBag.Title = "Home Page";
 }
 @if (Request.IsAuthenticated)
 {
-    @Html.Partial("_StockTable")
-    
+    <br />
 
-}
-else { 
     <div class="row">
-        <h1></h1>
-    </div>
-<div class="row">
-    <div class="col-md-6 div-custom">
-        <h1 style="text-align:center;">Welcome to the</h1>
-        <h1><b><i>Essential Portfolio Manager</i></b></h1>
-        <div>
-            <img src="~/Content/Images/logo2.png"  alt="Logo" />
+        <div class="col-md-4">
+            <table class="table table-bordered table-responsive custom-table" style="border-width: medium;border-color:#565656;">
+                <tr>
+                    <td>
+                        Total Value
+                    </td>
+                    <td class="partialContents" data-url="@Url.Action("TotalValue","Home")">
+                        ...
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Returns
+                    </td>
+                    <td class="partialContents" data-url="@Url.Action("Returns","Home")">
+                        ...
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Initial Investment
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => Model.InitialInvestmen)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Asset Count
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => Model.TotalAssets)
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-8">
+            <div id="donutchart" style="width: 900px; height: 400px;"></div>
         </div>
     </div>
-    <div class="col-md-6" style="background-color:#CFDBC5;">
-        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-            @Html.AntiForgeryToken()
-            <h1 style="text-align:center;">Sign Up</h1>
-            <h4 style="text-align:center;">Start your portfolio</h4>
-            <hr />
-            @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-responsive">
+                <thead>
+                    <tr class="active">
+                        <th>Asset</th>
+                        <th>Ticker</th>
+                        <th>Type</th>
+                        <th>Quantity</th>
+                        <th>Mkt Price</th>
+                        <th>Weight</th>
+                        <th>Value</th>
+                        <th>Initial Investment</th>
+                        <th>Commissions</th>
+                        <th>Returns</th>
+                        <th>Date Purchased</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="partialContents" data-url="@Url.Action("_StockTable","Home")">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-2 col-md-offset-10">
+        @Html.ActionLink("Add Asset", "UserAddStock", "Account", null, new { @class = "btn btn-success btn-large" })
+    </div>
+    
+    <script type="text/javascript">
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            $.post("/Home/Chart", function (data) {
+                var options = {
+                    title: 'My Portfolio',
+                    pieHole: 0.4,
+                    backgroundColor: '#F8F8F8',
+                    colors: ['#A3D977','#556B2F']
+                };
+                
+                var datas = google.visualization.arrayToDataTable([
+                    ['Assets', 'Asset Value'],
+                    ['Stocks', data['stocks']],
+                    ['Cryptos', data['cryptos']]]);
+                var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+                chart.draw(datas, options);
+            });
 
-            <div class="form-group">
-                @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" value="Register" />
-                </div>
-            </div>
+            
         }
-    </div>
-</div>
+    </script>
 }
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+else
+{
+    @Html.Action("RegisterPartial", "Home")
+}

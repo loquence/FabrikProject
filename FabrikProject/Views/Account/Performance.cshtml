@@ -1,0 +1,42 @@
+﻿@model List<FabrikProject.Models.UserStock>
+
+@{
+    ViewBag.Title = "Performance";
+
+}
+
+
+        <br />
+        <div id="barchartstacked"></div>
+        
+
+        <script type="text/javascript">
+            google.charts.load('current', { packages: ['corechart', 'bar'] });
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+                $.post("/Home/PerformanceChartStacked", function (data) {
+                    
+                    var assets = ['Assets'];
+                    var values = ['Portfolio'];
+                    var first = data['pricelist'];
+                    
+                    for (var i = 0; i < first.length; ++i) {
+                        assets.push(first[i]['AssetName']);
+                        values.push(first[i]['Value']);
+                    }
+                    
+                    var datas = google.visualization.arrayToDataTable([assets,values]);
+                    var options = {
+                        isStacked: true,
+                        height: 300,
+                        legend: { position: 'top', maxLines: 3 },
+                        hAxis: { minValue: 0 }
+                    };
+                    var chart = new google.visualization.BarChart(document.getElementById('barchartstacked'));
+                    chart.draw(datas, options);
+                });
+                
+
+
+            }
+        </script>

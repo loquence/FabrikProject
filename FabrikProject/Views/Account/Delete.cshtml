@@ -1,0 +1,63 @@
+﻿@using FabrikProject.Models
+@model UserStock
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+
+    
+<div class="col-md-8 col-md-offset-2">
+    <h4>Really Delete: </h4>
+
+    <div>
+        @Html.LabelFor(s => Model.AssetName):
+        @Html.DisplayFor(s => Model.AssetName)
+    </div>
+    <div>
+        @Html.LabelFor(s => Model.AssetTicker):
+        @Html.DisplayFor(s => Model.AssetTicker)
+    </div>
+    <div>
+        @Html.LabelFor(s => Model.Quantity):
+        @Html.DisplayFor(s => Model.Quantity)
+    </div>
+    <div>
+        @Html.LabelFor(s => Model.DatePurchased):
+        @Html.DisplayFor(s => Model.DatePurchased)
+    </div>
+    <div>
+        @Html.LabelFor(s => Model.InitialInvestment):
+        @Html.DisplayFor(s => Model.InitialInvestment)
+    </div>
+    <div>
+        @Html.LabelFor(s => Model.SharePrice):
+        @Html.DisplayFor(s => Model.SharePrice)
+    </div>
+    <div>
+        <a class="btn btn-success btn-xs" href="/Home">Cancel</a>
+        @using (Html.BeginForm("Delete","Account", new {@class="form-horizontal", role="form" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="submit" class="btn btn-danger btn-xs" />
+        }
+    </div>
+</div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
