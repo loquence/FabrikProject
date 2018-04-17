@@ -103,11 +103,18 @@ namespace FabrikProject.Controllers
         {
             string email = User.Identity.GetUserName();
             var list = context.UserStock.Where(s => s.Email == email);
+            double returns;
+            if (list.Count() == 0)
+            {
+                returns = 0;
+                ViewBag.Returns = returns;
+                return PartialView();
+            }
             var portfolio = context.PortfolioMeta.Find(email);
             var SortedList = list.OrderBy(s => s.AssetTicker).ToList();
             double ttv = 0;
             var pricelist = GetPrices(SortedList, ref ttv);
-            double returns;
+           
             if (portfolio.InitialInvestmen == 0)
             {
                 returns = 0;

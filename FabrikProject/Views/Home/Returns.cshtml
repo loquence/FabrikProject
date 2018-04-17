@@ -5,6 +5,12 @@
         + @(((decimal)ViewBag.Returns).ToString("C2"))%
     </div>
 }
+else if(ViewBag.Returns == 0)
+{
+    <div>
+        @ViewBag.Returns%
+    </div>
+}
 else
 {
     <div style="color:#FF0000">
