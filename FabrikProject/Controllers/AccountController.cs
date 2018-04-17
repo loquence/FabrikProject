@@ -197,6 +197,16 @@ namespace FabrikProject.Controllers
             // If we got this far, something failed, redisplay form
             return View("Register");
         }
+
+        [AllowAnonymous]
+        public ActionResult AddStock()
+        {
+            
+            var assetticker = Request.QueryString["assetticker"];
+            ViewBag.Ticker = assetticker;
+            return View();
+        }
+
         [AllowAnonymous]
         public ActionResult UserAddStock()
         {

@@ -328,6 +328,7 @@
     <Content Include="Views\Account\StockList.cshtml" />
     <Content Include="Views\Home\TotalValue.cshtml" />
     <Content Include="Views\Home\Returns.cshtml" />
+    <Content Include="Views\Account\AddStock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
