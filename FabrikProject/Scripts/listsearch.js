@@ -7,7 +7,7 @@ $(function () {
         e.preventDefault();
         var x = $('#search-input').val();
         
-        if (x == "") {
+        if (x === "") {
             $('.autocomplete-items').empty();
         }
         
@@ -26,7 +26,7 @@ $(function () {
 
 
 
-                    if (val1 != null) {
+                    if (val1 !== null) {
                         /* datalist.empty();
                          console.log(val1);
                          datalist.append('<option value="' + val1 + '...">');*/
