@@ -1,0 +1,35 @@
+﻿@using FabrikProject.Models
+@model AddStockViewModel
+
+<fieldset>
+    <legend>@Html.DisplayFor(m => m.Company.CompanyName) -- @Html.DisplayFor(m => m.CurrentPrice)</legend>
+    <div>
+        @Html.LabelFor(m => m.Company.Symbol)
+        @Html.DisplayFor(m => m.Company.Symbol)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Company.Exchange)
+        @Html.DisplayFor(m => m.Company.Exchange)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Company.Industry)
+        @Html.DisplayFor(m => m.Company.Industry)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Company.Website)
+        @Html.DisplayFor(m => m.Company.Website)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Company.CEO)
+        @Html.DisplayFor(m => m.Company.CEO)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Company.Sector)
+        @Html.DisplayFor(m => m.Company.Sector)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Company.Description)
+        @Html.DisplayFor(m => m.Company.Description)
+    </div>
+</fieldset>
+

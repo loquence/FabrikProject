@@ -197,9 +197,47 @@ namespace FabrikProject.Models
     public class AddStockViewModel
     {
         [Required]
+        [DataType(DataType.Currency)]
+        [Display(Name = "Current Price")]
         public double CurrentPrice { get; set; }
         [Required]
-        public string News { get; set; }
+        public CompanyInfo Company { get; set; }
+    }
+
+    public class CompanyInfo
+    {
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Symbol")]
+        public string Symbol { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Company Name")]
+        public String CompanyName { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Exchange")]
+        public String Exchange { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Industry")]
+        public String Industry { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Website Url")]
+        public String Website { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Description")]
+        public String Description { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "CEO")]
+        public String CEO { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Sector")]
+        public String Sector { get; set; }
     }
 
 

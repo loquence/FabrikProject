@@ -221,10 +221,17 @@ namespace FabrikProject.Controllers
                 var responseFromServer = reader.ReadToEnd();
                 double currentprice = Convert.ToDouble(responseFromServer);
                 toadd.CurrentPrice = currentprice;
+                string comp = "https://api.iextrading.com/1.0/stock/" + ticker + "/company";
+                request = WebRequest.Create(comp);
+                request.Credentials = CredentialCache.DefaultCredentials;
+                response = request.GetResponse();
+                dataStream = response.GetResponseStream();
+                reader = new StreamReader(dataStream);
+                responseFromServer = reader.ReadToEnd();
+                var json = JsonConvert.DeserializeObject<dynamic>(responseFromServer);
+                toadd.Company = new CompanyInfo { Symbol = json["symbol"], CompanyName = json["companyName"], Exchange = json["exchange"], Industry = json["industry"], Website = json["website"], CEO = json["CEO"], Description = json["description"] };
                 
-                
-               
-                
+
                 //count++;
             }
             if (type.Equals("Crypto", StringComparison.InvariantCultureIgnoreCase))
@@ -239,18 +246,22 @@ namespace FabrikProject.Controllers
                 var cpt = JsonConvert.DeserializeObject<dynamic>(responseFromServer);
                 var price = cpt["USD"];
                 double currentprice = Convert.ToDouble(price);
-                double value = s.Quantity * currentprice;
-                totalVal += value;
-                double prereturns = value / (s.InitialInvestment + s.Commissions);
-                double returns = (prereturns - 1) * 100;
-                StockViewModel model = new StockViewModel { CurrentPrice = currentprice, userstock = s, Value = value, Returns = returns };
-                SortedStock.Add(model);
+                toadd.CurrentPrice = currentprice;
             }
+            return toadd;
+        }
+
+        [AllowAnonymous]
+        public ActionResult CompanyInfo(string ticker, string type)
+        {
+            var ret = GetStockInfo(type, ticker);
+            return PartialView(ret);
         }
 
         [AllowAnonymous]
         public ActionResult AddStock(string assetticker,string assetname, string assettype)
         {
+            ViewBag.CompanyUrl = "/Account/CompanyInfo?ticker=" + assetticker + "&type=" + assettype;
             ViewBag.NameType =assettype + " - " + assetname;
             ViewBag.Name = assetname;
             ViewBag.Ticker = assetticker; 
