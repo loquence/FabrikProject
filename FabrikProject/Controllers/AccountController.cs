@@ -229,7 +229,7 @@ namespace FabrikProject.Controllers
                 reader = new StreamReader(dataStream);
                 responseFromServer = reader.ReadToEnd();
                 var json = JsonConvert.DeserializeObject<dynamic>(responseFromServer);
-                toadd.Company = new CompanyInfo { Symbol = json["symbol"], CompanyName = json["companyName"], Exchange = json["exchange"], Industry = json["industry"], Website = json["website"], CEO = json["CEO"], Description = json["description"] };
+                toadd.Company = new CompanyInfo { Symbol = json["symbol"], CompanyName = json["companyName"], Exchange = json["exchange"], Industry = json["industry"], Website = json["website"], CEO = json["CEO"], Description = json["description"], Sector = json["sector"] };
                 
 
                 //count++;
