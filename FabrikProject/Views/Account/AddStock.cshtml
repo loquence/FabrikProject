@@ -1,12 +1,49 @@
-﻿<div class="container">
-    <div class="col-md-8">
+﻿@using FabrikProject.Models
+@model UserStockViewModel
+
+<div class="container">
+    <div class="col-md-9">
         The Chart will go here
     </div>
-    <div class="col-md-4">
-        @using(Html.BeginForm("AddStock","Account", FormMethod.Post, new { @class = "form-control" }))
-        {
-            @Html.AntiForgeryToken();
-            <h4>Buy @ViewBag.Ticker</h4>
-        }
+    <div class="col-md-3 custom-shadow-div">
+        <div style="margin:12px;">
+            @using (Html.BeginForm("AddStock", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken();
+            <fieldset>
+                <legend>
+                    Buy @ViewBag.Ticker
+                </legend>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SharePrice, new { style = "bottom:0px;" })
+                    @Html.TextBoxFor(m => m.SharePrice, new { @class = "form-control custom-input iicalc", placeholder = "0", id="price"})
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Quantity)
+                    @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control custom-input iicalc", placeholder = "0", id="quantity" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Commissions)
+                    @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control custom-input", placeholder = "0" })
+                    <p></p>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DatePurchased)
+                    @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", placeholder = "0", type = "date" })
+                    <p></p>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.InitialInvestment):
+                    <div>
+                        $<p style="display:inline;" id="iinvest">0</p>
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-success btn-lg" value="Add Stock" />
+
+
+            </fieldset>
+}
+        </div>
     </div>
 </div>

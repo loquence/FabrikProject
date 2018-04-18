@@ -199,10 +199,10 @@ namespace FabrikProject.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult AddStock(string assetticker)
+        public ActionResult AddStock(string assetticker,string assetname, string assettype)
         {
-            
-            ViewBag.Ticker = assetticker;
+            ViewBag.AssetName
+            ViewBag.Ticker = assetticker; ;
             return View();
         }
 

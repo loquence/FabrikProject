@@ -191,3 +191,20 @@ textarea {
     background-color: DodgerBlue !important;
     color: #ffffff;
 }
+
+.custom-input {
+    display: inline;
+    float:right;
+    text-align: right;
+    /*border: 0;
+    background-color: transparent;
+    box-shadow:none !important;*/
+    width:60%;
+}
+
+.custom-input input:focus {
+    outline:0;
+}
+.custom-shadow-div {
+    box-shadow: 0 0 30px #C8C8C8;
+}

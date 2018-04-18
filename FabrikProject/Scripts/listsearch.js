@@ -1,6 +1,16 @@
 ﻿var numb = 0;
 var apiKey = 'BECFPZPO9R3JIDAN';
 $(function () {
+    $('.iicalc').on('keyup',function () {
+
+        var price = $("#price").val();
+        console.log(price);
+        var quantity = $("#quantity").val();
+        console.log(quantity);
+        var initinv = price * quantity;
+        $('#iinvest').html(initinv);
+    })
+
     var drew = false;
     var search = $('#searchform');
     search.on("keyup",function (e) {
@@ -38,7 +48,7 @@ $(function () {
                         $('.autocomplete-items').empty();
                         for (var i = 0; i < val2.length; i++) {
 
-                            $('.autocomplete-items').append('<div onclick="search()"><p class="asset">' + val2[i]["AssetName"] + ' - ' + val2[i]["AssetTicker"] + '</p><p class="assettype">'+val2[i]['AssetType']+'</p></div>');
+                            $('.autocomplete-items').append('<div onclick="search()"><a href="/Account/AddStock?assetname=' + val2[i]["AssetName"] + '&assetticker=' + val2[i]["AssetTicker"] + '&assettype=' + val2[i]['AssetType']+'">' + val2[i]["AssetName"] + ' - ' + val2[i]["AssetTicker"] +'</a>'+ '</div>');
                         }
 
                     }
