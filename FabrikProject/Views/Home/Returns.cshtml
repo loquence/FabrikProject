@@ -8,20 +8,14 @@
 else if(ViewBag.Returns == 0)
 {
     <div>
-        @ViewBag.Returns%
+        @ViewBag.Returns %
     </div>
 }
 else
 {
-    if (ViewBag.Returns == 0)
-    {
-        <div style="color:#FF0000">
-            @((ViewBag.Returns).ToString("C2"))%
-        </div>
-    }
-    else { 
-        <div style="color:#FF0000">
+   
+    <div style="color:#FF0000">
         @(((decimal)ViewBag.Returns).ToString("C2"))%
     </div>
-    }
+    
 }

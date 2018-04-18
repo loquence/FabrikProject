@@ -201,8 +201,8 @@ namespace FabrikProject.Controllers
         [AllowAnonymous]
         public ActionResult AddStock(string assetticker)
         {
-            string ticker = assetticker;
-            ViewBag.Ticker = ticker;
+            
+            ViewBag.Ticker = assetticker;
             return View();
         }
 

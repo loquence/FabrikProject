@@ -38,7 +38,7 @@ $(function () {
                         $('.autocomplete-items').empty();
                         for (var i = 0; i < val2.length; i++) {
 
-                            $('.autocomplete-items').append('<div><a href="/Account/AddStock/assetticker='+ val2[i]['AssetTicker']+'">' + val2[i]["AssetName"] + ' - ' + val2[i]["AssetTicker"] + '</a></div>');
+                            $('.autocomplete-items').append('<div onclick="search()"><p class="asset">' + val2[i]["AssetName"] + ' - ' + val2[i]["AssetTicker"] + '</p><p class="assettype">'+val2[i]['AssetType']+'</p></div>');
                         }
 
                     }
@@ -138,6 +138,13 @@ function addToTable(e) {
         "\" />\n<input type=\"hidden\" name=\"[" + numb +
         "].AssetName\" value=\"" + stock + "\" />");
     numb++;
+}
+
+function search(e) {
+    var asset = $(e).find('.asset').text();
+    var type = $(e).find('.assettype').text();
+    
+    $.get('/Account/AddStock', { assetticker: asset, assettype : type });
 }
 
 
