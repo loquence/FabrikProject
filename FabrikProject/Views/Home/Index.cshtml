@@ -48,6 +48,18 @@
             <div id="donutchart" style="width: 900px; height: 400px;"></div>
         </div>
     </div>
+
+    <!--Add Asset Button -->
+
+    <br />
+    <div class="pull-right">
+        @Html.ActionLink("Add Asset", "UserAddStock", "Account", null, new { @class = "btn btn-success btn-large" })
+    </div>
+    <br />
+    <br />
+
+    <!-- Table -->
+    <br />
     <div class="row">
         <div class="col-md-12">
             <table class="table table-bordered table-responsive">
@@ -67,16 +79,12 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody class="partialContents" data-url="@Url.Action("_StockTable","Home")">
-                    
-                </tbody>
+                <tbody class="partialContents" data-url="@Url.Action("_StockTable","Home")"></tbody>
             </table>
         </div>
     </div>
-    <div class="col-md-2 col-md-offset-10">
-        @Html.ActionLink("Add Asset", "UserAddStock", "Account", null, new { @class = "btn btn-success btn-large" })
-    </div>
-    
+
+
     <script type="text/javascript">
         google.charts.load("current", { packages: ["corechart"] });
         google.charts.setOnLoadCallback(drawChart);
@@ -86,9 +94,9 @@
                     title: 'My Portfolio',
                     pieHole: 0.4,
                     backgroundColor: '#F8F8F8',
-                    colors: ['#A3D977','#556B2F']
+                    colors: ['#A3D977', '#556B2F']
                 };
-                
+
                 var datas = google.visualization.arrayToDataTable([
                     ['Assets', 'Asset Value'],
                     ['Stocks', data['stocks']],
@@ -97,7 +105,7 @@
                 chart.draw(datas, options);
             });
 
-            
+
         }
     </script>
 }

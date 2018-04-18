@@ -34,7 +34,15 @@ textarea {
 .navbar-brand {
 
     color: black;
-    
+    right: 20px;
+    margin-right: 20px;
+}
+
+#icon {
+    padding-right: 5px;
+    right: 30px;
+    top:9px;
+    font-size: 25px;
 }
 
 .navbar-inverse .navbar-nav > .active > a {
