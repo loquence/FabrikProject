@@ -10,6 +10,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FabrikProject.Models;
 using System.Collections.Generic;
+using System.Net;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace FabrikProject.Controllers
 {
@@ -198,12 +201,77 @@ namespace FabrikProject.Controllers
             return View("Register");
         }
 
+        private AddStockViewModel GetStockInfo(string type, string ticker)
+        {
+            WebRequest request;
+            AddStockViewModel toadd = new AddStockViewModel();
+            List<string> toret;
+            WebResponse response;
+            Stream dataStream;//= response.GetResponseStream();
+            StreamReader reader; //= new StreamReader(dataStream);
+
+            if (type.Equals("Stock", StringComparison.InvariantCultureIgnoreCase))
+            {
+                string IEX = "https://api.iextrading.com/1.0/stock/" + ticker + "/price";
+                request = WebRequest.Create(IEX);
+                request.Credentials = CredentialCache.DefaultCredentials;
+                response = request.GetResponse();
+                dataStream = response.GetResponseStream();
+                reader = new StreamReader(dataStream);
+                var responseFromServer = reader.ReadToEnd();
+                double currentprice = Convert.ToDouble(responseFromServer);
+                toadd.CurrentPrice = currentprice;
+                
+                
+               
+                
+                //count++;
+            }
+            if (type.Equals("Crypto", StringComparison.InvariantCultureIgnoreCase))
+            {
+                string crypto = "https://min-api.cryptocompare.com/data/price?fsym=" + ticker + "&tsyms=USD";
+                request = WebRequest.Create(crypto);
+                request.Credentials = CredentialCache.DefaultCredentials;
+                response = request.GetResponse();
+                dataStream = response.GetResponseStream();
+                reader = new StreamReader(dataStream);
+                var responseFromServer = reader.ReadToEnd();
+                var cpt = JsonConvert.DeserializeObject<dynamic>(responseFromServer);
+                var price = cpt["USD"];
+                double currentprice = Convert.ToDouble(price);
+                double value = s.Quantity * currentprice;
+                totalVal += value;
+                double prereturns = value / (s.InitialInvestment + s.Commissions);
+                double returns = (prereturns - 1) * 100;
+                StockViewModel model = new StockViewModel { CurrentPrice = currentprice, userstock = s, Value = value, Returns = returns };
+                SortedStock.Add(model);
+            }
+        }
+
         [AllowAnonymous]
         public ActionResult AddStock(string assetticker,string assetname, string assettype)
         {
-            
-            ViewBag.Ticker = assetticker; ;
+            ViewBag.NameType =assettype + " - " + assetname;
+            ViewBag.Name = assetname;
+            ViewBag.Ticker = assetticker; 
             return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddStock(UserStockViewModel model, FabrikProject.Models.ApplicationDbContext context)
+        {
+            if (ModelState.IsValid)
+            {
+                var asset = model.AssetName.Split('-');
+                asset[0] = asset[0].Trim();
+                asset[1] = asset[1].Trim();
+                var stock = new UserStock { Email = User.Identity.GetUserName(), AssetType = asset[0], AssetTicker = model.AssetTicker, AssetName = asset[1], DatePurchased = model.DatePurchased, Commissions = model.Commissions, InitialInvestment = model.InitialInvestment, Quantity = model.Quantity };
+                context.UserStock.Add(stock);
+                await context.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            return View("Error");
         }
 
         [AllowAnonymous]

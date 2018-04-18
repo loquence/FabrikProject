@@ -137,17 +137,17 @@ namespace FabrikProject.Models
         */
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name ="Asset Ticker")]
+        [Display(Name = "Asset Ticker")]
         public string AssetTicker { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name ="Asset Name")]
+        [Display(Name = "Asset Name")]
         public string AssetName { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name ="Asset Type")]
+        [Display(Name = "Asset Type")]
         public string AssetType { get; set; }
 
         [Required]
@@ -155,22 +155,22 @@ namespace FabrikProject.Models
         public int Quantity { get; set; }
 
         [Required]
-        [Display(Name ="Date Purchased")]
+        [Display(Name = "Date Purchased")]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime DatePurchased { get; set; }
 
         [Required]
-        [Display(Name ="Initial Investment")]
+        [Display(Name = "Initial Investment")]
         [DataType(DataType.Currency)]
         public double InitialInvestment { get; set; }
 
         [Required]
-        [Display(Name ="Share Price")]
+        [Display(Name = "Share Price")]
         [DataType(DataType.Currency)]
         public double SharePrice { get; set; }
 
         [Required]
-        [Display(Name ="Commissions")]
+        [Display(Name = "Commissions")]
         [DataType(DataType.Currency)]
         public double Commissions { get; set; }
     }
@@ -193,6 +193,17 @@ namespace FabrikProject.Models
         public double Commissions { get; set; }
 
     }
+
+    public class AddStockViewModel
+    {
+        [Required]
+        public double CurrentPrice { get; set; }
+        [Required]
+        public string News { get; set; }
+    }
+
+
+        
 
     public class StockViewModel
     {

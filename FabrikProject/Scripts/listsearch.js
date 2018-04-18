@@ -9,6 +9,7 @@ $(function () {
         console.log(quantity);
         var initinv = price * quantity;
         $('#iinvest').html(initinv);
+        $('#investment').val(initinv);
     })
 
     var drew = false;
