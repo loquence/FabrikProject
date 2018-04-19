@@ -1,8 +1,8 @@
 ﻿@using FabrikProject.Models
-@{ 
-                /**/
-                
-                var controller = (ViewContext.RouteData.Values["controller"] ?? "").ToString().ToLower();
+@{
+    /**/
+
+    var controller = (ViewContext.RouteData.Values["controller"] ?? "").ToString().ToLower();
 }
 
 
@@ -30,38 +30,49 @@
             </li>
         }
     </ul>
-    using (Html.BeginForm("Search", "Account", FormMethod.Post, new { id = "searchform", @class = "navbar-form navbar-left", autocomplete="off", autofocus="autofocus" }))
+    using (Html.BeginForm("Search", "Account", FormMethod.Post, new { id = "searchform", @class = "navbar-form navbar-left", autocomplete = "off", autofocus = "autofocus" }))
     {
         @Html.AntiForgeryToken()
-    <div class="form-group" style="display:inline">
+    <div class="form-group form-search" style="display:inline">
         <div class="input-group autocomplete" style="display:table">
             <span class="input-group-addon" style=""><span class="glyphicon glyphicon-search"></span></span>
-            <input type="text" class="form-control" name="search" id="search-input" placeholder="Search" list="json-datalist" style="width:500px;max-width:none;" />
+            <input type="text" class="form-control" name="search" id="search-input" placeholder="Search" list="json-datalist" style="width:500px" />
 
 
-            <div class="autocomplete-items" style="overflow-y:scroll; max-height:280px; text-align:center;">
+                <div class="autocomplete-items" style="overflow-y:scroll; max-height:280px; text-align:center;">
 
+                </div>
             </div>
         </div>
-    </div>
-    
+
     }
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-        <ul class="nav navbar-nav navbar-right">
-            <li>
 
+        <ul class="nav navbar-nav navbar-right">
+
+
+            <li id="icon">
+                <span><i class="glyphicon glyphicon-cog"></i></span>
+            </li>
+
+            <li>  
                 @Html.Action("_NamePartial", "Account")
             </li>
-            <li><a class="navbar-brand" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+
+            <li>
+                <a class="navbar-brand" href="javascript:document.getElementById('logoutForm').submit()"> Log off </a>
+            </li>
+
+
         </ul>
-    }
-}
-else
-{
+            }
+            }
+            else
+            {
 
-    @Html.Partial("_NonLoggedIn")
+            @Html.Partial("_NonLoggedIn")
 
 
-}
+            }
