@@ -216,3 +216,19 @@ textarea {
 .custom-shadow-div {
     box-shadow: 0 0 30px #C8C8C8;
 }
+
+.search-form {
+    border: 0;
+    background-color: #F0FFF0;
+    box-shadow: none !important;
+}
+
+.custom-glyph {
+    background-color:#F0FFF0;
+    border:0;
+}
+
+.custom-add-form {
+    border:0;
+    box-shadow:none !important;
+}

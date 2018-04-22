@@ -1,7 +1,7 @@
 ﻿@using FabrikProject.Models
 @{
     /**/
-
+    var action = (ViewContext.RouteData.Values["action"] ?? "").ToString().ToLower();
     var controller = (ViewContext.RouteData.Values["controller"] ?? "").ToString().ToLower();
 }
 
@@ -11,7 +11,7 @@
 
     <ul class="nav navbar-nav">
 
-        @if (controller == "home")
+        @if (controller == "home" && action == "index")
         {
             <li class="active">
                 @Html.ActionLink("Home", "Index", "Home")
@@ -20,7 +20,7 @@
                 @Html.ActionLink("Performance", "Performance", "Account")
             </li>
         }
-        else if (controller == "account")
+        else if (controller == "account" && action == "performance")
         {
             <li>
                 @Html.ActionLink("Home", "Index", "Home")
@@ -29,14 +29,25 @@
                 @Html.ActionLink("Performance", "Performance", "Account")
             </li>
         }
+        else
+        {
+            <li>
+                @Html.ActionLink("Home", "Index", "Home")
+            </li>
+            <li>
+                @Html.ActionLink("Performance", "Performance", "Account")
+            </li>
+        }
+
     </ul>
-    using (Html.BeginForm("Search", "Account", FormMethod.Post, new { id = "searchform", @class = "navbar-form navbar-left", autocomplete = "off", autofocus = "autofocus" }))
-    {
+    <div class="autodiv">
+        @using (Html.BeginForm("Search", "Account", FormMethod.Post, new { id = "searchform", @class = "navbar-form navbar-left", autocomplete = "off", autofocus = "autofocus" }))
+        {
         @Html.AntiForgeryToken()
-    <div class="form-group form-search" style="display:inline">
-        <div class="input-group autocomplete" style="display:table">
-            <span class="input-group-addon" style=""><span class="glyphicon glyphicon-search"></span></span>
-            <input type="text" class="form-control" name="search" id="search-input" placeholder="Search" list="json-datalist" style="width:500px" />
+        <div class="form-group form-search" style="display:inline;">
+            <div class="input-group autocomplete" style="display:table">
+                <span class="input-group-addon" style=""><span class="glyphicon glyphicon-search"></span></span>
+                <input type="text" class="form-control" name="search" id="search-input" placeholder="Search" list="json-datalist" style="width:600px;" />
 
 
                 <div class="autocomplete-items" style="overflow-y:scroll; max-height:280px; text-align:center;">
@@ -45,7 +56,8 @@
             </div>
         </div>
 
-    }
+        }
+    </div>
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
@@ -53,26 +65,32 @@
         <ul class="nav navbar-nav navbar-right">
 
 
-            <li id="icon">
-                <span><i class="glyphicon glyphicon-cog"></i></span>
-            </li>
 
-            <li>  
-                @Html.Action("_NamePartial", "Account")
-            </li>
+            @if (controller == "manage" && action == "index")
+            {
+                <li class="active">
 
+                    @Html.Action("_NamePartial", "Account")
+                </li>
+            }
+            else
+            {
+                <li>
+                    @Html.Action("_NamePartial", "Account")
+                </li>
+            }
             <li>
-                <a class="navbar-brand" href="javascript:document.getElementById('logoutForm').submit()"> Log off </a>
+                <a class="" href="javascript:document.getElementById('logoutForm').submit()"> Log off </a>
             </li>
 
 
         </ul>
-            }
-            }
-            else
-            {
+    }
+}
+else
+{
 
-            @Html.Partial("_NonLoggedIn")
+    @Html.Partial("_NonLoggedIn")
 
 
-            }
+}

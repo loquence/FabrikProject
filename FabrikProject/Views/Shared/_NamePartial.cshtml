@@ -1,1 +1,2 @@
-﻿@Html.ActionLink("Welcome, " + (string)ViewBag.Name, "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "navbar-brand" })
+﻿<!--@Html.ActionLink("Welcome, " + (string)ViewBag.Name, "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "" })-->
+<a href="/Manage" title="Manage"> Welcome,  @ViewBag.Name  <span class="glyphicon glyphicon-cog"></span></a>

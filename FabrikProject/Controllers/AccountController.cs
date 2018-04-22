@@ -258,6 +258,7 @@ namespace FabrikProject.Controllers
             return PartialView(ret);
         }
 
+        [HttpGet]
         [AllowAnonymous]
         public ActionResult AddStock(string assetticker,string assetname, string assettype)
         {
