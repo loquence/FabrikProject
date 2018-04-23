@@ -358,7 +358,36 @@ namespace FabrikProject.Controllers
             }
             return Json(new { slist });
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Searcher(FabrikProject.Models.ApplicationDbContext context)
+        {
+            string radio = Request.Form["asset"];
+            if (radio == null)
+                radio = "";
+            else
+                radio = radio.ToLower();
+            string search = Request.Form["search"].ToLower();
+            var list = ReturnStockTable();
+            List<Models.Csv> slist = new List<Models.Csv>();
+            
+            foreach (var k in list)
+            {
+                string name = k.AssetName.ToLower();
+                string ticker = k.AssetTicker.ToLower();
+                string type = k.AssetType.ToLower();
+                if ((k.AssetName.StartsWith(search, StringComparison.OrdinalIgnoreCase) || k.AssetTicker.StartsWith(search, StringComparison.OrdinalIgnoreCase)) && type.Contains(radio) )
+                {
+                    slist.Add(k);
+                }
+            }
+            if (slist.Count() > 100)
+            {
+                return Json(new { String = "narrow your search" });
 
+            }
+            return Json(new { slist,radio });
+        }
         private List<Models.Csv> ReturnStockTable()
         {
             string path = Server.MapPath("~/App_Data/assets.csv");
@@ -593,10 +622,15 @@ namespace FabrikProject.Controllers
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
-
-        
         [AllowAnonymous]
         public ActionResult Performance(FabrikProject.Models.ApplicationDbContext context)
+        {
+            PortfolioMeta pm = context.PortfolioMeta.Find(User.Identity.GetUserName());
+            return View(pm);
+        }
+        
+        [AllowAnonymous]
+        public ActionResult Performancer(FabrikProject.Models.ApplicationDbContext context)
         {
             if (User.Identity.IsAuthenticated)
             {

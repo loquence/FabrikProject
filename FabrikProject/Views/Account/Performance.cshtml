@@ -1,42 +1,79 @@
-﻿@model List<FabrikProject.Models.UserStock>
-
+﻿
+@model FabrikProject.Models.PortfolioMeta
 @{
     ViewBag.Title = "Performance";
 
 }
+@if (Request.IsAuthenticated)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <table class="table table-bordered table-responsive custom-table" style="border-width: medium;border-color:#565656;">
+                <tr>
+                    <td>
+                        Total Value
+                    </td>
+                    <td class="partialContents" data-url="@Url.Action("TotalValue", "Home")">
+                        ...
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Returns
+                    </td>
+                    <td class="partialContents" data-url="@Url.Action("Returns", "Home")">
+                        ...
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Initial Investment
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => Model.InitialInvestmen)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Asset Count
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => Model.TotalAssets)
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-8">
+            <div id="donutchart" style="width: 900px; height: 400px;"></div>
+        </div>
+    </div>
+
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-responsive">
+                <thead>
+                    <tr class="active">
+                        <th>Asset</th>
+                        <th>Ticker</th>
+                        <th>Type</th>
+                        <th>Quantity</th>
+                        <th>Mkt Price</th>
+                        <th>Weight</th>
+                        <th>Value</th>
+                        <th>Initial Investment</th>
+                        <th>Commissions</th>
+                        <th>Returns</th>
+                        <th>Date Purchased</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="partialContents" data-url="@Url.Action("_StockTable","Home")"></tbody>
+            </table>
+        </div>
+    </div>
+}
 
 
-        <br />
-        <div id="barchartstacked"></div>
-        
-
-        <script type="text/javascript">
-            google.charts.load('current', { packages: ['corechart', 'bar'] });
-            google.charts.setOnLoadCallback(drawChart);
-            function drawChart() {
-                $.post("/Home/PerformanceChartStacked", function (data) {
-                    
-                    var assets = ['Assets'];
-                    var values = ['Portfolio'];
-                    var first = data['pricelist'];
-                    
-                    for (var i = 0; i < first.length; ++i) {
-                        assets.push(first[i]['AssetName']);
-                        values.push(first[i]['Value']);
-                    }
-                    
-                    var datas = google.visualization.arrayToDataTable([assets,values]);
-                    var options = {
-                        isStacked: true,
-                        height: 300,
-                        legend: { position: 'top', maxLines: 3 },
-                        hAxis: { minValue: 0 }
-                    };
-                    var chart = new google.visualization.BarChart(document.getElementById('barchartstacked'));
-                    chart.draw(datas, options);
-                });
-                
 
 
-            }
-        </script>

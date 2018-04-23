@@ -14,7 +14,9 @@ $(function () {
 
     var drew = false;
     var search = $('#searchform');
-    
+    search.on('focusout', function (e) {
+        $('.autocomplete-items').empty();
+    });
     search.on("keyup focusin",function (e) {
         e.preventDefault();
         var x = $('#search-input').val();
@@ -50,7 +52,6 @@ $(function () {
                         $('.autocomplete-items').empty();
                         for (var i = 0; i < val2.length; i++) {
                             $('.autocomplete-items').append('<div onclick="search()"><a href="/Account/AddStock?assetname=' + val2[i]["AssetName"] + '&assetticker=' + val2[i]["AssetTicker"] + '&assettype=' + val2[i]['AssetType'] + '">' + val2[i]["AssetName"] + ' - ' + val2[i]["AssetTicker"] + '</a>' + '</div>');
-                           
                         }
 
                     }
@@ -64,11 +65,8 @@ $(function () {
 
      $('#defaultOpen').click();
 
-     $("#myInput").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#myList li").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-            });
+     $("#myInput").on("keyup focusin", function () {
+            
      });
     
 
@@ -92,11 +90,11 @@ $(function () {
                  var randNum = rand * 10000;
                  $(".stock-body").append("<tr>\n<td>" + stock + "</td>\n<td>" + ticker + "</td>\n<td class=\"custom-td\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">#</span>\n<input type=\"number\" class=\"form-control custom-add-form\" name=\"[" + numb
                      + "].Quantity\" step=\"0.01\" data-number-to-fixed=\"2\" data-number-stepfactor=\"100\" placholder=\"Quantity\" required/></div></td>\n<td class=\"custom-td-pps\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">$</span><input type=\"number\" name=\"[" + numb +
-                     "].SharePrice\" step=\"any\" class=\"form-control\" required /></div></td>\n<td class=\"custom-td-cm\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">$</span><input type=\"number\" step=\"any\" name=\"[" + numb +
-                     "].InitialInvestment\" class=\"form-control custom-add-form\" required /></div></td>\n<td class=\"custom-td-cm\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">$</span><input type=\"number\" step=\"any\" name=\"[" + numb +
+                     "].SharePrice\" step=\"any\" class=\"form-control\" required /></div></td>\n<td class=\"custom-td-cm\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">$</span><input type=\"number\" step=\"any\" id=\"commi\" name=\"[" + numb +
+                     "].InitialInvestment\" class=\"form-control custom-add-form\" required /></div></td>\n<td class=\"custom-td-cm\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">$</span><input type=\"number\" step=\"any\" id=\"datepurch\" name=\"[" + numb +
                      "].Commissions\" class=\"form-control custom-add-form\" required /></div></td>\n<td class=\"\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\"><i class=\"glyphicon glyphicon-calendar\"></i></span><input type=\"Date\" name=\"[" + numb +
-                     "].DatePurchased\" class=\"form-control custom-add-form\" required /></div></td>\n" + "</tr>\n<input type=\"hidden\" name=\"[" + numb + "].AssetTicker\" value=\"" + ticker +
-                     "\" />\n<input type=\"hidden\" name=\"[" + numb +
+                     "].DatePurchased\" class=\"form-control custom-add-form\" required /></div></td>\n" + "</tr>\n<input type=\"hidden\" id =\"tick\" name=\"[" + numb + "].AssetTicker\" value=\"" + ticker +
+                     "\" />\n<input type=\"hidden\" id =\"aname\" name=\"[" + numb +
                      "].AssetName\" value=\"" + stock + "\" />");
                  numb++;
                  
@@ -119,9 +117,50 @@ $(function () {
             $(item).load(url);
         }
     });
+    var test = $('#myInput');
+    $('#myInput').on('keyup focusin', function () {
+        var x = $('#search-multi').val();
 
-    $('#myInput').on('keyup', function () {
+        if (x == "") {
+            $('.stock').empty();
+        }
+        
+        else {
+            $.ajax({
+                type: test.attr('method'),
+                url: test.attr('action'),
+                data: test.serialize(),
+                success: function (data) {
 
+                    console.log(data);
+                    var val1 = data["String"];
+                    var val2 = data["slist"];
+                    $('.stock').empty();
+
+                    console.log(val1);
+                    console.log(val2);
+
+                    if (val1 != null) {
+                        
+                         
+                         
+                        $('.stock').empty();
+
+                        $('.stock').append("<div>narrow your search</div>");
+                    }
+                    else {
+                        $('.stock').empty();
+                        for (var i = 0; i < val2.length; i++) {
+
+                            $('.stock').append('<li class="list-group-item" onclick="addToTable(this)"><h4 class="list-group-item-heading" >' + val2[i]['AssetTicker'] + '</h4><p class="list-group-item-text" >' + val2[i]['AssetType'] +' - '+ val2[i]['AssetName'] + '</p></li>' );
+                        }
+
+                    }
+
+
+                }
+            });
+        }
     });
 
     
@@ -147,14 +186,14 @@ function addToTable(e) {
     //var url = 'https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols=' + ticker + '&apikey=' + apiKey;
     //var rand = Math.random();
     //var randNum = rand * 10000;
-    $(".stock-body").append("<tr>\n<td>" + stock + "</td>\n<td>" + ticker + "</td>\n<td class=\"custom-td\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">#</span>\n<input type=\"number\" class=\"form-control custom-add-form\" name=\"[" + numb
-        + "].Quantity\" step=\"0.01\" data-number-to-fixed=\"2\" data-number-stepfactor=\"100\" placholder=\"Quantity\" required/></div></td>\n<td class=\"custom-td-pps\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">$</span><input type=\"number\" name=\"[" + numb +
-        "].SharePrice\" step=\"any\" class=\"form-control\" required /></div></td>\n<td class=\"custom-td-cm\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">$</span><input type=\"number\" step=\"any\" name=\"[" + numb +
-        "].InitialInvestment\" class=\"form-control custom-add-form\" required /></div></td>\n<td class=\"custom-td-cm\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">$</span><input type=\"number\" step=\"any\" name=\"[" + numb +
-        "].Commissions\" class=\"form-control custom-add-form\" required /></div></td>\n<td class=\"\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\"><i class=\"glyphicon glyphicon-calendar\"></i></span><input type=\"Date\" name=\"[" + numb +
-        "].DatePurchased\" class=\"form-control custom-add-form\" required /></div></td>\n" + "</tr>\n<input type=\"hidden\" name=\"[" + numb + "].AssetTicker\" value=\"" + ticker +
+    $(".stock-body").append("<tr class=\""+numb +"\">\n<td>" + stock + "</td>\n<td>" + ticker + "</td>\n<td class=\"custom-td\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">#</span>\n<input type=\"number\" class=\"form-control custom-add-form\" name=\"[" + numb
+        + "].Quantity\" step=\"0.01\" data-number-to-fixed=\"2\" data-number-stepfactor=\"100\" placholder=\"Quantity\" id=\"quant\" required/></div></td>\n<td class=\"custom-td-pps\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">$</span><input type=\"number\" id=\"sharep\" name=\"[" + numb +
+        "].SharePrice\" step=\"any\" class=\"form-control\" required /></div></td>\n<td class=\"custom-td-cm\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">$</span><input type=\"number\" step=\"any\" id=\"ii\"name=\"[" + numb +
+        "].InitialInvestment\" class=\"form-control custom-add-form\" required /></div></td>\n<td class=\"custom-td-cm\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">$</span><input type=\"number\" step=\"any\" id=\"commi\" name=\"[" + numb +
+        "].Commissions\" class=\"form-control custom-add-form\" required /></div></td>\n<td class=\"\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\"><i class=\"glyphicon glyphicon-calendar\"></i></span><input type=\"Date\" id=\"datep\" name=\"[" + numb +
+        "].DatePurchased\" class=\"form-control custom-add-form\" required /></div></td>\n" + "<td><button class=\"butt btn btn-default glyphicon glyphicon-trash\" type=\"button\" onclick=\"remove('"+numb+"')\"></button></td>\n<input type=\"hidden\" id =\"tick\" name=\"[" + numb + "].AssetTicker\" value=\"" + ticker +
         "\" />\n<input type=\"hidden\" name=\"[" + numb +
-        "].AssetName\" value=\"" + stock + "\" />");
+        "].AssetName\"  id=\"aname\" value=\"" + stock + "\" /></tr>");
     numb++;
 }
 
@@ -164,6 +203,30 @@ function search(e) {
     
     $.get('/Account/AddStock', { assetticker: asset, assettype: type });
 
+}
+
+function remove(i) {
+
+    
+    var cl = '.' + i;
+    var l = parseInt(i);
+    
+    
+    $(cl).remove();
+    for (r = l + 1;r < numb; r++) {
+        var lc = '.' + r;
+        var ele = $(lc);
+        var m = r - 1;
+        ele.find('#aname').attr('name', '[' + m + '].AssetName');
+        ele.find('#tick').attr('name', '[' + m + '].AssetTicker');
+        ele.find('#commi').attr('name', '[' + m + '].Commissions');
+        ele.find('#ii').attr('name', '[' + m + '].InitialInvestment');
+        ele.find('#sharep').attr('name', '[' + m + '].SharePrice');
+        ele.find('#datep').attr('name', '[' + m + '].DatePurchased');
+        ele.find('#quant').attr('name', '[' + m + '].Quantity');
+        ele.attr('class', '' + m);
+    }
+    numb--;
 }
 
 

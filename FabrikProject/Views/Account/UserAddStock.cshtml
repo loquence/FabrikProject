@@ -11,24 +11,32 @@
 {
     <h1></h1>
     <div class="row">
+        @using (Html.BeginForm("Searcher", "Account", FormMethod.Post, new { id = "myInput", autocomplete = "off", autofocus = "autofocus" }))
+        {
+            @Html.AntiForgeryToken()
         <div class="form-group input-group">
             <span class="input-group-addon">
                 <i class="glyphicon glyphicon-search"></i>
             </span>
-            <input class="form-control" id="myInput" type="text" placeholder="Search.." />
+
+            <input class="form-control" name="search"id="search-multi" type="text" placeholder="Search.." />
         </div>
-        <div class="col-md-5 partialContents" style="overflow-y:scroll; height:280px; text-align:center; background-color:gray" data-url="@Url.Action("StockList","Account")">
-            loading stocks, please wait...
+
+        <div class="col-md-5" style="overflow-y:scroll; max-height:280px; text-align:center;" >
+            <ul class="list-group stock" id="myList" style="border-width: medium;border-color:#565656;">
+
+            </ul>
         </div>
         <div class="col-md-5">
-            
+
             <div>
-                <input type="radio" name="asset" value="Stocks" />Stocks
+                <input type="radio" name="asset" value="Stock" />Stocks
             </div>
             <div>
-                <input type="radio" name="asset" value="Cryptos" />Cryptos
+                <input type="radio" name="asset" value="Crypto" />Cryptos
             </div>
         </div>
+        }
     </div>
     <br />
     <br />
@@ -48,6 +56,7 @@
                             <td>Initial Investment</td>
                             <td>Commissions</td>
                             <td>Date Purchased</td>
+                            <td>Remove</td>
                         </tr>
                     </thead>
                     <tbody class="stock-body"></tbody>
@@ -56,7 +65,7 @@
             </div>
 
             <div class="col-md-1">
-                <a class="btn btn-danger btn-lg" id="CancelButton" >Cancel</a>
+                <a class="btn btn-danger btn-lg" id="CancelButton" >Clear</a>
                
 
             </div>
