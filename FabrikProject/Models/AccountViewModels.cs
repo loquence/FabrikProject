@@ -173,6 +173,10 @@ namespace FabrikProject.Models
         [Display(Name = "Commissions")]
         [DataType(DataType.Currency)]
         public double Commissions { get; set; }
+
+        [Required]
+        [Display(Name = "Sector")]
+        public string Sector { get; set; }
     }
 
     public class UserStockViewModel
@@ -240,6 +244,11 @@ namespace FabrikProject.Models
         public String Sector { get; set; }
     }
 
+    public class SectorViewModel
+    {
+        [Required]
+        public Dictionary<string, double> SectorList { get; set; }
+    }
 
         
 
@@ -267,6 +276,8 @@ namespace FabrikProject.Models
         [Display(Name ="Weight")]
         [DisplayFormat(DataFormatString = "{0:#,##0.000#}", ApplyFormatInEditMode = true)]
         public double Weight { get; set; }
+
+        
     }
 
     public class StockTableViewModel

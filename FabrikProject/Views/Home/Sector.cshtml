@@ -1,0 +1,44 @@
+﻿
+
+<div id="sectorchart" style="width: 900px; height: 700px;"></div>
+
+
+<script>
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawChartSector);
+    function drawChartSector() {
+        
+        $.post("/Home/SectorChart", function (data) {
+
+            
+            
+            var datas = new google.visualization.DataTable();
+            datas.addColumn('string', 'Sector');
+            datas.addColumn('number', 'Value');
+            for (var key in data['svm']['SectorList']) {
+                var array = [key, data['svm']['SectorList'][key]];
+                datas.addRow(array);
+            }
+            var formatter = new google.visualization.NumberFormat({
+                prefix: '$'
+            });
+            formatter.format(datas, 1);
+
+            
+            
+
+            
+            var options = {
+                title: 'Sectors',
+                pieHole: 0.4,
+                backgroundColor: '#F8F8F8',
+                
+                
+            };
+
+
+            var chart = new google.visualization.PieChart(document.getElementById('sectorchart'));
+            chart.draw(datas, options);
+        });
+    }
+</script>

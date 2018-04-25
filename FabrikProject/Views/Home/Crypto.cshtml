@@ -1,0 +1,43 @@
+﻿<div id="cryptochart" style="width: 900px; height: 700px;"></div>
+
+
+<script>
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawChartCrypto);
+    function drawChartCrypto() {
+
+        $.post("/Home/CryptoChart", function (data) {
+
+
+
+            var datas = new google.visualization.DataTable();
+            console.log(data);
+            datas.addColumn('string', 'Crypto');
+            datas.addColumn('number', 'Value');
+            console.log(data['pricelist'][0]['userstock']['AssetName']);
+            for (var i = 0; i < data['pricelist'].length; i++) {
+                var array = [(data['pricelist'][i]['userstock']['AssetName']), (data['pricelist'][i]['Value'])];
+                datas.addRow(array);
+            }
+            var formatter = new google.visualization.NumberFormat({
+                prefix: '$'
+            });
+            formatter.format(datas, 1);
+
+
+
+
+
+            var options = {
+                title: 'Sectors',
+                pieHole: 0.4,
+                backgroundColor: '#F8F8F8',
+
+            };
+
+
+            var chart = new google.visualization.PieChart(document.getElementById('cryptochart'));
+            chart.draw(datas, options);
+        });
+    }
+</script>

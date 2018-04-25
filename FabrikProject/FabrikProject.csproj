@@ -334,6 +334,8 @@
     <Content Include="Views\Home\Returns.cshtml" />
     <Content Include="Views\Account\AddStock.cshtml" />
     <Content Include="Views\Account\CompanyInfo.cshtml" />
+    <Content Include="Views\Home\Sector.cshtml" />
+    <Content Include="Views\Home\Crypto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />

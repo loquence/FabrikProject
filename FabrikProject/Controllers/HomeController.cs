@@ -150,6 +150,56 @@ namespace FabrikProject.Controllers
             }
             return Json(new { stocks = stockp, cryptos = cryptop });
         }
+        public ActionResult Crypto()
+        {
+            return PartialView();
+        }
+        public ActionResult Sector()
+        {
+            return PartialView();
+        }
+
+        public ActionResult CryptoChart(FabrikProject.Models.ApplicationDbContext context)
+        {
+            var email = User.Identity.GetUserName();
+            var list = context.UserStock.Where(s => s.Email == email && s.AssetType.Equals("crypto", StringComparison.InvariantCultureIgnoreCase));
+            var slist = list.OrderBy(s => s.AssetTicker).ToList();
+            double ttv = 0;
+            var pricelist = GetPrices(slist, ref ttv);
+            return Json(new { pricelist });
+        }
+
+        public ActionResult SectorChart(FabrikProject.Models.ApplicationDbContext context)
+        {
+            var email = User.Identity.GetUserName();
+            var list = context.UserStock.Where(s => s.Email == email);
+            var slist = list.OrderBy(s => s.AssetTicker).ToList();
+            double ttv = 0;
+            var pricelist = GetPrices(slist, ref ttv);
+            SectorViewModel svm = new SectorViewModel { SectorList = new Dictionary<string, double>() };
+           
+            
+            foreach(var s in pricelist)
+            {
+                if (s.userstock.AssetType.Equals("stock", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    if (!svm.SectorList.ContainsKey(s.userstock.Sector))
+                    {
+                        double temp = (s.CurrentPrice * s.userstock.Quantity);
+                        svm.SectorList.Add(s.userstock.Sector, temp);
+                        
+                    }
+                    else
+                    {
+                        double temp = svm.SectorList[s.userstock.Sector] + (s.CurrentPrice * s.userstock.Quantity);
+                        svm.SectorList[s.userstock.Sector] = temp;
+
+                    }
+                }
+            }
+
+            return Json(new { svm});
+        }
 
         public ActionResult PerformanceChartStacked(FabrikProject.Models.ApplicationDbContext context)
         {
@@ -220,6 +270,7 @@ namespace FabrikProject.Controllers
             return SortedStock;
 
         }
+       
         private List<StackedChartReturn> GetPricesStacked(List<UserStock> list, ref double ttv)
         {
             WebRequest request;

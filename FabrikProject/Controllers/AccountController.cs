@@ -89,6 +89,11 @@ namespace FabrikProject.Controllers
                         double II = 0;
                         foreach (var s in list)
                         {
+                            string sector = "";
+                            if (s.AssetType.Equals("Stock", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                s.Sector = GetSector(s.AssetTicker);
+                            }
                             II += s.InitialInvestment;
                         }
                         int size = list.Count();
@@ -118,6 +123,8 @@ namespace FabrikProject.Controllers
                     return View(model);
             }
         }
+
+       
 
         //
         // GET: /Account/VerifyCode
@@ -279,6 +286,12 @@ namespace FabrikProject.Controllers
                 asset[0] = asset[0].Trim();
                 asset[1] = asset[1].Trim();
                 var stock = new UserStock { Email = User.Identity.GetUserName(), AssetType = asset[0], AssetTicker = model.AssetTicker, AssetName = asset[1], DatePurchased = model.DatePurchased, Commissions = model.Commissions, InitialInvestment = model.InitialInvestment, Quantity = model.Quantity };
+                string sector = "";
+                if (stock.AssetType.Equals("stock", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    sector = GetSector(stock.AssetTicker);
+                }
+                stock.Sector = sector;
                 context.UserStock.Add(stock);
                 await context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
@@ -324,7 +337,15 @@ namespace FabrikProject.Controllers
                     var asset = m.AssetName.Split('-');
                     asset[0]=asset[0].Trim();
                     asset[1] = asset[1].Trim();
+                    
+                    
                     var stock = new UserStock { AssetType = asset[0], AssetName = asset[1], AssetTicker = m.AssetTicker, Email = User.Identity.GetUserName(), Quantity = m.Quantity, DatePurchased = m.DatePurchased, InitialInvestment = m.InitialInvestment, SharePrice = m.SharePrice, Commissions = m.Commissions };
+                    string sector = "";
+                    if(stock.AssetType.Equals("stock", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        sector = GetSector(stock.AssetTicker);
+                    }
+                    stock.Sector = sector;
                     context.UserStock.Add(stock);
                     await context.SaveChangesAsync();
                 }
@@ -335,6 +356,26 @@ namespace FabrikProject.Controllers
             return View("Home");
             
         }
+
+        private string GetSector(string ticker)
+        {
+            WebRequest request;
+            AddStockViewModel toadd = new AddStockViewModel();
+            
+            WebResponse response;
+            Stream dataStream;//= response.GetResponseStream();
+            StreamReader reader; //= new StreamReader(dataStream);
+            string comp = "https://api.iextrading.com/1.0/stock/" + ticker + "/company";
+            request = WebRequest.Create(comp);
+            request.Credentials = CredentialCache.DefaultCredentials;
+            response = request.GetResponse();
+            dataStream = response.GetResponseStream();
+            reader = new StreamReader(dataStream);
+            var responseFromServer = reader.ReadToEnd();
+            var json = JsonConvert.DeserializeObject<dynamic>(responseFromServer);
+            return json["sector"];
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Search(FabrikProject.Models.ApplicationDbContext context)
