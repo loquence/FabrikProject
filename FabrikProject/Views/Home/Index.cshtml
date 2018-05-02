@@ -8,15 +8,19 @@
     <br />
 
     <div class="row">
-
-        <div class="col-md-12 custom-shadow-div">
-            <div id="donutchart" style="width: 900px; height: 700px;"></div>
+        <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'Portfolio')" id="defaultOpen">Portfolio Composition</button>
+            <button class="tablinks" onclick="openTab(event, 'Stocks')">Stocks - Sector</button>
+            <button class="tablinks" onclick="openTab(event, 'Cryptos')">Cryptos</button>
         </div>
-        <div class="col-md-12 custom-shadow-div">
+        <div class="custom-shadow-div tabcontent" id="Portfolio">
+            <div id="donutchart" style="height: 700px;"></div>
+        </div>
+        <div class="custom-shadow-div tabcontent" id="Stocks">
             @Html.Partial("Sector", "Home")
 
         </div>
-        <div class="col-md-12 custom-shadow-div">
+        <div class="custom-shadow-div tabcontent" id="Cryptos">
             @Html.Partial("Crypto", "Home")
 
         </div>

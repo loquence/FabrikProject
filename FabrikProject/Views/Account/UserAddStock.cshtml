@@ -9,7 +9,13 @@
 
 @if (Request.IsAuthenticated)
 {
-    <h1></h1>
+    <h3>Add multiple assets</h3>
+    <p>Search for an asset, and click on it to add to the list below.</p>
+    <p>Click on other assets to add them to the list</p>
+    <p>Use the buttons on the right to sort by stock or crypto</p>
+    <br />
+    
+    <hr />
     <div class="row">
         @using (Html.BeginForm("Searcher", "Account", FormMethod.Post, new { id = "myInput", autocomplete = "off", autofocus = "autofocus" }))
         {
@@ -19,7 +25,7 @@
                 <i class="glyphicon glyphicon-search"></i>
             </span>
 
-            <input class="form-control" name="search"id="search-multi" type="text" placeholder="Search.." />
+            <input class="form-control" name="search"id="search-multi" type="text" placeholder="Search assets (e.g BTC, FB, GOOGL)" />
         </div>
 
         <div class="col-md-5" style="overflow-y:scroll; max-height:280px; text-align:center;" >
@@ -27,7 +33,7 @@
 
             </ul>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-1">
 
             <div>
                 <input type="radio" name="asset" value="Stock" />Stocks
@@ -36,6 +42,7 @@
                 <input type="radio" name="asset" value="Crypto" />Cryptos
             </div>
         </div>
+        
         }
     </div>
     <br />
@@ -70,7 +77,7 @@
 
             </div>
             <div class="col-md-2 col-md-offset-9">
-                <input type="submit" class="btn btn-success btn-lg" value="Confirm" style="float:right" />
+                <input type="submit" class="btn btn-success btn-lg" id="subBut" value="Confirm" style="float:right" disabled/>
             </div>
 
         }

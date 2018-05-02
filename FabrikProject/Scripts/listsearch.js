@@ -1,5 +1,6 @@
 ﻿var numb = 0;
 var apiKey = 'BECFPZPO9R3JIDAN';
+var ch = 0;
 $(function () {
     $('.iicalc').on('keyup',function () {
 
@@ -103,7 +104,7 @@ $(function () {
          
 
      });
-
+    document.getElementById("defaultOpen").click();
     $('[data-toggle="popover"]').popover(); 
 
     $('#CancelButton').click(function () {
@@ -186,15 +187,16 @@ function addToTable(e) {
     //var url = 'https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&symbols=' + ticker + '&apikey=' + apiKey;
     //var rand = Math.random();
     //var randNum = rand * 10000;
-    $(".stock-body").append("<tr class=\""+numb +"\">\n<td>" + stock + "</td>\n<td>" + ticker + "</td>\n<td class=\"custom-td\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">#</span>\n<input type=\"number\" class=\"form-control custom-add-form\" name=\"[" + numb
+    $(".stock-body").append("<tr class=\""+numb +"\">\n<td>" + stock + "</td>\n<td>" + ticker + "</td>\n<td class=\"custom-td\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">#</span>\n<input type=\"number\" class=\"form-control\" name=\"[" + numb
         + "].Quantity\" step=\"0.01\" data-number-to-fixed=\"2\" data-number-stepfactor=\"100\" placholder=\"Quantity\" id=\"quant\" required/></div></td>\n<td class=\"custom-td-pps\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">$</span><input type=\"number\" id=\"sharep\" name=\"[" + numb +
         "].SharePrice\" step=\"any\" class=\"form-control\" required /></div></td>\n<td class=\"custom-td-cm\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">$</span><input type=\"number\" step=\"any\" id=\"ii\"name=\"[" + numb +
-        "].InitialInvestment\" class=\"form-control custom-add-form\" required /></div></td>\n<td class=\"custom-td-cm\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">$</span><input type=\"number\" step=\"any\" id=\"commi\" name=\"[" + numb +
-        "].Commissions\" class=\"form-control custom-add-form\" required /></div></td>\n<td class=\"\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\"><i class=\"glyphicon glyphicon-calendar\"></i></span><input type=\"Date\" id=\"datep\" name=\"[" + numb +
-        "].DatePurchased\" class=\"form-control custom-add-form\" required /></div></td>\n" + "<td><button class=\"butt btn btn-default glyphicon glyphicon-trash\" type=\"button\" onclick=\"remove('"+numb+"')\"></button></td>\n<input type=\"hidden\" id =\"tick\" name=\"[" + numb + "].AssetTicker\" value=\"" + ticker +
+        "].InitialInvestment\" class=\"form-control \" required /></div></td>\n<td class=\"custom-td-cm\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\">$</span><input type=\"number\" step=\"any\" id=\"commi\" name=\"[" + numb +
+        "].Commissions\" class=\"form-control \" required /></div></td>\n<td class=\"\"><div class=\"input-group custom-table-div\"><span class=\"input-group-addon\"><i class=\"glyphicon glyphicon-calendar\"></i></span><input type=\"Date\" id=\"datep\" name=\"[" + numb +
+        "].DatePurchased\" class=\"form-control \" required /></div></td>\n" + "<td><button class=\"butt btn btn-default glyphicon glyphicon-trash\" type=\"button\" onclick=\"remove('"+numb+"')\"></button></td>\n<input type=\"hidden\" id =\"tick\" name=\"[" + numb + "].AssetTicker\" value=\"" + ticker +
         "\" />\n<input type=\"hidden\" name=\"[" + numb +
         "].AssetName\"  id=\"aname\" value=\"" + stock + "\" /></tr>");
     numb++;
+    $('#subBut').removeAttr('disabled');
 }
 
 function search(e) {
@@ -227,6 +229,27 @@ function remove(i) {
         ele.attr('class', '' + m);
     }
     numb--;
+}
+
+function openTab(evt, cityName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(cityName).style.display = "block";
+    
 }
 
 

@@ -24,11 +24,11 @@ textarea {
 }
 
 .navbar-custom {
-    background-color: #A3D977;
+    background-color: #6aa84f;
 }
 
 .nav > li > a {
-    background-color: #A3D977;
+    background-color: #6aa84f;
 }
 
 .navbar-brand {
@@ -231,4 +231,36 @@ textarea {
 .custom-add-form {
     border:0;
     box-shadow:none !important;
+}
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    
 }
