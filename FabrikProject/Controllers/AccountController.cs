@@ -89,7 +89,7 @@ namespace FabrikProject.Controllers
                         double II = 0;
                         foreach (var s in list)
                         {
-                            string sector = "";
+                            
                             if (s.AssetType.Equals("Stock", StringComparison.InvariantCultureIgnoreCase))
                             {
                                 s.Sector = GetSector(s.AssetTicker);
@@ -99,7 +99,7 @@ namespace FabrikProject.Controllers
                         int size = list.Count();
                         if (portfolio == null)
                         {
-                            PortfolioMeta pm = new PortfolioMeta { Email = model.Email, InitialInvestmen = II, TotalAssets = size };
+                            PortfolioMeta pm = new PortfolioMeta { Email = model.Email, InitialInvestmen = II, TotalAssets = size, StartDate = DateTime.Now };
                             context.PortfolioMeta.Add(pm);
                         }
                         else
@@ -191,7 +191,8 @@ namespace FabrikProject.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    PortfolioMeta pm = new PortfolioMeta { Email = model.Email, InitialInvestmen = 0, TotalAssets = 0 };
+                    var st = DateTime.Now;
+                    PortfolioMeta pm = new PortfolioMeta { Email = model.Email, InitialInvestmen = 0, TotalAssets = 0, StartDate = st };
                     context.PortfolioMeta.Add(pm);
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link

@@ -21,7 +21,8 @@ namespace FabrikProject.Controllers
     {
         public ActionResult Index(FabrikProject.Models.ApplicationDbContext context)
         {
-            
+            var st = DateTime.Now;
+            ViewBag.Date = st;
             PortfolioMeta pm = context.PortfolioMeta.Find(User.Identity.GetUserName());
             return View(pm);
         }
@@ -51,7 +52,14 @@ namespace FabrikProject.Controllers
 
             return View();
         }
+        /*
+        [AllowAnonymous]
+        public ActionResult PerformanceChart(FabrikProject.Models.ApplicationDbContext context)
+        {
+            PortfolioMeta pm = context.PortfolioMeta.Find(User.Identity.GetUserName());
 
+        }
+        */
         [AllowAnonymous]
         public ActionResult _StockTable(FabrikProject.Models.ApplicationDbContext context)
         {

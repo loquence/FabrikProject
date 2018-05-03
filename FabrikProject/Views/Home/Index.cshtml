@@ -6,7 +6,6 @@
 @if (Request.IsAuthenticated)
 {
     <br />
-
     <div class="row">
         <div class="tab">
             <button class="tablinks" onclick="openTab(event, 'Portfolio')" id="defaultOpen">Portfolio Composition</button>
@@ -38,6 +37,7 @@
     
 
     <script type="text/javascript">
+
         google.charts.load("current", { packages: ["corechart"] });
         google.charts.setOnLoadCallback(drawChart);
         function drawChart() {

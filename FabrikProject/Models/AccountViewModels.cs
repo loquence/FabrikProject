@@ -300,6 +300,10 @@ namespace FabrikProject.Models
         [Required]
         [Display(Name ="Total Assets")]
         public int TotalAssets { get; set; }
+
+        [Required]
+        [Display(Name ="Start Date")]
+        public DateTime StartDate { get; set; }
     }
 
     public class Csv

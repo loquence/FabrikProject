@@ -64,7 +64,7 @@ $(function () {
         
     });
 
-     $('#defaultOpen').click();
+     
 
      $("#myInput").on("keyup focusin", function () {
             
@@ -104,7 +104,7 @@ $(function () {
          
 
      });
-    document.getElementById("defaultOpen").click();
+    $('#defaultOpen').click();
     $('[data-toggle="popover"]').popover(); 
 
     $('#CancelButton').click(function () {
