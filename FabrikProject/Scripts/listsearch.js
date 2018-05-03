@@ -15,9 +15,7 @@ $(function () {
 
     var drew = false;
     var search = $('#searchform');
-    search.on('focusout', function (e) {
-        $('.autocomplete-items').empty();
-    });
+    
     search.on("keyup focusin",function (e) {
         e.preventDefault();
         var x = $('#search-input').val();
@@ -52,7 +50,7 @@ $(function () {
                     else {
                         $('.autocomplete-items').empty();
                         for (var i = 0; i < val2.length; i++) {
-                            $('.autocomplete-items').append('<div onclick="search()"><a href="/Account/AddStock?assetname=' + val2[i]["AssetName"] + '&assetticker=' + val2[i]["AssetTicker"] + '&assettype=' + val2[i]['AssetType'] + '">' + val2[i]["AssetName"] + ' - ' + val2[i]["AssetTicker"] + '</a>' + '</div>');
+                            $('.autocomplete-items').append('<form method="post" action="/Account/AddStockP" > <input type="hidden" name="AssetType" value="' + val2[i]['AssetType'] + '"><input type="hidden" name="AssetName" value="' + val2[i]['AssetName'] + '"><input type="hidden" name="AssetTicker" value="' + val2[i]['AssetTicker'] + '"><div onclick="sub(this)"><p>' + val2[i]["AssetName"] + ' - ' + val2[i]["AssetTicker"] + '</p>' + '</div></form>');
                         }
 
                     }
@@ -199,13 +197,7 @@ function addToTable(e) {
     $('#subBut').removeAttr('disabled');
 }
 
-function search(e) {
-    var asset = $(e).find('.asset').text();
-    var type = $(e).find('.assettype').text();
-    
-    $.get('/Account/AddStock', { assetticker: asset, assettype: type });
 
-}
 
 function remove(i) {
 
@@ -250,6 +242,18 @@ function openTab(evt, cityName) {
     // Show the current tab, and add an "active" class to the button that opened the tab
     document.getElementById(cityName).style.display = "block";
     
+}
+
+function pageload(item) {
+    var url = $(item).data("url");
+    console.log(url);
+    $.get(url);
+}
+
+function sub(item) {
+    var test = $(item).parent();
+    console.log(test);
+    test.submit();
 }
 
 

@@ -174,7 +174,7 @@ namespace FabrikProject.Models
         [DataType(DataType.Currency)]
         public double Commissions { get; set; }
 
-        [Required]
+        
         [Display(Name = "Sector")]
         public string Sector { get; set; }
     }
@@ -321,6 +321,16 @@ namespace FabrikProject.Models
         public string AssetName { get; set; }
         [Required]
         public double Value { get; set; }
+    }
+
+    public class AddStock
+    {
+        [Required]
+        public string AssetType { get; set; }
+        [Required]
+        public string AssetTicker { get; set; }
+        [Required]
+        public string AssetName { get; set; }
     }
 
 

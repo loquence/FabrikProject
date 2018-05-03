@@ -14,28 +14,28 @@
         @if (controller == "home" && action == "index")
         {
             <li class="active">
-                @Html.ActionLink("Home", "Index", "Home")
+                @Html.ActionLink("Dashboard", "Index", "Home")
             </li>
             <li>
-                @Html.ActionLink("Portfolio", "Performance", "Account")
+                @Html.ActionLink("Manage Portfolio", "Performance", "Account")
             </li>
         }
         else if (controller == "account" && action == "performance")
         {
             <li>
-                @Html.ActionLink("Home", "Index", "Home")
+                @Html.ActionLink("Dashboard", "Index", "Home")
             </li>
             <li class="active">
-                @Html.ActionLink("Portfolio", "Performance", "Account")
+                @Html.ActionLink("Manage Portfolio", "Performance", "Account")
             </li>
         }
         else
         {
             <li>
-                @Html.ActionLink("Home", "Index", "Home")
+                @Html.ActionLink("Dashboard", "Index", "Home")
             </li>
             <li>
-                @Html.ActionLink("Portfolio", "Performance", "Account")
+                @Html.ActionLink("Manage Portfolio", "Performance", "Account")
             </li>
         }
 
@@ -45,7 +45,7 @@
         {
         @Html.AntiForgeryToken()
         <div class="form-group form-search" style="display:inline;">
-            <div class="input-group autocomplete col-md-offset-4" style="display:table">
+            <div class="input-group autocomplete col-md-offset-2" style="display:table">
                 <span class="input-group-addon custom-glyph" style=""><span class="glyphicon glyphicon-search"></span></span>
                 <input type="text" class="form-control search-form" name="search" id="search-input" placeholder="Search assets (e.g BTC, FB, GOOGL)" list="json-datalist" style="width:650px;max-width:none;" />
 

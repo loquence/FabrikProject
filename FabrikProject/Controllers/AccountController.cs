@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace FabrikProject.Controllers
 {
@@ -274,6 +275,7 @@ namespace FabrikProject.Controllers
             ViewBag.NameType =assettype + " - " + assetname;
             ViewBag.Name = assetname;
             ViewBag.Ticker = assetticker; 
+            
             return View();
         }
         [HttpPost]
@@ -347,8 +349,28 @@ namespace FabrikProject.Controllers
                         sector = GetSector(stock.AssetTicker);
                     }
                     stock.Sector = sector;
+                    
                     context.UserStock.Add(stock);
-                    await context.SaveChangesAsync();
+                    try
+                    {
+                        await context.SaveChangesAsync();
+                    }
+                    catch(System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                    {
+                        Exception raise = dbEx;
+                        foreach(var validationErrors in dbEx.EntityValidationErrors)
+                        {
+                            foreach(var validationError in validationErrors.ValidationErrors)
+                            {
+                                string message = string.Format("{0}:{1}",
+                    validationErrors.Entry.Entity.ToString(),
+                    validationError.ErrorMessage);
+                                raise = new InvalidOperationException(message, raise);
+                            }
+                        }
+                        throw raise;
+                    }
+                    
                 }
                 
                 return RedirectToAction("Index", "Home");
@@ -376,7 +398,21 @@ namespace FabrikProject.Controllers
             var json = JsonConvert.DeserializeObject<dynamic>(responseFromServer);
             return json["sector"];
         }
+        [HttpPost]
+        public ActionResult AddStockP(AddStock model)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewBag.CompanyUrl = "/Account/CompanyInfo?ticker=" + model.AssetTicker + "&type=" + model.AssetType;
+                ViewBag.NameType = model.AssetType + " - " + model.AssetName;
+                ViewBag.Name = model.AssetName;
+                ViewBag.Ticker = model.AssetName;
 
+                return View("AddStock");
+            }
+            return View("Error");
+           
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Search(FabrikProject.Models.ApplicationDbContext context)
