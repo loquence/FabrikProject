@@ -17,6 +17,7 @@ using Newtonsoft.Json.Linq;
 
 namespace FabrikProject.Controllers
 {
+    
     public class HomeController : Controller
     {
         public ActionResult Index(FabrikProject.Models.ApplicationDbContext context)
@@ -36,6 +37,11 @@ namespace FabrikProject.Controllers
         {
             ViewBag.Message = "Your application description page.";
 
+            return View();
+        }
+
+        public ActionResult ConfirmEmail()
+        {
             return View();
         }
 

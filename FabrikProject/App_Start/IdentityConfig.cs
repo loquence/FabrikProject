@@ -11,6 +11,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using FabrikProject.Models;
+using System.Net.Mail;
+using System.Diagnostics;
 
 namespace FabrikProject
 {
@@ -18,8 +20,35 @@ namespace FabrikProject
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            Debug.WriteLine("Calling SendAsync");
+            return ConfigSendGridasync(message);
+        }
+
+        private Task ConfigSendGridasync(IdentityMessage message)
+        {
+            Debug.WriteLine("Calling SendGridAsync");
+            var myMessage = new SendGrid.SendGridMessage();
+            myMessage.AddTo(message.Destination);
+            myMessage.From = new MailAddress("do-not-reply@essentialportfolio.azurewebsites.com", "Verify Your Account - Essentail Portfolio");
+            myMessage.Subject = message.Subject;
+            myMessage.Html = message.Body;
+            var apiKey = "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";
+            var transportWeb = new SendGrid.Web(apiKey);
+
+
+
+            // Send the email.
+            if (transportWeb != null)
+            {
+                Debug.WriteLine("I am sending the message");
+                return transportWeb.DeliverAsync(myMessage);
+            }
+            else
+            {
+                Debug.WriteLine("ApiKey: {0}", apiKey);
+                return Task.FromResult(0);
+
+            }
         }
     }
 

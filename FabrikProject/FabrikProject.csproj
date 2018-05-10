@@ -336,6 +336,7 @@
     <Content Include="Views\Account\CompanyInfo.cshtml" />
     <Content Include="Views\Home\Sector.cshtml" />
     <Content Include="Views\Home\Crypto.cshtml" />
+    <Content Include="Views\Home\ConfirmEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
@@ -379,7 +380,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53847</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

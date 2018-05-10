@@ -191,17 +191,19 @@ namespace FabrikProject.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    
                     var st = DateTime.Now;
                     PortfolioMeta pm = new PortfolioMeta { Email = model.Email, InitialInvestmen = 0, TotalAssets = 0, StartDate = st };
                     context.PortfolioMeta.Add(pm);
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    Debug.WriteLine("About to call the SendEmailAsync function ");
+                    
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("ConfirmEmail", "Home");
                 }
                 AddErrors(result);
             }
@@ -214,7 +216,7 @@ namespace FabrikProject.Controllers
         {
             WebRequest request;
             AddStockViewModel toadd = new AddStockViewModel();
-            List<string> toret;
+            
             WebResponse response;
             Stream dataStream;//= response.GetResponseStream();
             StreamReader reader; //= new StreamReader(dataStream);

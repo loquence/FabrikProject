@@ -10,6 +10,7 @@ using FabrikProject.Models;
 
 namespace FabrikProject.Controllers
 {
+    
     [Authorize]
     public class ManageController : Controller
     {
