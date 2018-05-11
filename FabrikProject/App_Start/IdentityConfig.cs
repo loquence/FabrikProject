@@ -32,7 +32,7 @@ namespace FabrikProject
             myMessage.From = new MailAddress("do-not-reply@essentialportfolio.azurewebsites.com", "Verify Your Account - Essentail Portfolio");
             myMessage.Subject = message.Subject;
             myMessage.Html = message.Body;
-            var apiKey = "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";
+            var apiKey = "";
             var transportWeb = new SendGrid.Web(apiKey);
 
 
